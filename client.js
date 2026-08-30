@@ -66,6 +66,8 @@ window.__ModuleLoader__.load({
         openMac: '在访达中显示',
         openWindows: '在资源管理器中显示',
         openGeneric: '在系统文件管理器中显示',
+        terminal: '在终端中打开',
+        terminalFailed: '无法打开终端',
         openFailed: '无法打开系统文件管理器',
       },
       en: {
@@ -80,6 +82,8 @@ window.__ModuleLoader__.load({
         openMac: 'Show in Finder',
         openWindows: 'Show in File Explorer',
         openGeneric: 'Show in file manager',
+        terminal: 'Open in Terminal',
+        terminalFailed: 'Couldn’t open terminal',
         openFailed: 'Couldn’t open the system file manager',
       },
     }
@@ -202,6 +206,23 @@ window.__ModuleLoader__.load({
         }))
     }
 
+    function IconTerminal({ size = 14 }) {
+      return h('svg', {
+        width: size,
+        height: size,
+        viewBox: '0 0 16 16',
+        fill: 'none',
+        'aria-hidden': 'true',
+      },
+        h('path', {
+          d: 'M3 4.5l4 3.5-4 3.5M8 11.5h5',
+          stroke: 'currentColor',
+          strokeWidth: 1.25,
+          strokeLinecap: 'round',
+          strokeLinejoin: 'round',
+        }))
+    }
+
     function IconOpen({ size = 14 }) {
       return h('svg', {
         width: size,
@@ -225,7 +246,9 @@ window.__ModuleLoader__.load({
         }))
     }
 
-    function PathPanel({ t, rows, total, query, onQuery, inputRef, currentId, home, canOpen, onCopy, onOpen, copiedId, status, error, revealLabel }) {
+    function PathPanel({ t, rows, total, query, onQuery, inputRef, currentId, home, canOpen, onCopy, onOpen,
+              onTerminal,
+              copiedId, status, error, revealLabel }) {
       const empty = total === 0 ? t.empty : t.noMatches
       return h(React.Fragment, null,
         total > 0 ? h('div', { className: 'dsh-wspath-search' },
@@ -273,6 +296,13 @@ window.__ModuleLoader__.load({
                   h('span', { className: 'dsh-wspath-path' }, displayPath),
                 ),
               ),
+              canOpen ? h('button', {
+                type: 'button',
+                className: 'dsh-wspath-open',
+                'aria-label': t.terminal,
+                title: t.terminal,
+                onClick: () => { void onTerminal(workspace) },
+              }, h(IconTerminal)) : null,
               canOpen ? h('button', {
                 type: 'button',
                 className: 'dsh-wspath-open',
@@ -395,13 +425,26 @@ window.__ModuleLoader__.load({
       async function onOpen(workspace) {
         if (!canOpen) return
         try {
-          // Host OS file manager (Finder / Explorer / xdg-open). Not the DSH sidebar.
-          await workspaces.openPath(workspace.path)
+          const res = await connection.rpc.call('/dsh-workspace-path', 'reveal', { path: workspace.path })
+          if (!res.ok) throw new Error(res.error.message)
           setError(false)
           setStatus('')
         } catch (err) {
           setError(true)
           setStatus(err instanceof Error ? err.message : t.openFailed)
+        }
+      }
+
+      async function onTerminal(workspace) {
+        if (!canOpen) return
+        try {
+          const res = await connection.rpc.call('/dsh-workspace-path', 'terminal', { path: workspace.path })
+          if (!res.ok) throw new Error(res.error.message)
+          setError(false)
+          setStatus('')
+        } catch (err) {
+          setError(true)
+          setStatus(err instanceof Error ? err.message : t.terminalFailed)
         }
       }
 
@@ -432,6 +475,7 @@ window.__ModuleLoader__.load({
               canOpen,
               onCopy,
               onOpen,
+              onTerminal,
               copiedId,
               status,
               error,
