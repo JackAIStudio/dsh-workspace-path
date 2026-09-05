@@ -342,8 +342,7 @@ window.__ModuleLoader__.load({
       const currentId = currentWorkspace ? currentWorkspace.workspaceId : undefined
       const canOpen = Boolean(
         connection && connection.isLoopback === true
-        && host && host.canOpenPath === true
-        && workspaces && typeof workspaces.openPath === 'function',
+        && (host ? host.canOpenPath === true : true),
       )
 
       const place = React.useCallback(() => {
