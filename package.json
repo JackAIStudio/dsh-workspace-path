@@ -1,8 +1,8 @@
 {
   "name": "dsh-workspace-path",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Sidebar panel: copy a workspace's absolute path, optionally reveal it in the OS file manager.",
+  "description": "Sidebar workspace hub: fast switch workspace & start session, copy absolute path, reveal in file manager, open in terminal, and create subdirectories.",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -30,8 +30,7 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-connection",
-        "@deepseek-ai/dsh-client-ui-sidebar",
-        "@deepseek-ai/dsh-client-ui-slots"
+        "@deepseek-ai/dsh-client-ui-sidebar"
       ],
       "platform": "web"
     }

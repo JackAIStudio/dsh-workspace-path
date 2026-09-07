@@ -1,50 +1,14 @@
 window.__ModuleLoader__.load({
   id: 'dsh-workspace-path',
   factory: (require) => {
-    const module = { exports: {} }
-    const React = require('react')
-    const ReactDOM = require('react-dom')
-    const h = React.createElement
+    const module = { exports: {} }, React = require('react'), ReactDOM = require('react-dom'), h = React.createElement
 
-    const css = [
-      '.dsh-wspath{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center}',
-      '[class*="_footArea"]:has(.dsh-wspath-wide){flex-direction:row;align-items:center;gap:4px}',
-      '[class*="_footArea"]:has(.dsh-wspath-wide) [class*="_settingsArea"]{flex:1 1 auto;width:auto;min-width:0}',
-      '[class*="_footArea"]:has(.dsh-wspath-wide) [class*="_footerActions"]{order:2;flex:none;width:auto;align-items:center;justify-content:flex-end}',
-      '.dsh-wspath-btn{appearance:none;position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:50%;padding:0;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 120ms ease,color 120ms ease,box-shadow 120ms ease}',
-      '.dsh-wspath-btn:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}',
-      '.dsh-wspath-btn:active{background:var(--dsw-alias-interactive-bg-active)}',
-      '.dsh-wspath-btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dsw-alias-bg-layer-2),0 0 0 4px var(--dsw-alias-brand-primary)}',
-      '.dsh-wspath-btn.is-open{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}',
-      '.dsh-wspath-btn svg{display:block;flex:none}',
-      '.dsh-wspath-panel{box-sizing:border-box;z-index:80;display:flex;flex-direction:column;width:min(320px,calc(100vw - 16px));max-height:min(420px,calc(100vh - 24px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}',
-      '.dsh-wspath-head{flex:none;padding:4px 8px 6px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-tertiary)}',
-      '.dsh-wspath-search{flex:none;margin:0 4px 6px}',
-      '.dsh-wspath-search input{box-sizing:border-box;width:100%;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-primary);font:inherit;font-size:13px;line-height:20px}',
-      '.dsh-wspath-search input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}',
-      '.dsh-wspath-search input::placeholder{color:var(--dsw-alias-label-tertiary)}',
-      '.dsh-wspath-list{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:auto}',
-      '.dsh-wspath-empty{padding:12px 8px;font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)}',
-      '.dsh-wspath-row{box-sizing:border-box;width:100%;display:flex;align-items:center;gap:4px;padding:2px;border-radius:8px}',
-      '.dsh-wspath-row.is-current,.dsh-wspath-row:hover{background:var(--dsw-alias-interactive-bg-hover)}',
-      '.dsh-wspath-copy{appearance:none;box-sizing:border-box;min-width:0;flex:1;display:flex;align-items:center;margin:0;padding:6px 8px;border:none;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}',
-      '.dsh-wspath-copy:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--dsw-alias-brand-primary)}',
-      '.dsh-wspath-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}',
-      '.dsh-wspath-title{display:flex;align-items:center;gap:6px;min-width:0}',
-      '.dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:20px;color:var(--dsw-alias-label-primary)}',
-      '.dsh-wspath-badge{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:18px;color:var(--dsw-alias-label-secondary)}',
-      '.dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;line-height:17px;color:var(--dsw-alias-label-tertiary)}',
-      '.dsh-wspath-open{appearance:none;flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}',
-      '.dsh-wspath-open:hover,.dsh-wspath-open:focus-visible{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary);outline:none}',
-      '.dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}',
-      '.dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}',
-      '@media (prefers-reduced-motion: reduce){.dsh-wspath-btn{transition:none}}',
-    ].join('')
+    const css = '.dsh-wspath{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center}.dsh-wspath-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:50%;padding:0;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 120ms ease,color 120ms ease}.dsh-wspath-btn:hover,.dsh-wspath-btn.is-open{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}.dsh-wspath-panel{box-sizing:border-box;z-index:80;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));max-height:min(440px,calc(100vh - 24px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}.dsh-wspath-search-row{display:flex;align-items:center;gap:6px;margin:0 4px 6px}.dsh-wspath-search-row input{flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-primary);font:inherit;font-size:13px}.dsh-wspath-search-row input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}.dsh-wspath-add-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-secondary);cursor:pointer}.dsh-wspath-add-btn:hover,.dsh-wspath-add-btn.is-active{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}.dsh-wspath-new-box{box-sizing:border-box;display:flex;gap:6px;margin:0 4px 6px;padding:6px;border-radius:8px;background:var(--dsw-alias-interactive-bg-hover)}.dsh-wspath-new-box input{flex:1;min-width:0;height:28px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2);border-radius:6px;background:var(--dsw-alias-bg-layer-2);color:inherit;font:inherit;font-size:12px}.dsh-wspath-new-box button{appearance:none;flex:none;height:28px;padding:0 8px;border:none;border-radius:6px;background:var(--dsw-alias-brand-primary);color:#fff;font-size:12px;cursor:pointer}.dsh-wspath-new-box button:disabled{opacity:.5;cursor:default}.dsh-wspath-list{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:auto}.dsh-wspath-empty{padding:12px 8px;font-size:13px;color:var(--dsw-alias-label-secondary)}.dsh-wspath-row{box-sizing:border-box;width:100%;display:flex;align-items:center;gap:2px;padding:2px;border-radius:8px}.dsh-wspath-row.is-current,.dsh-wspath-row:hover{background:var(--dsw-alias-interactive-bg-hover)}.dsh-wspath-item{appearance:none;box-sizing:border-box;min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;margin:0;padding:6px 8px;border:none;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}.dsh-wspath-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--dsw-alias-brand-primary)}.dsh-wspath-title{display:flex;align-items:center;gap:6px;min-width:0}.dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}.dsh-wspath-badge{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:16px;color:var(--dsw-alias-label-secondary)}.dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--dsw-alias-label-tertiary)}.dsh-wspath-actions{display:flex;align-items:center;gap:2px;flex:none}.dsh-wspath-icon-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}.dsh-wspath-icon-btn:hover{background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}.dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;color:var(--dsw-alias-label-secondary)}.dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}'
 
     if (typeof document !== 'undefined') {
       const id = 'dsh-workspace-path/ui.css'
       let tag = document.querySelector('style[data-plugin-css=' + JSON.stringify(id) + ']')
-      if (tag === null) {
+      if (!tag) {
         tag = document.createElement('style')
         tag.dataset.plugin = 'dsh-workspace-path'
         tag.dataset.pluginCss = id
@@ -54,435 +18,220 @@ window.__ModuleLoader__.load({
     }
 
     const copy = {
-      zh: {
-        trigger: '复制工作区路径',
-        title: '复制工作区路径',
-        empty: '暂无工作区',
-        search: '搜索工作区',
-        noMatches: '无匹配工作区',
-        current: '当前',
-        copied: '已复制',
-        copyFailed: '无法写入剪贴板',
-        openMac: '在访达中显示',
-        openWindows: '在资源管理器中显示',
-        openGeneric: '在系统文件管理器中显示',
-        terminal: '在终端中打开',
-        terminalFailed: '无法打开终端',
-        openFailed: '无法打开系统文件管理器',
-      },
-      en: {
-        trigger: 'Copy workspace path',
-        title: 'Copy workspace path',
-        empty: 'No workspaces',
-        search: 'Search workspaces',
-        noMatches: 'No matching workspaces',
-        current: 'Current',
-        copied: 'Copied',
-        copyFailed: 'Couldn’t copy to the clipboard',
-        openMac: 'Show in Finder',
-        openWindows: 'Show in File Explorer',
-        openGeneric: 'Show in file manager',
-        terminal: 'Open in Terminal',
-        terminalFailed: 'Couldn’t open terminal',
-        openFailed: 'Couldn’t open the system file manager',
-      },
+      zh: { trigger: '工作区中心 (点击切换)', search: '搜索工作区 (点击直达)...', empty: '暂无工作区', noMatches: '无匹配工作区', current: '当前', copied: '已复制路径', copyFailed: '复制失败', copyBtn: '复制路径', terminal: '在终端打开', openMac: '在访达中显示', openWindows: '在资源管理器中显示', openGeneric: '在文件管理器中显示', newSubdir: '在当前工作区下新建子目录', createBtn: '创建并进入', creating: '创建中...', promptName: '子目录名称 (如 feature-1)' },
+      en: { trigger: 'Workspace Hub (Click to Switch)', search: 'Search workspaces (Click to enter)...', empty: 'No workspaces', noMatches: 'No matching workspaces', current: 'Current', copied: 'Path copied', copyFailed: 'Copy failed', copyBtn: 'Copy path', terminal: 'Open in Terminal', openMac: 'Show in Finder', openWindows: 'Show in File Explorer', openGeneric: 'Show in file manager', newSubdir: 'New subdir in current workspace', createBtn: 'Create & Enter', creating: 'Creating...', promptName: 'Subdirectory name (e.g. feature-1)' },
     }
 
-    function locale() {
-      const lang = typeof document !== 'undefined' ? document.documentElement.lang : ''
-      return String(lang).toLowerCase().startsWith('en') ? copy.en : copy.zh
-    }
+    const locale = () => (typeof document !== 'undefined' && String(document.documentElement.lang).toLowerCase().startsWith('en')) ? copy.en : copy.zh
 
-    /** Keep in sync with paths.js */
     function abbreviateHomePath(path, home) {
-      if (typeof path !== 'string' || path === '') return ''
-      if (typeof home !== 'string' || home === '' || home === '/' || home === '\\') return path
-      if (/^[A-Za-z]:[\\/]/.test(home) || home.startsWith('\\\\')) return path
-      const normPath = path.replace(/\\/g, '/')
-      const normHome = home.replace(/\\/g, '/').replace(/\/+$/, '')
-      if (normHome === '' || normHome === '/') return path
-      if (normPath === normHome) return '~'
-      if (normPath.startsWith(normHome + '/')) return '~' + normPath.slice(normHome.length)
-      return path
-    }
-
-    /** Keep in sync with paths.js */
-    function listCopyableWorkspaces(items, currentSessionId) {
-      const rows = (items || []).filter((item) => typeof item.path === 'string' && item.path !== '')
-      if (currentSessionId === undefined || currentSessionId === '') return rows
-      const current = rows.find((item) => Array.isArray(item.sessionIds) && item.sessionIds.includes(currentSessionId))
-      if (current === undefined) return rows
-      return [current].concat(rows.filter((item) => item.workspaceId !== current.workspaceId))
-    }
-
-    /** Keep in sync with paths.js — Host OS, not the DSH sidebar. */
-    function hostFileManagerKind(home) {
-      if (typeof home !== 'string' || home === '') return 'generic'
-      if (/^[A-Za-z]:[\\/]/.test(home) || home.startsWith('\\\\')) return 'windows'
-      if (home === '/Users' || home.startsWith('/Users/')) return 'mac'
-      return 'generic'
-    }
-
-    function workspaceBasename(path) {
-      if (typeof path !== 'string' || path === '') return ''
-      const trimmed = path.replace(/[/\\]+$/, '')
-      const parts = trimmed.split(/[/\\]/)
-      const base = parts[parts.length - 1]
-      return base !== undefined && base !== '' ? base : trimmed
+      if (!path) return ''
+      if (!home || home === '/' || home === '\\' || /^[A-Za-z]:[\\/]/.test(home) || home.startsWith('\\\\')) return path
+      const p = path.replace(/\\/g, '/'), h = home.replace(/\\/g, '/').replace(/\/+$/, '')
+      if (!h || h === '/') return path
+      return p === h ? '~' : (p.startsWith(h + '/') ? '~' + p.slice(h.length) : path)
     }
 
     function filterWorkspaces(rows, query, home) {
-      const needle = String(query || '').trim().toLowerCase()
-      if (needle === '') return rows
-      return rows.filter((item) => {
-        const title = String(item.title || '').toLowerCase()
-        const path = String(item.path || '').toLowerCase()
-        const base = workspaceBasename(item.path).toLowerCase()
-        const short = abbreviateHomePath(item.path || '', home).toLowerCase()
-        return title.indexOf(needle) !== -1 || path.indexOf(needle) !== -1 || base.indexOf(needle) !== -1 || short.indexOf(needle) !== -1
-      })
+      const q = String(query || '').trim().toLowerCase()
+      if (!q) return rows
+      return rows.filter((it) => String(it.title || '').toLowerCase().includes(q) || String(it.path || '').toLowerCase().includes(q) || abbreviateHomePath(it.path || '', home).toLowerCase().includes(q))
     }
 
-    function openLabel(t, home) {
-      const kind = hostFileManagerKind(home)
-      if (kind === 'mac') return t.openMac
-      if (kind === 'windows') return t.openWindows
+    function listCopyableWorkspaces(items, curId) {
+      const rows = (items || []).filter((it) => typeof it.path === 'string' && it.path !== '')
+      if (!curId) return rows
+      const cur = rows.find((it) => Array.isArray(it.sessionIds) && it.sessionIds.includes(curId))
+      return cur ? [cur].concat(rows.filter((it) => it.workspaceId !== cur.workspaceId)) : rows
+    }
+
+    function hostRevealLabel(t, home) {
+      if (typeof home === 'string' && home.startsWith('/Users/')) return t.openMac
+      if (typeof home === 'string' && (/^[A-Za-z]:[\\/]/.test(home) || home.startsWith('\\\\'))) return t.openWindows
       return t.openGeneric
     }
 
     async function writeClipboard(text) {
-      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-        try {
-          await navigator.clipboard.writeText(text)
-          return true
-        } catch {
-          /* fall through */
-        }
-      }
-      if (typeof document === 'undefined' || typeof document.execCommand !== 'function') return false
-      const area = document.createElement('textarea')
-      area.value = text
-      area.setAttribute('readonly', '')
-      area.style.position = 'fixed'
-      area.style.left = '-9999px'
-      document.body.appendChild(area)
-      area.select()
-      try {
-        return document.execCommand('copy')
-      } catch {
-        return false
-      } finally {
-        area.remove()
-      }
+      try { if (navigator?.clipboard?.writeText) { await navigator.clipboard.writeText(text); return true } } catch {}
+      return false
     }
 
     function useSnapshot(store) {
       const [, bump] = React.useState(0)
-      React.useEffect(() => {
-        if (!store || typeof store.subscribe !== 'function') return undefined
-        return store.subscribe(() => bump((n) => n + 1))
-      }, [store])
-      return store && typeof store.getSnapshot === 'function' ? store.getSnapshot() : undefined
+      React.useEffect(() => store?.subscribe?.(() => bump((n) => n + 1)), [store])
+      return store?.getSnapshot?.()
     }
 
-    function IconFolder({ size = 18 }) {
-      return h('svg', {
-        width: size,
-        height: size,
-        viewBox: '0 0 16 16',
-        fill: 'none',
-        'aria-hidden': 'true',
-      },
-        h('path', {
-          d: 'M2.5 4.75A1.25 1.25 0 0 1 3.75 3.5h2.2L7.2 5h5.05A1.25 1.25 0 0 1 13.5 6.25v5.5A1.25 1.25 0 0 1 12.25 13h-8.5A1.25 1.25 0 0 1 2.5 11.75z',
-          stroke: 'currentColor',
-          strokeWidth: 1.25,
-        }),
-        h('path', {
-          d: 'M6 9.2h4M6 11h2.5',
-          stroke: 'currentColor',
-          strokeWidth: 1.25,
-          strokeLinecap: 'round',
-        }))
-    }
+    const IconFolder = ({ size = 18 }) => h('svg', { width: size, height: size, viewBox: '0 0 16 16', fill: 'none' }, h('path', { d: 'M2.5 4.75A1.25 1.25 0 0 1 3.75 3.5h2.2L7.2 5h5.05A1.25 1.25 0 0 1 13.5 6.25v5.5A1.25 1.25 0 0 1 12.25 13h-8.5A1.25 1.25 0 0 1 2.5 11.75z', stroke: 'currentColor', strokeWidth: 1.25 }), h('path', { d: 'M6 9.2h4M6 11h2.5', stroke: 'currentColor', strokeWidth: 1.25, strokeLinecap: 'round' }))
+    const IconCopy = ({ size = 14 }) => h('svg', { width: size, height: size, viewBox: '0 0 16 16', fill: 'none' }, h('rect', { x: 5, y: 5, width: 8, height: 9, rx: 1.5, stroke: 'currentColor', strokeWidth: 1.25 }), h('path', { d: 'M3.5 11H3a1 1 0 0 1-1-1V3.5A1.5 1.5 0 0 1 3.5 2h6.5a1 1 0 0 1 1 1v.5', stroke: 'currentColor', strokeWidth: 1.25, strokeLinecap: 'round' }))
+    const IconTerminal = ({ size = 14 }) => h('svg', { width: size, height: size, viewBox: '0 0 16 16', fill: 'none' }, h('path', { d: 'M3 4.5l4 3.5-4 3.5M8 11.5h5', stroke: 'currentColor', strokeWidth: 1.25, strokeLinecap: 'round', strokeLinejoin: 'round' }))
+    const IconOpen = ({ size = 14 }) => h('svg', { width: size, height: size, viewBox: '0 0 16 16', fill: 'none' }, h('path', { d: 'M6.5 3.5H4.25A1.75 1.75 0 0 0 2.5 5.25v6.5A1.75 1.75 0 0 0 4.25 13.5h6.5a1.75 1.75 0 0 0 1.75-1.75V9.5M9 3.5h3.5V7M12.5 3.5 8 8', stroke: 'currentColor', strokeWidth: 1.25, strokeLinecap: 'round', strokeLinejoin: 'round' }))
+    const IconPlus = ({ size = 14 }) => h('svg', { width: size, height: size, viewBox: '0 0 16 16', fill: 'none' }, h('path', { d: 'M8 3.5v9M3.5 8h9', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' }))
 
-    function IconTerminal({ size = 14 }) {
-      return h('svg', {
-        width: size,
-        height: size,
-        viewBox: '0 0 16 16',
-        fill: 'none',
-        'aria-hidden': 'true',
-      },
-        h('path', {
-          d: 'M3 4.5l4 3.5-4 3.5M8 11.5h5',
-          stroke: 'currentColor',
-          strokeWidth: 1.25,
-          strokeLinecap: 'round',
-          strokeLinejoin: 'round',
-        }))
-    }
+    function PathPanel(props) {
+      const { t, rows, query, onQuery, inputRef, currentId, currentWorkspace, home, canOpen,
+              onSelect, onCopy, onOpen, onTerminal, onCreateSubdir,
+              showNewBox, setShowNewBox, newSubdir, setNewSubdir, creatingSubdir, status, error, revealLabel } = props
 
-    function IconOpen({ size = 14 }) {
-      return h('svg', {
-        width: size,
-        height: size,
-        viewBox: '0 0 16 16',
-        fill: 'none',
-        'aria-hidden': 'true',
-      },
-        h('path', {
-          d: 'M6.5 3.5H4.25A1.75 1.75 0 0 0 2.5 5.25v6.5A1.75 1.75 0 0 0 4.25 13.5h6.5a1.75 1.75 0 0 0 1.75-1.75V9.5',
-          stroke: 'currentColor',
-          strokeWidth: 1.25,
-          strokeLinecap: 'round',
-        }),
-        h('path', {
-          d: 'M9 3.5h3.5V7M12.5 3.5 8 8',
-          stroke: 'currentColor',
-          strokeWidth: 1.25,
-          strokeLinecap: 'round',
-          strokeLinejoin: 'round',
-        }))
-    }
-
-    function PathPanel({ t, rows, total, query, onQuery, inputRef, currentId, home, canOpen, onCopy, onOpen,
-              onTerminal,
-              copiedId, status, error, revealLabel }) {
-      const empty = total === 0 ? t.empty : t.noMatches
       return h(React.Fragment, null,
-        total > 0 ? h('div', { className: 'dsh-wspath-search' },
+        h('div', { className: 'dsh-wspath-search-row' },
           h('input', {
             ref: inputRef,
             type: 'search',
             value: query,
             placeholder: t.search,
-            'aria-label': t.search,
-            autoComplete: 'off',
-            spellCheck: 'false',
-            onChange: (event) => onQuery(event.target.value),
-            onKeyDown: (event) => {
-              if (event.key !== 'Escape') return
-              if (!event.currentTarget.value) return
-              event.preventDefault()
-              event.stopPropagation()
-              onQuery('')
+            onChange: (e) => onQuery(e.target.value),
+            onKeyDown: (e) => {
+              if (e.key === 'Escape') { e.stopPropagation(); onQuery('') }
+              if (e.key === 'Enter' && rows.length > 0) { e.preventDefault(); onSelect(rows[0]) }
             },
           }),
+          currentWorkspace ? h('button', {
+            type: 'button',
+            className: 'dsh-wspath-add-btn' + (showNewBox ? ' is-active' : ''),
+            title: t.newSubdir,
+            onClick: () => setShowNewBox((v) => !v),
+          }, h(IconPlus)) : null,
+        ),
+        showNewBox ? h('form', {
+          className: 'dsh-wspath-new-box',
+          onSubmit: (e) => { e.preventDefault(); onCreateSubdir() },
+        },
+          h('input', {
+            type: 'text',
+            autoFocus: true,
+            value: newSubdir,
+            placeholder: t.promptName,
+            onChange: (e) => setNewSubdir(e.target.value),
+          }),
+          h('button', { type: 'submit', disabled: creatingSubdir || !newSubdir.trim() },
+            creatingSubdir ? t.creating : t.createBtn),
         ) : null,
         rows.length === 0
-          ? h('p', { className: 'dsh-wspath-empty' }, empty)
+          ? h('p', { className: 'dsh-wspath-empty' }, query ? t.noMatches : t.empty)
           : h('div', { className: 'dsh-wspath-list' },
-          rows.map((workspace) => {
-            const current = workspace.workspaceId === currentId
-            const copied = copiedId === workspace.workspaceId
-            const displayPath = abbreviateHomePath(workspace.path, home)
-            return h('div', {
-              key: workspace.workspaceId,
-              className: 'dsh-wspath-row' + (current ? ' is-current' : ''),
-            },
-              h('button', {
-                type: 'button',
-                className: 'dsh-wspath-copy',
-                title: workspace.path,
-                onClick: () => { void onCopy(workspace) },
-              },
-                h('span', { className: 'dsh-wspath-main' },
-                  h('span', { className: 'dsh-wspath-title' },
-                    h('span', { className: 'dsh-wspath-name' }, workspace.title || workspace.path),
-                    current ? h('span', { className: 'dsh-wspath-badge' }, t.current) : null,
-                    copied ? h('span', { className: 'dsh-wspath-badge' }, t.copied) : null,
+              rows.map((ws) => {
+                const isCur = ws.workspaceId === currentId
+                const display = abbreviateHomePath(ws.path, home)
+                return h('div', { key: ws.workspaceId, className: 'dsh-wspath-row' + (isCur ? ' is-current' : '') },
+                  h('button', {
+                    type: 'button',
+                    className: 'dsh-wspath-item',
+                    title: ws.path + ' (点击切换)',
+                    onClick: () => onSelect(ws),
+                  },
+                    h('span', { className: 'dsh-wspath-title' },
+                      h('span', { className: 'dsh-wspath-name' }, ws.title || ws.path),
+                      isCur ? h('span', { className: 'dsh-wspath-badge' }, t.current) : null,
+                    ),
+                    h('span', { className: 'dsh-wspath-path' }, display),
                   ),
-                  h('span', { className: 'dsh-wspath-path' }, displayPath),
-                ),
-              ),
-              canOpen ? h('button', {
-                type: 'button',
-                className: 'dsh-wspath-open',
-                'aria-label': t.terminal,
-                title: t.terminal,
-                onClick: () => { void onTerminal(workspace) },
-              }, h(IconTerminal)) : null,
-              canOpen ? h('button', {
-                type: 'button',
-                className: 'dsh-wspath-open',
-                'aria-label': revealLabel,
-                title: revealLabel,
-                onClick: () => { void onOpen(workspace) },
-              }, h(IconOpen)) : null,
-            )
-          }),
-        ),
-        status ? h('div', { className: 'dsh-wspath-status' + (error ? ' is-error' : ''), role: error ? 'alert' : 'status' }, status) : null,
+                  h('div', { className: 'dsh-wspath-actions' },
+                    h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: t.copyBtn, onClick: (e) => { e.stopPropagation(); onCopy(ws) } }, h(IconCopy)),
+                    canOpen ? h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: t.terminal, onClick: (e) => { e.stopPropagation(); onTerminal(ws) } }, h(IconTerminal)) : null,
+                    canOpen ? h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: revealLabel, onClick: (e) => { e.stopPropagation(); onOpen(ws) } }, h(IconOpen)) : null,
+                  ),
+                )
+              }),
+            ),
+        status ? h('div', { className: 'dsh-wspath-status' + (error ? ' is-error' : ''), role: 'status' }, status) : null,
       )
     }
 
-    function PathButton({ wide, workspaces, sessions, connection }) {
-      const t = locale()
-      const buttonRef = React.useRef(null)
-      const panelRef = React.useRef(null)
-      const inputRef = React.useRef(null)
-      const [open, setOpen] = React.useState(false)
-      const [coords, setCoords] = React.useState(null)
-      const [query, setQuery] = React.useState('')
-      const [copiedId, setCopiedId] = React.useState('')
-      const [status, setStatus] = React.useState('')
-      const [error, setError] = React.useState(false)
+    function PathButton({ wide, workspaces, sessions, connection, startSession }) {
+      const t = locale(), buttonRef = React.useRef(null), inputRef = React.useRef(null)
+      const [open, setOpen] = React.useState(false), [coords, setCoords] = React.useState(null)
+      const [query, setQuery] = React.useState(''), [showNewBox, setShowNewBox] = React.useState(false)
+      const [newSubdir, setNewSubdir] = React.useState(''), [creatingSubdir, setCreatingSubdir] = React.useState(false)
+      const [status, setStatus] = React.useState(''), [error, setError] = React.useState(false)
       const copiedTimer = React.useRef(null)
 
-      const workspaceSnap = useSnapshot(workspaces && workspaces.list)
-      const sessionSnap = useSnapshot(sessions && sessions.list)
-      const host = useSnapshot(connection && connection.hostDescription)
-      const items = workspaceSnap && Array.isArray(workspaceSnap.items) ? workspaceSnap.items : []
-      const currentSessionId = sessionSnap && sessionSnap.current
-      const home = host && typeof host.home === 'string' ? host.home : undefined
-      const rows = listCopyableWorkspaces(items, currentSessionId)
-      const visible = filterWorkspaces(rows, query, home)
-      const currentWorkspace = rows.find((item) => Array.isArray(item.sessionIds) && item.sessionIds.includes(currentSessionId))
-      const currentId = currentWorkspace ? currentWorkspace.workspaceId : undefined
-      const canOpen = Boolean(
-        connection && connection.isLoopback === true
-        && (host ? host.canOpenPath === true : true),
-      )
+      const wsSnap = useSnapshot(workspaces?.list), sesSnap = useSnapshot(sessions?.list)
+      const host = useSnapshot(connection?.hostDescription), currentSessionId = sesSnap?.current, home = host?.home
+      const rows = filterWorkspaces(listCopyableWorkspaces(wsSnap?.items, currentSessionId), query, home)
+      const currentWs = (wsSnap?.items || []).find((it) => Array.isArray(it.sessionIds) && it.sessionIds.includes(currentSessionId))
+      const canOpen = Boolean(connection?.isLoopback === true && (host ? host.canOpenPath === true : true))
 
       const place = React.useCallback(() => {
-        const button = buttonRef.current
-        if (button === null) return
-        const rect = button.getBoundingClientRect()
-        const width = Math.min(320, window.innerWidth - 16)
-        let left = rect.left
-        if (left + width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - width - 8)
-        if (left < 8) left = 8
-        const bottom = Math.max(8, window.innerHeight - rect.top + 8)
-        setCoords({ left, bottom, width })
+        const btn = buttonRef.current
+        if (!btn) return
+        const r = btn.getBoundingClientRect(), w = Math.min(340, window.innerWidth - 16)
+        let l = r.left
+        if (l + w > window.innerWidth - 8) l = Math.max(8, window.innerWidth - w - 8)
+        setCoords({ left: Math.max(8, l), bottom: Math.max(8, window.innerHeight - r.top + 8), width: w })
       }, [])
 
       React.useEffect(() => {
         if (!open) return undefined
         place()
-        const onScroll = () => place()
+        const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
+        const onPtr = (e) => { if (!buttonRef.current?.contains(e.target) && !e.target.closest?.('.dsh-wspath-panel')) setOpen(false) }
         window.addEventListener('resize', place)
-        window.addEventListener('scroll', onScroll, true)
+        document.addEventListener('keydown', onKey)
+        document.addEventListener('pointerdown', onPtr)
         return () => {
           window.removeEventListener('resize', place)
-          window.removeEventListener('scroll', onScroll, true)
+          document.removeEventListener('keydown', onKey)
+          document.removeEventListener('pointerdown', onPtr)
         }
       }, [open, place])
 
       React.useEffect(() => {
-        if (!open) return undefined
-        const onKey = (event) => {
-          if (event.key === 'Escape') setOpen(false)
-        }
-        const onPointer = (event) => {
-          const target = event.target
-          if (!(target instanceof Node)) return
-          if (buttonRef.current && buttonRef.current.contains(target)) return
-          if (panelRef.current && panelRef.current.contains(target)) return
+        if (open) window.requestAnimationFrame(() => inputRef.current?.focus())
+        else { setQuery(''); setShowNewBox(false); setNewSubdir('') }
+      }, [open])
+
+      const flash = (msg, isErr = false) => {
+        setError(isErr)
+        setStatus(msg)
+        if (copiedTimer.current) clearTimeout(copiedTimer.current)
+        copiedTimer.current = setTimeout(() => setStatus(''), 1500)
+      }
+
+      const onSelect = (ws) => {
+        setOpen(false)
+        if (typeof startSession === 'function') startSession(ws.workspaceId)
+      }
+
+      const onCopy = async (ws) => {
+        const ok = await writeClipboard(ws.path)
+        flash(ok ? t.copied : t.copyFailed, !ok)
+      }
+
+      const onOpen = (ws) => canOpen && connection.rpc.call('/dsh-workspace-path', 'reveal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
+      const onTerminal = (ws) => canOpen && connection.rpc.call('/dsh-workspace-path', 'terminal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
+
+      const onCreateSubdir = async () => {
+        const name = newSubdir.trim()
+        if (!name || !currentWs?.path || creatingSubdir) return
+        setCreatingSubdir(true)
+        try {
+          const childPath = await workspaces.createChildDirectory(currentWs.path, name)
+          const newWs = await workspaces.create({ path: childPath })
           setOpen(false)
-        }
-        document.addEventListener('keydown', onKey)
-        document.addEventListener('pointerdown', onPointer)
-        return () => {
-          document.removeEventListener('keydown', onKey)
-          document.removeEventListener('pointerdown', onPointer)
-        }
-      }, [open])
-
-      React.useEffect(() => {
-        if (!open) {
-          setQuery('')
-          return undefined
-        }
-        const id = window.requestAnimationFrame(() => {
-          if (inputRef.current) inputRef.current.focus()
-        })
-        return () => window.cancelAnimationFrame(id)
-      }, [open])
-
-      React.useEffect(() => () => {
-        if (copiedTimer.current !== null) clearTimeout(copiedTimer.current)
-      }, [])
-
-      async function onCopy(workspace) {
-        const ok = await writeClipboard(workspace.path)
-        if (!ok) {
-          setError(true)
-          setStatus(t.copyFailed)
-          return
-        }
-        setError(false)
-        setStatus(t.copied)
-        setCopiedId(workspace.workspaceId)
-        if (copiedTimer.current !== null) clearTimeout(copiedTimer.current)
-        copiedTimer.current = setTimeout(() => {
-          setCopiedId('')
-          setStatus('')
-        }, 1200)
-      }
-
-      async function onOpen(workspace) {
-        if (!canOpen) return
-        try {
-          const res = await connection.rpc.call('/dsh-workspace-path', 'reveal', { path: workspace.path })
-          if (!res.ok) throw new Error(res.error.message)
-          setError(false)
-          setStatus('')
-        } catch (err) {
-          setError(true)
-          setStatus(err instanceof Error ? err.message : t.openFailed)
+          if (typeof startSession === 'function') startSession(newWs.workspaceId)
+        } catch (e) {
+          flash(e?.message || 'Create failed', true)
+        } finally {
+          setCreatingSubdir(false)
         }
       }
 
-      async function onTerminal(workspace) {
-        if (!canOpen) return
-        try {
-          const res = await connection.rpc.call('/dsh-workspace-path', 'terminal', { path: workspace.path })
-          if (!res.ok) throw new Error(res.error.message)
-          setError(false)
-          setStatus('')
-        } catch (err) {
-          setError(true)
-          setStatus(err instanceof Error ? err.message : t.terminalFailed)
-        }
-      }
-
-      const panel = open && coords !== null
+      const panel = open && coords && typeof document !== 'undefined'
         ? ReactDOM.createPortal(
-          h('div', {
-            ref: panelRef,
-            className: 'dsh-wspath-panel',
-            role: 'dialog',
-            'aria-label': t.title,
-            style: {
-              position: 'fixed',
-              left: coords.left + 'px',
-              bottom: coords.bottom + 'px',
-              width: coords.width + 'px',
+            h('div', {
+              className: 'dsh-wspath-panel',
+              style: { position: 'fixed', left: coords.left + 'px', bottom: coords.bottom + 'px', width: coords.width + 'px' },
             },
-          },
-            h('div', { className: 'dsh-wspath-head' }, t.title),
-            h(PathPanel, {
-              t,
-              rows: visible,
-              total: rows.length,
-              query,
-              onQuery: setQuery,
-              inputRef,
-              currentId,
-              home,
-              canOpen,
-              onCopy,
-              onOpen,
-              onTerminal,
-              copiedId,
-              status,
-              error,
-              revealLabel: openLabel(t, home),
-            }),
-          ),
-          document.body,
-        )
+              h(PathPanel, {
+                t, rows, query, onQuery: setQuery, inputRef, currentId: currentWs?.workspaceId, currentWorkspace: currentWs,
+                home, canOpen, onSelect, onCopy, onOpen, onTerminal, onCreateSubdir,
+                showNewBox, setShowNewBox, newSubdir, setNewSubdir, creatingSubdir, status, error,
+                revealLabel: hostRevealLabel(t, home),
+              }),
+            ),
+            document.body,
+          )
         : null
 
       return h('div', { className: wide === false ? 'dsh-wspath' : 'dsh-wspath dsh-wspath-wide' },
@@ -492,13 +241,7 @@ window.__ModuleLoader__.load({
           className: 'dsh-wspath-btn' + (open ? ' is-open' : ''),
           title: t.trigger,
           'aria-label': t.trigger,
-          'aria-expanded': open ? 'true' : 'false',
-          'aria-haspopup': 'dialog',
-          onClick: () => {
-            setOpen((value) => !value)
-            setStatus('')
-            setError(false)
-          },
+          onClick: () => { setOpen((v) => !v); setStatus('') },
         }, h(IconFolder, { size: 18 })),
         panel,
       )
@@ -507,21 +250,31 @@ window.__ModuleLoader__.load({
     const inject = ['slots', 'workspaces', 'sessions', 'connection']
 
     function apply(ctx) {
+      let uiWorkspace
+      if (typeof ctx.inject === 'function') {
+        ctx.inject(['uiWorkspace'], (sub) => {
+          uiWorkspace = sub.uiWorkspace
+          return () => { uiWorkspace = undefined }
+        })
+      }
+      const startSession = (workspaceId) => {
+        const owner = (uiWorkspace && typeof uiWorkspace.startSession === 'function')
+          ? uiWorkspace
+          : ctx.workspaces
+        if (owner && typeof owner.startSession === 'function') owner.startSession(workspaceId)
+      }
       ctx.slots.inject('sidebar.footer.action', () => {
         let dispose
         try {
-          dispose = ctx.slots.register({
-            name: 'sidebar.footer.action',
-            id: 'dsh-workspace-path',
-          }, (props) => h(PathButton, {
-            wide: props && props.wide,
-            workspaces: ctx.workspaces,
-            sessions: ctx.sessions,
-            connection: ctx.connection,
-          }))
-        } catch {
-          dispose = undefined
-        }
+          dispose = ctx.slots.register({ name: 'sidebar.footer.action', id: 'dsh-workspace-path' }, (props) =>
+            h(PathButton, {
+              wide: props?.wide,
+              workspaces: ctx.workspaces,
+              sessions: ctx.sessions,
+              connection: ctx.connection,
+              startSession,
+            }))
+        } catch { dispose = undefined }
         return () => { if (dispose) dispose() }
       })
     }
