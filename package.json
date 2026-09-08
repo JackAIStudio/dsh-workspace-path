@@ -1,8 +1,8 @@
 {
   "name": "dsh-workspace-path",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Sidebar workspace hub: fast switch workspace & start session, copy absolute path, reveal in file manager, open in terminal, and create subdirectories.",
+  "description": "Sidebar workspace hub & session-header workspace badge: fast switch workspace, reveal in file manager, open in terminal, copy path, and view current workspace in any view mode.",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -30,7 +30,8 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-connection",
-        "@deepseek-ai/dsh-client-ui-sidebar"
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-conversation"
       ],
       "platform": "web"
     }
