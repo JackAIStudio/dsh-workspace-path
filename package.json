@@ -1,8 +1,8 @@
 {
   "name": "dsh-workspace-path",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
-  "description": "Sidebar workspace hub & session-header workspace badge: fast switch workspace, reveal in file manager, open in terminal, copy path, and view current workspace in any view mode.",
+  "description": "Sidebar workspace hub and official picker: project workspaces first, day folders one step away, plus session-header path/ID badges.",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -14,7 +14,9 @@
   "files": [
     "index.js",
     "client.js",
+    "client",
     "paths.js",
+    "scripts",
     "cordis.patch.yml",
     "LICENSE",
     "README.zh.md"
@@ -37,7 +39,8 @@
     }
   },
   "scripts": {
-    "test": "node --test test/*.test.js"
+    "pack": "node scripts/pack-client.js",
+    "test": "node scripts/pack-client.js && node --test test/*.test.js"
   },
   "peerDependencies": {
     "react": "^18.2.0",

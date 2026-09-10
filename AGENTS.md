@@ -8,15 +8,17 @@
 ## 1. 零单文件膨胀原则（Strict File Size Limits）
 
 1. **单文件行数上限**：
-   - 任何单个源码文件严禁超过 **300 行**。
-   - 现有较大文件（如 `client.js`）后续迭代时**必须拆分成独立子模块，禁止在单文件末尾堆砌代码**。
-2. **前后端模块职责划分建议**：
+   - 任何单个**源码**文件严禁超过 **300 行**。
+   - 生成物 `client.js` 除外（由 `scripts/pack-client.js` 拼接，勿手改）。
+2. **前后端模块职责划分**：
    - **后端入口 (`index.js`)**：保持极简（< 80 行），仅负责 Cordis RPC 通道与权限拦截。
-   - **跨平台路径与系统调用 (`paths.js`)**：专职负责工作区路径计算、OS 文件管理器打开（Reveal）与终端唤起（Terminal）。
-   - **前端入口 (`client.js`)**：仅做侧栏 Slot 注册与数据监听（< 100 行）。
-   - **前端子组件 (`client/components/`)**：
-     - `PathPanel.js`：侧栏主展示面板（路径文字、折叠、缩略显示）。
-     - `ActionButtons.js`：复制绝对路径、系统文件管理器定位、终端打开等动作按钮组与反馈提示。
+   - **纯函数 (`paths.js`)**：路径缩写、按天/项目分类、选择器列表模型。禁止 DOM / React。
+   - **前端源码**：
+     - `client/ui.css`：样式。
+     - `client/ui.js`：工作区列表面板、侧栏中心、官方 Hero 选择器。
+     - `client/badges.js`：会话顶栏工作区胶囊与会话 ID 芯片。
+     - `client/apply.js`：Slot 注册（< 100 行）。
+   - DSH 只加载 `exports["./client"]`。改前端源码后必须跑 `node scripts/pack-client.js` 再测。
 
 ---
 
@@ -30,15 +32,19 @@
    - 在无桌面环境的 Linux/云端时，必须安全捕获异常，不得导致后端进程崩溃。
 2. **路径安全**：
    - 统一走 `node:path`，严格防范命令注入与路径穿越漏洞。
+3. **工作区分类**：
+   - 按天：标题或 basename 为 `YYYY-MM-DD`（可带 `(老)` 一类前缀），或路径落在 `…/days/<日期>/`。
+   - 其余为项目。默认选择器只列项目；按天走第二步。搜索框仍能命中日期。
 
 ---
 
 ## 3. 原生 ESM 与修改后自检
 
-1. **零构建原生 ESM**：所有模块引用必须显式带 `.js` 扩展名。
-2. **修改后门禁自检**：
-   修改任何代码后，必须在插件根目录下运行以下命令：
+1. **零构建原生 ESM（宿主）**：`index.js` / `paths.js` 的模块引用必须显式带 `.js` 扩展名。
+2. **前端拼接不是业务构建**：`scripts/pack-client.js` 只是把 CSS + `paths.js` + `client/*.js` 打进 ModuleLoader 工厂，禁止上 tsdown / webpack。
+3. **修改后门禁自检**：
    ```bash
    node --test test/*.test.js
    find . -name "*.js" -not -path "*/.*" -not -path "*/node_modules/*" -exec node --check {} +
    ```
+   `npm test` 会先 pack 再跑测试。
