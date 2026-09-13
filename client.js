@@ -255,7 +255,7 @@ function pickerModel(opts = {}) {
       return h('div', { className: 'dsh-wspath-row' + (isCur ? ' is-current' : '') },
         h('button', { type: 'button', className: 'dsh-wspath-item', title: ws.path, onClick: () => onSelect(ws) },
           h('span', { className: 'dsh-wspath-title' }, h('span', { className: 'dsh-wspath-name' }, ws.title || ws.path), badges),
-          variant === 'hub' ? h('span', { className: 'dsh-wspath-path' }, display) : null,
+          variant === 'hub' || ws.kind === 'project' ? h('span', { className: 'dsh-wspath-path' }, display) : null,
         ),
         variant === 'hub' ? h('div', { className: 'dsh-wspath-actions' },
           h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: t.copyBtn, onClick: (e) => { e.stopPropagation(); onCopy(ws) } }, h(IconCopy)),
@@ -350,14 +350,15 @@ function pickerModel(opts = {}) {
     }
 
     function HeroWorkspacePicker(props) {
-      const { open, anchorRef, selectedId, onPick, onClose, useWorkspaces, createWorkspace, useDirectoryFlow, renderSlot } = props
+      const { open, anchorRef, selectedId, onPick, onClose, workspaces, uiWorkspace, connection, useWorkspaces } = props
       const t = locale(), inputRef = React.useRef(null)
       const [coords, setCoords] = React.useState(null)
-      const [flowOpen, setFlowOpen] = React.useState(false), [pickingFolder, setPickingFolder] = React.useState(false)
       const panel = usePanelReset(open)
-      const snap = typeof useWorkspaces === 'function' ? useWorkspaces((state) => state) : null
-      const items = snap?.items || []
-      const flowAvailable = typeof useDirectoryFlow === 'function' ? useDirectoryFlow((occupied) => occupied) : false
+      const wsSnap = useSnapshot(workspaces?.list)
+      const host = useSnapshot(connection?.hostDescription)
+      const home = host?.homeDirectory || host?.home
+      const snap = typeof useWorkspaces === 'function' ? useWorkspaces((state) => state) : wsSnap
+      const items = snap?.items || wsSnap?.items || []
       const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId })
       const place = React.useCallback(() => {
         const btn = anchorRef?.current
@@ -369,31 +370,47 @@ function pickerModel(opts = {}) {
       }, [anchorRef])
       usePopover(open, (next) => { if (!next) onClose?.() }, place, anchorRef || { current: null }, '.dsh-wspath-panel')
       React.useEffect(() => { if (open) inputRef.current?.focus() }, [open])
-      const adoptDirectory = (path) => Promise.resolve(createWorkspace({ path })).then((workspace) => {
-        setFlowOpen(false)
-        if (workspace?.workspaceId) onPick(workspace.workspaceId)
-      }).catch((reason) => {
-        setFlowOpen(false)
-        panel.setError(true)
-        panel.setStatus(reason instanceof Error ? reason.message : String(reason))
-      })
-      const openDirectoryFlow = React.useCallback(() => {
-        onClose?.(); panel.setError(false); panel.setStatus(''); setFlowOpen(true)
-      }, [onClose])
-      const emptyReady = (snap?.phase === 'ready' || snap?.phase === undefined) && items.length === 0 && flowAvailable
-      React.useEffect(() => { if (open && emptyReady && !flowOpen && !pickingFolder) openDirectoryFlow() }, [open, emptyReady, flowOpen, pickingFolder, openDirectoryFlow])
-      const flowOwner = {
-        open: flowOpen, busy: pickingFolder,
-        onPicked: (path) => { setPickingFolder(true); adoptDirectory(path).finally(() => setPickingFolder(false)) },
-        onCancel: () => setFlowOpen(false),
-        onError: (message) => { setFlowOpen(false); panel.setError(true); panel.setStatus(message) },
+      const handleSelect = (ws) => {
+        if (typeof onPick === 'function') onPick(ws.workspaceId)
+        if (typeof onClose === 'function') onClose()
+      }
+      const canPickDir = typeof uiWorkspace?.pickDirectory === 'function' && typeof workspaces?.create === 'function'
+      const handleAddWorkspace = async () => {
+        if (!canPickDir) return
+        try {
+          const pickedPath = await uiWorkspace.pickDirectory()
+          if (!pickedPath) return
+          const res = await workspaces.create({ path: pickedPath })
+          if (res?.workspaceId) {
+            handleSelect(res)
+          }
+        } catch (err) {
+          panel.setError(true)
+          panel.setStatus(err instanceof Error ? err.message : String(err))
+        }
       }
       const node = open && coords && typeof document !== 'undefined'
         ? ReactDOM.createPortal(
             h('div', { className: 'dsh-wspath-panel is-hero', style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' } },
-              h(PathPanel, { t, model, query: panel.query, onQuery: panel.setQuery, inputRef, currentId: selectedId, variant: 'picker', onSelect: (ws) => onPick(ws.workspaceId), canAddWorkspace: flowAvailable && !flowOpen && !pickingFolder, onAddWorkspace: openDirectoryFlow, status: panel.status, error: panel.error, onOpenDays: () => { panel.setQuery(''); panel.setView('days') }, onBack: () => { panel.setQuery(''); panel.setView('projects') } }),
+              h(PathPanel, {
+                t,
+                model,
+                query: panel.query,
+                onQuery: panel.setQuery,
+                inputRef,
+                currentId: selectedId,
+                home,
+                variant: 'picker',
+                onSelect: handleSelect,
+                canAddWorkspace: canPickDir,
+                onAddWorkspace: handleAddWorkspace,
+                status: panel.status,
+                error: panel.error,
+                onOpenDays: () => { panel.setQuery(''); panel.setView('days') },
+                onBack: () => { panel.setQuery(''); panel.setView('projects') },
+              }),
             ), document.body) : null
-      return h(React.Fragment, null, node, typeof renderSlot === 'function' ? renderSlot('conversation.hero.workspace.directoryFlow', flowOwner) : null)
+      return node
     }
 
     function findSessionWorkspace(wsSnap, sesSnap, sessionId) {
@@ -563,13 +580,17 @@ function pickerModel(opts = {}) {
           dispose = ctx.slots.register({
             name: 'conversation.hero.workspace',
             id: 'dsh-workspace-path-hero',
-            children: { 'conversation.hero.workspace.directoryFlow': { kind: 'single', scope: 'root' } },
-            inject: () => ({
-              createWorkspace: (input) => ctx.workspaces.create(input),
-              hooks: { directoryFlow: flowSource },
-            }),
-          }, (props) => h(HeroWorkspacePicker, props))
-        } catch { dispose = undefined }
+            priority: -10,
+          }, (props) => h(HeroWorkspacePicker, {
+            ...props,
+            workspaces: ctx.workspaces,
+            uiWorkspace,
+            connection: ctx.connection,
+          }))
+        } catch (e) {
+          console.error('[dsh-workspace-path] failed to register conversation.hero.workspace:', e)
+          dispose = undefined
+        }
         return () => { if (dispose) dispose() }
       })
     }

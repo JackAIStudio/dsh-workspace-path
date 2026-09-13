@@ -39,13 +39,17 @@
           dispose = ctx.slots.register({
             name: 'conversation.hero.workspace',
             id: 'dsh-workspace-path-hero',
-            children: { 'conversation.hero.workspace.directoryFlow': { kind: 'single', scope: 'root' } },
-            inject: () => ({
-              createWorkspace: (input) => ctx.workspaces.create(input),
-              hooks: { directoryFlow: flowSource },
-            }),
-          }, (props) => h(HeroWorkspacePicker, props))
-        } catch { dispose = undefined }
+            priority: -10,
+          }, (props) => h(HeroWorkspacePicker, {
+            ...props,
+            workspaces: ctx.workspaces,
+            uiWorkspace,
+            connection: ctx.connection,
+          }))
+        } catch (e) {
+          console.error('[dsh-workspace-path] failed to register conversation.hero.workspace:', e)
+          dispose = undefined
+        }
         return () => { if (dispose) dispose() }
       })
     }
