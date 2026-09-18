@@ -5,7 +5,7 @@ import path from 'node:path'
 const execFileAsync = promisify(execFile)
 
 export const name = 'dsh-workspace-path'
-export const inject = ['connection']
+export const inject = ['connection', 'webServer']
 
 export function apply(ctx) {
   ctx.connection.rpc.handle('/dsh-workspace-path', async (endpoint, payload) => {
