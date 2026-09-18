@@ -8,36 +8,38 @@ export const name = 'dsh-workspace-path'
 export const inject = ['connection', 'webServer']
 
 export function apply(ctx) {
-  ctx.connection.rpc.handle('/dsh-workspace-path', async (endpoint, payload) => {
-    try {
-      const targetPath = payload.path
-      if (!targetPath) return { ok: false, error: { code: 'bad_request', message: 'path required' } }
+  ctx.inject(['connection', 'webServer'], () => {
+    ctx.connection.rpc.handle('/dsh-workspace-path', async (endpoint, payload) => {
+      try {
+        const targetPath = payload.path
+        if (!targetPath) return { ok: false, error: { code: 'bad_request', message: 'path required' } }
 
-      if (endpoint === 'reveal') {
-        if (process.platform === 'win32') {
-          await execFileAsync('explorer', ['/select,', targetPath])
-        } else if (process.platform === 'darwin') {
-          await execFileAsync('open', ['-R', targetPath])
-        } else {
-          // POSIX fallback
-          const dir = path.dirname(targetPath)
-          await execFileAsync('xdg-open', [dir])
+        if (endpoint === 'reveal') {
+          if (process.platform === 'win32') {
+            await execFileAsync('explorer', ['/select,', targetPath])
+          } else if (process.platform === 'darwin') {
+            await execFileAsync('open', ['-R', targetPath])
+          } else {
+            // POSIX fallback
+            const dir = path.dirname(targetPath)
+            await execFileAsync('xdg-open', [dir])
+          }
+          return { ok: true, value: { success: true } }
+        } else if (endpoint === 'terminal') {
+          if (process.platform === 'win32') {
+            await execFileAsync('cmd', ['/C', 'start', 'cmd', '/K', `cd /d "${targetPath}"`])
+          } else if (process.platform === 'darwin') {
+            await execFileAsync('open', ['-a', 'Terminal', targetPath])
+          } else {
+            // POSIX fallback
+            await execFileAsync('x-terminal-emulator', ['-e', `cd "${targetPath}" && bash`])
+          }
+          return { ok: true, value: { success: true } }
         }
-        return { ok: true, value: { success: true } }
-      } else if (endpoint === 'terminal') {
-        if (process.platform === 'win32') {
-          await execFileAsync('cmd', ['/C', 'start', 'cmd', '/K', `cd /d "${targetPath}"`])
-        } else if (process.platform === 'darwin') {
-          await execFileAsync('open', ['-a', 'Terminal', targetPath])
-        } else {
-          // POSIX fallback
-          await execFileAsync('x-terminal-emulator', ['-e', `cd "${targetPath}" && bash`])
-        }
-        return { ok: true, value: { success: true } }
+        return { ok: false, error: { code: 'unknown_endpoint', message: 'Unknown endpoint' } }
+      } catch (err) {
+        return { ok: false, error: { code: 'internal_error', message: String(err) } }
       }
-      return { ok: false, error: { code: 'unknown_endpoint', message: 'Unknown endpoint' } }
-    } catch (err) {
-      return { ok: false, error: { code: 'internal_error', message: String(err) } }
-    }
-  }, { authority: 'loopback' })
+    }, { authority: 'loopback' })
+  })
 }
