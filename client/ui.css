@@ -32,13 +32,19 @@
 .dsh-wspath-icon-btn:hover{background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}
 .dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;color:var(--dsw-alias-label-secondary)}
 .dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}
-.dsh-wspath-hbadge{position:relative;display:inline-flex;align-items:center;flex:none}
-.dsh-wspath-hbtn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border:none;border-radius:12px;background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;font-weight:500;line-height:24px;cursor:pointer;transition:background-color 120ms ease,color 120ms ease;max-width:180px}
-.dsh-wspath-hbtn:hover,.dsh-wspath-hbtn.is-open{background:var(--dsw-alias-interactive-bg-pressed, var(--dsw-alias-border-l2));color:var(--dsw-alias-label-primary)}
+.dsh-wspath-hbadge,.dsh-wspath-hgroup{display:inline-flex;align-items:center;height:24px;padding:0 3px 0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));gap:2px;flex:none;transition:border-color 120ms ease}
+.dsh-wspath-hgroup:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}
+.dsh-wspath-hbtn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:20px;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;font-weight:500;line-height:20px;cursor:pointer;max-width:180px;user-select:none;transition:color 120ms ease}
+.dsh-wspath-hbtn:hover{color:var(--dsw-alias-label-primary)}
+.dsh-wspath-hbtn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981)}
 .dsh-wspath-hicon{flex:none;color:inherit;display:inline-flex;align-items:center}
 .dsh-wspath-hname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
-.dsh-wspath-hchev{flex:none;color:var(--dsw-alias-label-tertiary);transition:transform 150ms ease}
-.dsh-wspath-hbtn.is-open .dsh-wspath-hchev{transform:rotate(180deg)}
+.dsh-wspath-hsep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}
+.dsh-wspath-hactions{display:inline-flex;align-items:center;gap:1px}
+.dsh-wspath-haction-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}
+.dsh-wspath-haction-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}
+.dsh-wspath-haction-btn:active{background:var(--dsw-alias-border-l2, rgba(128,128,128,0.26))}
+.dsh-wspath-haction-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12)}
 .dsh-wspath-hmenu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(320px,calc(100vw - 16px));padding:6px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}
 .dsh-wspath-hmenu-head{padding:4px 8px 6px}
 .dsh-wspath-hmenu-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}
@@ -64,3 +70,6 @@
 .dsh-wspath-sid-code{font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--dsw-alias-label-primary);user-select:all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dsh-wspath-sid-copybtn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;flex-shrink:0}
 .dsh-wspath-sid-copybtn:hover{background:var(--dsw-alias-interactive-bg-hover);color:#2563eb}
+[class*="_footArea"]:has(.dsh-wspath){flex-direction:row !important;align-items:center !important;gap:4px !important}
+[class*="_footArea"]:has(.dsh-wspath) [class*="_settingsArea"]{flex:1 1 auto !important;width:auto !important;min-width:0 !important}
+[class*="_footArea"]:has(.dsh-wspath) [class*="_footerActions"]{order:2 !important;flex:none !important;width:auto !important;display:flex !important;align-items:center !important;justify-content:flex-end !important}

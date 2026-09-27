@@ -47,6 +47,7 @@
     const IconChevronDown = ({ size = 12, className = '' }) => h('svg', { width: size, height: size, viewBox: '0 0 16 16', fill: 'none', className }, h('path', { d: 'M4 6l4 4 4-4', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
     const IconChevronLeft = ({ size = 12 }) => svg(size, h('path', { d: 'M10 4L6 8l4 4', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
     const IconChat = ({ size = 13 }) => svg(size, h('path', { d: 'M2.5 3.5A1.5 1.5 0 0 1 4 2h8a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 12 11H5.5L2.8 13.7A.5.5 0 0 1 2 13.3V3.5z', stroke: 'currentColor', strokeWidth: 1.25, strokeLinejoin: 'round' }))
+    const IconCheck = ({ size = 13 }) => svg(size, h('path', { d: 'M3 8.5l3.5 3.5 6.5-7', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
 
     function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel }) {
       const isCur = ws.workspaceId === currentId, display = abbreviateHomePath(ws.path, home)

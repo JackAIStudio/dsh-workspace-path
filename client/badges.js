@@ -8,65 +8,66 @@
     }
 
     function WorkspaceHeaderBadge({ sessionId, workspaces, sessions, connection, startSession }) {
-      const t = locale(), badgeRef = React.useRef(null)
-      const [open, setOpen] = React.useState(false), [coords, setCoords] = React.useState(null), [status, setStatus] = React.useState('')
+      const t = locale()
+      const [copied, setCopied] = React.useState(false)
       const copiedTimer = React.useRef(null), wsSnap = useSnapshot(workspaces?.list), sesSnap = useSnapshot(sessions?.list)
       const host = useSnapshot(connection?.hostDescription), home = host?.home
-      const canOpen = Boolean(connection?.isLoopback === true && (host ? host.canOpenPath === true : true))
       const targetId = sessionId || sesSnap?.current, ws = findSessionWorkspace(wsSnap, sesSnap, targetId)
       const display = ws ? (abbreviateHomePath(ws.path, home) || ws.path) : ''
-      const revealLabel = hostRevealLabel(t, home)
-      const place = React.useCallback(() => {
-        const btn = badgeRef.current
-        if (!btn) return
-        const r = btn.getBoundingClientRect(), w = Math.min(320, window.innerWidth - 16)
-        let l = r.left
-        if (l + w > window.innerWidth - 8) l = Math.max(8, window.innerWidth - w - 8)
-        setCoords({ left: Math.max(8, l), top: r.bottom + 6, width: w })
-      }, [])
-      usePopover(open, setOpen, place, badgeRef, '.dsh-wspath-hmenu')
+
       if (!ws) return null
-      const flash = (msg) => { setStatus(msg)
-        if (copiedTimer.current) clearTimeout(copiedTimer.current)
-        copiedTimer.current = setTimeout(() => { setStatus(''); setOpen(false) }, 1200)
+
+      const onCopy = async (e) => {
+        if (e) e.stopPropagation()
+        if (!ws.path) return
+        const ok = await writeClipboard(ws.path)
+        if (ok) {
+          setCopied(true)
+          if (copiedTimer.current) clearTimeout(copiedTimer.current)
+          copiedTimer.current = setTimeout(() => setCopied(false), 1500)
+        }
       }
-      const onCopy = async () => { if (ws.path) flash((await writeClipboard(ws.path)) ? t.copied : t.copyFailed) }
-      const onOpenFolder = () => { if (canOpen && ws.path) { connection?.rpc?.call('/dsh-workspace-path', 'reveal', { path: ws.path }); setOpen(false) } }
-      const onOpenTerminal = () => { if (canOpen && ws.path) { connection?.rpc?.call('/dsh-workspace-path', 'terminal', { path: ws.path }); setOpen(false) } }
-      const onNewSession = async () => { setOpen(false)
+
+      const onNewSession = async (e) => {
+        if (e) e.stopPropagation()
         if (ws.workspaceId && typeof startSession === 'function') startSession(ws.workspaceId)
         else if (ws.path && workspaces?.create) {
           try { const res = await workspaces.create({ path: ws.path }); if (res?.workspaceId && typeof startSession === 'function') startSession(res.workspaceId) } catch {}
         }
       }
-      const menu = open && coords && typeof document !== 'undefined'
-        ? ReactDOM.createPortal(
-            h('div', { className: 'dsh-wspath-hmenu', style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' } },
-              h('div', { className: 'dsh-wspath-hmenu-head' },
-                h('div', { className: 'dsh-wspath-hmenu-title' }, h(IconFolder, { size: 14 }), h('span', { className: 'dsh-wspath-hmenu-titletxt' }, ws.title || ws.path)),
-                h('div', { className: 'dsh-wspath-hmenu-path', title: ws.path }, display),
-              ),
-              status ? h('div', { className: 'dsh-wspath-hmenu-status' }, status) : null,
-              h('div', { className: 'dsh-wspath-hmenu-divider' }),
-              h('div', { className: 'dsh-wspath-hmenu-list' },
-                h('button', { type: 'button', className: 'dsh-wspath-hmenu-item', onClick: onCopy },
-                  h('span', { className: 'dsh-wspath-hmenu-icon' }, h(IconCopy, { size: 14 })), h('span', null, t.copyBtn)),
-                canOpen ? h('button', { type: 'button', className: 'dsh-wspath-hmenu-item', onClick: onOpenFolder },
-                  h('span', { className: 'dsh-wspath-hmenu-icon' }, h(IconOpen, { size: 14 })), h('span', null, revealLabel)) : null,
-                canOpen ? h('button', { type: 'button', className: 'dsh-wspath-hmenu-item', onClick: onOpenTerminal },
-                  h('span', { className: 'dsh-wspath-hmenu-icon' }, h(IconTerminal, { size: 14 })), h('span', null, t.terminal)) : null,
-                h('button', { type: 'button', className: 'dsh-wspath-hmenu-item', onClick: onNewSession },
-                  h('span', { className: 'dsh-wspath-hmenu-icon' }, h(IconPlus, { size: 14 })), h('span', null, t.newSessionInWs)),
-              ),
-            ), document.body) : null
-      const tip = `${t.current}: ${ws.title || ws.path}\n${ws.path}\n${t.clickActionHint}`
-      return h('div', { className: 'dsh-wspath-hbadge' },
-        h('button', { ref: badgeRef, type: 'button', className: 'dsh-wspath-hbtn' + (open ? ' is-open' : ''), title: tip, 'aria-label': tip, onClick: () => setOpen((v) => !v) },
+
+      const copyTip = copied ? t.copied : `${t.copyBtn}\n${ws.path}`
+      const newSesTip = `${t.newSessionInWs}\n${ws.title || ws.path}`
+      const wsTip = `${t.current}: ${ws.title || ws.path}\n${ws.path}\n(点击亦可复制路径)`
+
+      return h('div', { className: 'dsh-wspath-hgroup' },
+        h('button', {
+          type: 'button',
+          className: 'dsh-wspath-hbtn' + (copied ? ' is-copied' : ''),
+          title: wsTip,
+          'aria-label': wsTip,
+          onClick: onCopy,
+        },
           h('span', { className: 'dsh-wspath-hicon' }, h(IconFolder, { size: 13 })),
           h('span', { className: 'dsh-wspath-hname' }, ws.title || ws.path),
-          h(IconChevronDown, { size: 10, className: 'dsh-wspath-hchev' }),
         ),
-        menu,
+        h('span', { className: 'dsh-wspath-hsep' }),
+        h('div', { className: 'dsh-wspath-hactions' },
+          h('button', {
+            type: 'button',
+            className: 'dsh-wspath-haction-btn' + (copied ? ' is-copied' : ''),
+            title: copyTip,
+            'aria-label': t.copyBtn,
+            onClick: onCopy,
+          }, h(copied ? IconCheck : IconCopy, { size: 12 })),
+          h('button', {
+            type: 'button',
+            className: 'dsh-wspath-haction-btn',
+            title: newSesTip,
+            'aria-label': t.newSessionInWs,
+            onClick: onNewSession,
+          }, h(IconPlus, { size: 12 })),
+        ),
       )
     }
 
