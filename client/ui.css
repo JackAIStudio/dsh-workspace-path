@@ -92,3 +92,28 @@
 .dsh-hero-app-icon{width:14px;height:14px;object-fit:contain;flex:none}
 .dsh-hero-app-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dsh-hero-app-badge{font-size:11px;color:var(--dsw-alias-label-tertiary);flex:none}
+.dsh-dev-actions{display:inline-flex;align-items:center;gap:2px;flex:none}
+.dsh-dev-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}
+.dsh-dev-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}
+.dsh-dev-btn.is-bordered{height:24px;min-width:24px;padding:0 4px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06))}
+.dsh-dev-btn.is-bordered:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38));background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14))}
+.dsh-dev-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.dsh-dev-modal{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:16px;border-radius:12px;background:var(--dsw-alias-bg-layer-2,#1e1e1e);border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));box-shadow:var(--dsw-shadow-lv3, 0 10px 30px rgba(0,0,0,0.35));color:var(--dsw-alias-label-primary,#fff)}
+.dsh-dev-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.dsh-dev-modal-title{font-size:14px;font-weight:600}
+.dsh-dev-modal-close{appearance:none;border:none;background:transparent;font-size:18px;line-height:1;color:var(--dsw-alias-label-tertiary,#888);cursor:pointer;padding:0 4px}
+.dsh-dev-modal-close:hover{color:var(--dsw-alias-label-primary,#fff)}
+.dsh-dev-modal-form{display:flex;flex-direction:column;gap:10px}
+.dsh-dev-modal-path{font-size:11px;font-family:ui-monospace,Menlo,Monaco,monospace;color:var(--dsw-alias-label-tertiary,#888);word-break:break-all;background:var(--dsw-alias-bg-layer-1,rgba(0,0,0,0.2));padding:4px 8px;border-radius:6px}
+.dsh-dev-modal-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.3));background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.05));color:inherit;font:inherit;font-size:13px;font-family:ui-monospace,Menlo,Monaco,monospace}
+.dsh-dev-modal-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary,#2563eb)}
+.dsh-dev-modal-presets{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:2px}
+.dsh-dev-modal-preset-label{font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}
+.dsh-dev-modal-preset-btn{appearance:none;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));border-radius:6px;background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.04));color:var(--dsw-alias-label-secondary,#bbb);font-size:11px;font-family:ui-monospace,Menlo,monospace;padding:2px 6px;cursor:pointer;transition:all 100ms ease}
+.dsh-dev-modal-preset-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.1));color:var(--dsw-alias-label-primary,#fff);border-color:var(--dsw-alias-brand-primary,#2563eb)}
+.dsh-dev-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}
+.dsh-dev-modal-btn{appearance:none;height:30px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none}
+.dsh-dev-modal-btn.is-cancel{background:transparent;color:var(--dsw-alias-label-secondary,#bbb)}
+.dsh-dev-modal-btn.is-cancel:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.08));color:var(--dsw-alias-label-primary,#fff)}
+.dsh-dev-modal-btn.is-primary{background:var(--dsw-alias-brand-primary,#2563eb);color:#fff}
+.dsh-dev-modal-btn.is-primary:hover{opacity:0.9}

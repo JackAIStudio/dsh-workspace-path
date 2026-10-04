@@ -44,6 +44,20 @@ export function apply(ctx) {
             await execFileAsync('x-terminal-emulator', ['-e', `cd "${targetPath}" && bash`])
           }
           return { ok: true, value: { success: true } }
+        } else if (endpoint === 'run-command') {
+          const cmd = String(payload.cmd || '').trim()
+          if (!cmd) return { ok: false, error: { code: 'bad_request', message: 'cmd required' } }
+          if (process.platform === 'darwin') {
+            const shellScript = `cd ${JSON.stringify(targetPath)} && ${cmd}`
+            const asScript = ['tell application "Terminal"', 'activate', `do script ${JSON.stringify(shellScript)}`, 'end tell'].join('\n')
+            await execFileAsync('osascript', ['-e', asScript])
+          } else if (process.platform === 'win32') {
+            await execFileAsync('cmd', ['/C', 'start', 'cmd', '/K', `cd /d "${targetPath}" && ${cmd}`])
+          } else {
+            // POSIX fallback
+            await execFileAsync('x-terminal-emulator', ['-e', `bash -c "cd '${targetPath}' && ${cmd}; exec bash"`])
+          }
+          return { ok: true, value: { success: true } }
         }
         return { ok: false, error: { code: 'unknown_endpoint', message: 'Unknown endpoint' } }
       } catch (err) {

@@ -151,9 +151,10 @@
           )
         : null
 
-      return h('div', { className: 'dsh-hero-tools' },
-        h('span', { className: 'dsh-hero-tools-sep' }),
-        h('button', {
+     return h('div', { className: 'dsh-hero-tools' },
+       h('span', { className: 'dsh-hero-tools-sep' }),
+        h(DevActionButtons, { connection, wsPath: currentWs.path, showBorder: true }),
+       h('button', {
           type: 'button',
           className: 'dsh-hero-tool-btn' + (copied ? ' is-copied' : ''),
           title: copyTip,

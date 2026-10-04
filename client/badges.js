@@ -51,9 +51,10 @@
           h('span', { className: 'dsh-wspath-hicon' }, h(IconFolder, { size: 13 })),
           h('span', { className: 'dsh-wspath-hname' }, ws.title || ws.path),
         ),
-        h('span', { className: 'dsh-wspath-hsep' }),
-        h('div', { className: 'dsh-wspath-hactions' },
-          h('button', {
+       h('span', { className: 'dsh-wspath-hsep' }),
+       h('div', { className: 'dsh-wspath-hactions' },
+          h(DevActionButtons, { connection, wsPath: ws.path, size: 12 }),
+         h('button', {
             type: 'button',
             className: 'dsh-wspath-haction-btn' + (copied ? ' is-copied' : ''),
             title: copyTip,
