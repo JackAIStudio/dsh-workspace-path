@@ -213,5 +213,8 @@
                 onBack: () => { panel.setQuery(''); panel.setView('projects') },
               }),
             ), document.body) : null
-      return node
+      return h(React.Fragment, null,
+        h(HeroWorkspaceTools, { selectedId, workspaces, connection, useWorkspaces }),
+        node,
+      )
     }
