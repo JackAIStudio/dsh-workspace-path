@@ -25,23 +25,55 @@
       return connection.rpc.call('/dsh-workspace-path', 'run-command', { path, cmd })
     }
 
+    // Git 按钮默认动作（全局偏好）：'sidebar' 打开 Better Sidebar 的「文件变动」页，
+    // 'terminal' 保持旧行为（外部终端跑 git status）。右键菜单里可随时切换。
+    const GIT_ACTION_KEY = 'dsh.git-action'
+    function getGitAction() {
+      if (typeof localStorage === 'undefined') return 'sidebar'
+      return localStorage.getItem(GIT_ACTION_KEY) === 'terminal' ? 'terminal' : 'sidebar'
+    }
+    function setGitAction(action) {
+      if (typeof localStorage === 'undefined') return
+      try { localStorage.setItem(GIT_ACTION_KEY, action === 'terminal' ? 'terminal' : 'sidebar') } catch {}
+    }
+
+    /**
+     * 在 Better Sidebar 打开当前会话的「文件变动」页。
+     * 服务缺失、tab 被禁用或抛错时返回 false，调用方回退外部终端。
+     */
+    function openChangesPage(getBetterSidebar, sessionId) {
+      const sb = typeof getBetterSidebar === 'function' ? getBetterSidebar() : undefined
+      if (!sb || typeof sb.openTab !== 'function') return false
+      if (typeof sb.isTabEnabled === 'function' && sb.isTabEnabled('git') === false) return false
+      try {
+        sb.openTab({ type: 'git' }, sessionId ? { sessionId } : undefined)
+        return true
+      } catch { return false }
+    }
+
     function DevCmdConfigModal(props) {
-      const { open, onClose, wsPath, onSave } = props
+      const { open, onClose, wsPath, onSave, error } = props
       const [cmd, setCmd] = React.useState('')
+      const [busy, setBusy] = React.useState(false)
 
       React.useEffect(() => {
-        if (open) setCmd(getWsDevCmd(wsPath) || 'npm run dev')
+        if (open) { setCmd(getWsDevCmd(wsPath) || 'npm run dev'); setBusy(false) }
       }, [open, wsPath])
 
       if (!open || typeof document === 'undefined') return null
 
       const presets = ['npm run dev', 'pnpm dev', 'yarn start', 'cargo run', 'python main.py']
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         if (e) e.preventDefault()
         const trimmed = cmd.trim()
         setWsDevCmd(wsPath, trimmed)
-        onSave?.(trimmed)
+        if (!trimmed || !onSave) { onClose(); return }
+        setBusy(true)
+        const res = await onSave(trimmed)
+        setBusy(false)
+        // 启动失败时保持对话框打开并展示原因，不再静默关闭。
+        if (res && res.ok === false) return
         onClose()
       }
 
@@ -71,9 +103,10 @@
                   onClick: () => setCmd(p),
                 }, p)),
               ),
+              error ? h('div', { className: 'dsh-dev-modal-error' }, error) : null,
               h('div', { className: 'dsh-dev-modal-foot' },
                 h('button', { type: 'button', className: 'dsh-dev-modal-btn is-cancel', onClick: onClose }, '取消'),
-                h('button', { type: 'submit', className: 'dsh-dev-modal-btn is-primary' }, '保存并启动'),
+                h('button', { type: 'submit', className: 'dsh-dev-modal-btn is-primary', disabled: busy }, busy ? '启动中…' : '保存并启动'),
               ),
             ),
           ),
@@ -82,46 +115,119 @@
       )
     }
 
+    /** Git 按钮右键菜单：列出两种动作，点击项 = 设为默认并立即执行。 */
+    function DevGitMenu({ open, anchorRef, current, onPick, onClose }) {
+      const [coords, setCoords] = React.useState(null)
+      const place = React.useCallback(() => {
+        const btn = anchorRef.current
+        if (!btn) return
+        const r = btn.getBoundingClientRect(), w = Math.min(260, window.innerWidth - 16)
+        let l = r.right - w
+        if (l < 8) l = 8
+        setCoords({ left: l, top: r.bottom + 6, width: w })
+      }, [anchorRef])
+      usePopover(open, (next) => { if (!next && typeof onClose === 'function') onClose() }, place, anchorRef, '.dsh-dev-menu')
+      if (!open || !coords || typeof document === 'undefined') return null
+      const item = (value, label) => h('button', {
+        type: 'button',
+        className: 'dsh-wspath-hmenu-item' + (current === value ? ' is-active' : ''),
+        onClick: () => onPick(value),
+      },
+        h('span', { className: 'dsh-wspath-hmenu-icon' }, current === value ? h(IconCheck, { size: 13 }) : null),
+        h('span', null, label),
+      )
+      return ReactDOM.createPortal(
+        h('div', { className: 'dsh-wspath-hmenu dsh-dev-menu', style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' } },
+          h('div', { className: 'dsh-wspath-hmenu-head' },
+            h('div', { className: 'dsh-wspath-hmenu-title' }, 'Git 按钮默认动作'),
+            h('div', { className: 'dsh-wspath-sid-label' }, '点击即设为默认并执行'),
+          ),
+          h('div', { className: 'dsh-wspath-hmenu-list' },
+            item('sidebar', '打开「文件变动」页'),
+            item('terminal', '在外部终端运行 git status'),
+          ),
+        ), document.body)
+    }
+
     function DevActionButtons(props) {
-      const { connection, wsPath, size = 13, showBorder = false } = props
+      const { connection, wsPath, size = 13, showBorder = false, sessionId, getBetterSidebar, variant = 'row', big = false } = props
       const [modalOpen, setModalOpen] = React.useState(false)
+      const [modalError, setModalError] = React.useState('')
+      const [menuOpen, setMenuOpen] = React.useState(false)
+      const [gitAction, setGitActionState] = React.useState(getGitAction)
+      const gitBtnRef = React.useRef(null)
 
       if (!wsPath) return null
 
-      const onGitStatus = (e) => {
-        if (e) e.stopPropagation()
-        runWorkspaceCommand(connection, wsPath, 'git status')
+      // 宿主调用失败（通道 4xx/5xx、脚本被系统拒绝等）必须变成可见错误，不能静默吞掉。
+      const launch = async (cmd) => {
+        try {
+          const res = await runWorkspaceCommand(connection, wsPath, cmd)
+          return res && typeof res === 'object' ? res : { ok: false, error: { message: '宿主连接不可用，请刷新页面后重试' } }
+        } catch (err) {
+          return { ok: false, error: { message: String(err?.message || err) } }
+        }
       }
 
-      const onRunDev = (e) => {
+      const openModal = (message) => { setModalError(message || ''); setModalOpen(true) }
+
+      // header 位置按偏好动作执行；工作区列表行保持旧行为（外部终端 git status）。
+      const runGitAction = (action) => {
+        if (action !== 'terminal' && openChangesPage(getBetterSidebar, sessionId)) return
+        launch('git status')
+      }
+
+      const onGitClick = (e) => {
+        if (e) e.stopPropagation()
+        setMenuOpen(false)
+        runGitAction(variant === 'header' ? gitAction : 'terminal')
+      }
+
+      const onGitContext = (e) => {
+        if (variant !== 'header') return
+        e.preventDefault()
+        e.stopPropagation()
+        setMenuOpen(true)
+      }
+
+      const pickGitAction = (value) => {
+        setGitAction(value)
+        setGitActionState(value)
+        setMenuOpen(false)
+        runGitAction(value)
+      }
+
+      const onRunDev = async (e) => {
         if (e) e.stopPropagation()
         const savedCmd = getWsDevCmd(wsPath)
-        if (!savedCmd) {
-          setModalOpen(true)
-          return
-        }
-        runWorkspaceCommand(connection, wsPath, savedCmd)
+        if (!savedCmd) { openModal(''); return }
+        const res = await launch(savedCmd)
+        if (res && res.ok === false) openModal(res.error?.message || '启动失败')
       }
 
       const onContextMenu = (e) => {
         e.preventDefault()
         e.stopPropagation()
-        setModalOpen(true)
+        openModal('')
       }
 
       const devCmd = getWsDevCmd(wsPath)
       const devTip = devCmd ? `启动: ${devCmd}\n(右键修改启动命令)` : '设置并启动项目开发命令'
-      const gitTip = '在外部终端运行 git status'
+      const gitTip = variant === 'header'
+        ? (gitAction === 'terminal' ? '在外部终端运行 git status\n(右键切换默认动作)' : '打开「文件变动」页 (Better Sidebar)\n(右键切换默认动作)')
+        : '在外部终端运行 git status'
 
-      const btnCls = showBorder ? 'dsh-dev-btn is-bordered' : 'dsh-dev-btn'
+      const btnCls = (showBorder ? 'dsh-dev-btn is-bordered' : 'dsh-dev-btn') + (big ? ' is-big' : '')
 
-      return h('div', { className: 'dsh-dev-actions' },
+      return h('div', { className: 'dsh-dev-actions' + (big ? ' is-big' : '') },
         h('button', {
+          ref: gitBtnRef,
           type: 'button',
           className: btnCls,
           title: gitTip,
-          'aria-label': 'Git Status',
-          onClick: onGitStatus,
+          'aria-label': 'Git',
+          onClick: onGitClick,
+          onContextMenu: onGitContext,
         }, h(IconGit, { size })),
         h('button', {
           type: 'button',
@@ -131,13 +237,30 @@
           onClick: onRunDev,
           onContextMenu: onContextMenu,
         }, h(IconRocket, { size })),
+        h(DevGitMenu, { open: menuOpen, anchorRef: gitBtnRef, current: gitAction, onPick: pickGitAction, onClose: () => setMenuOpen(false) }),
         h(DevCmdConfigModal, {
           open: modalOpen,
           onClose: () => setModalOpen(false),
           wsPath,
-          onSave: (newCmd) => {
-            if (newCmd) runWorkspaceCommand(connection, wsPath, newCmd)
+          error: modalError,
+          onSave: async (newCmd) => {
+            if (!newCmd) return undefined
+            const res = await launch(newCmd)
+            setModalError(res && res.ok === false ? (res.error?.message || '启动失败') : '')
+            return res
           },
         }),
       )
+    }
+
+    /** 会话头部右上角的 Git + 启动命令按钮（跟随当前会话的工作区，28px 大号样式）。 */
+    function SessionDevActions({ sessionId, workspaces, sessions, connection, getBetterSidebar }) {
+      const sesSnap = useSnapshot(sessions?.list), wsSnap = useSnapshot(workspaces?.list)
+      const targetId = sessionId || sesSnap?.current
+      const ws = findSessionWorkspace(wsSnap, sesSnap, targetId)
+      if (!ws || !ws.path) return null
+      return h(DevActionButtons, {
+        connection, wsPath: ws.path, sessionId: targetId, getBetterSidebar,
+        size: 16, variant: 'header', big: true,
+      })
     }

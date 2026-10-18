@@ -53,7 +53,6 @@
         ),
        h('span', { className: 'dsh-wspath-hsep' }),
        h('div', { className: 'dsh-wspath-hactions' },
-          h(DevActionButtons, { connection, wsPath: ws.path, size: 12 }),
          h('button', {
             type: 'button',
             className: 'dsh-wspath-haction-btn' + (copied ? ' is-copied' : ''),

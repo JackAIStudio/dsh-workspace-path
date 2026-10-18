@@ -19,13 +19,24 @@
 ### 3. 顶部 Header 工作区胶囊徽章
 
 - 紧邻会话标题右侧展示 `📁 工作区短名 ▾`。
-- 点击可复制路径、在访达/资源管理器/终端打开、在此工作区新建会话。
+- 点击可复制路径；行内 `＋` 在此工作区新建会话。（Git / 启动命令按钮已迁到右上角，见 §5）
 
 ### 4. 侧边栏工作区快速中心
 
 - 点击列表行：切换并在该工作区开新会话。
 - 搜索栏右侧 `➕`：在当前工作区下新建子目录并注册。
 - 行内复制路径 / 终端 / 访达。
+
+### 5. 会话头部右上角大号 Git / 启动命令（0.5.0）
+
+- **两个高频按钮放大归位**：Git 与启动命令从会话标题旁迁到会话头部右上角，28px 大号图标（对齐官方头部按钮的尺寸手感）。
+- **Git 按钮可配置**：左键默认在 Better Sidebar 打开当前会话的「文件变动」页；右键菜单可切换为「在外部终端运行 git status」，选择全局记住；Better Sidebar 不可用时自动回退外部终端。
+- **启动命令**：左键运行已保存的 dev 命令（未设置时弹出设置框），右键修改。
+
+### 6. 工作区列表的 git 工作区状态（0.5.0）
+
+- 工作区中心里每个 git 项目显示工作区状态：`✓` 干净 / `● N` 未提交改动 / `?` 探测失败；非 git 目录不显示。
+- 打开面板时异步批量探测（5 秒缓存、并发与超时保护），结果回来前列表照常渲染。
 
 ## 安装
 
@@ -37,4 +48,4 @@ dsh plugin --profile web add link:$HOME/Documents/dshspace/plugins/dsh-workspace
 dsh plugin --profile web add github:JackAIStudio/dsh-workspace-path
 ```
 
-改 `client/` 或 `paths.js` 后先跑 `npm test`（会 pack 进 `client.js`），然后**刷新浏览器页面**（Cmd/Ctrl+R）即可，无需重启 `dsh web`。
+改 `client/` 或 `paths.js` 后先跑 `npm test`（会 pack 进 `client.js`），然后**刷新浏览器页面**（Cmd/Ctrl+R）即可，无需重启 `dsh web`；改 `index.js` / `git-summary.js` 等 host 端文件需要**重启 `dsh web`** 才生效。

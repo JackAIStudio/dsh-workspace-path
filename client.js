@@ -2,7 +2,7 @@ window.__ModuleLoader__.load({
   id: 'dsh-workspace-path',
   factory: (require) => {
     const module = { exports: {} }, React = require('react'), ReactDOM = require('react-dom'), h = React.createElement
-    const css = ".dsh-wspath{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center}\n.dsh-wspath-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:50%;padding:0;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 120ms ease,color 120ms ease}\n.dsh-wspath-btn:hover,.dsh-wspath-btn.is-open{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel{box-sizing:border-box;z-index:80;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));max-height:min(440px,calc(100vh - 24px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel.is-hero{z-index:120}\n.dsh-wspath-search-row{display:flex;align-items:center;gap:6px;margin:0 4px 6px}\n.dsh-wspath-search-row input{flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-primary);font:inherit;font-size:13px}\n.dsh-wspath-search-row input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}\n.dsh-wspath-add-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-secondary);cursor:pointer}\n.dsh-wspath-add-btn:hover,.dsh-wspath-add-btn.is-active{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-new-box{box-sizing:border-box;display:flex;gap:6px;margin:0 4px 6px;padding:6px;border-radius:8px;background:var(--dsw-alias-interactive-bg-hover)}\n.dsh-wspath-new-box input{flex:1;min-width:0;height:28px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2);border-radius:6px;background:var(--dsw-alias-bg-layer-2);color:inherit;font:inherit;font-size:12px}\n.dsh-wspath-new-box button{appearance:none;flex:none;height:28px;padding:0 8px;border:none;border-radius:6px;background:var(--dsw-alias-brand-primary);color:#fff;font-size:12px;cursor:pointer}\n.dsh-wspath-new-box button:disabled{opacity:.5;cursor:default}\n.dsh-wspath-list{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:auto}\n.dsh-wspath-empty{padding:12px 8px;font-size:13px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-section{flex:none;padding:6px 8px 2px;font-size:11px;font-weight:600;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-back,.dsh-wspath-days-btn{appearance:none;display:flex;align-items:center;gap:6px;width:100%;height:32px;margin:0;padding:0 8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left}\n.dsh-wspath-days-btn{justify-content:space-between;margin-top:4px;flex:none}\n.dsh-wspath-back:hover,.dsh-wspath-days-btn:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-row{box-sizing:border-box;width:100%;display:flex;align-items:center;gap:2px;padding:2px;border-radius:8px}\n.dsh-wspath-row.is-current,.dsh-wspath-row:hover{background:var(--dsw-alias-interactive-bg-hover)}\n.dsh-wspath-item{appearance:none;box-sizing:border-box;min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;margin:0;padding:6px 8px;border:none;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}\n.dsh-wspath-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--dsw-alias-brand-primary)}\n.dsh-wspath-title{display:flex;align-items:center;gap:6px;min-width:0}\n.dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}\n.dsh-wspath-badge,.dsh-wspath-kind{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:16px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-kind{font-size:10px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-actions{display:flex;align-items:center;gap:2px;flex:none}\n.dsh-wspath-icon-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}\n.dsh-wspath-icon-btn:hover{background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}\n.dsh-wspath-hbadge,.dsh-wspath-hgroup{display:inline-flex;align-items:center;height:24px;padding:0 3px 0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));gap:2px;flex:none;transition:border-color 120ms ease}\n.dsh-wspath-hgroup:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-wspath-hbtn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:20px;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;font-weight:500;line-height:20px;cursor:pointer;max-width:180px;user-select:none;transition:color 120ms ease}\n.dsh-wspath-hbtn:hover{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hbtn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-hicon{flex:none;color:inherit;display:inline-flex;align-items:center}\n.dsh-wspath-hname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}\n.dsh-wspath-hsep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-wspath-hactions{display:inline-flex;align-items:center;gap:1px}\n.dsh-wspath-haction-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-haction-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-wspath-haction-btn:active{background:var(--dsw-alias-border-l2, rgba(128,128,128,0.26))}\n.dsh-wspath-haction-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12)}\n.dsh-wspath-hmenu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(320px,calc(100vw - 16px));padding:6px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-head{padding:4px 8px 6px}\n.dsh-wspath-hmenu-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-hmenu-path{margin-top:3px;font-size:11px;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}\n.dsh-wspath-hmenu-divider{height:1px;background:var(--dsw-alias-border-l2);margin:4px 0}\n.dsh-wspath-hmenu-list{display:flex;flex-direction:column;gap:2px}\n.dsh-wspath-hmenu-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-hmenu-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;flex:none;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-hmenu-item:hover .dsh-wspath-hmenu-icon{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-status{padding:4px 8px;font-size:11px;border-radius:6px;color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.1);margin-top:2px;text-align:center}\n.dsh-wspath-sid-badge{position:relative;display:inline-flex;align-items:center;flex:none;margin-left:4px}\n.dsh-wspath-sid-btn{appearance:none;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:22px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-wspath-sid-btn:hover,.dsh-wspath-sid-btn.is-open{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.15));border-color:#2563eb;color:#2563eb}\n.dsh-wspath-sid-icon{font-weight:700;font-size:11px;color:var(--dsw-alias-label-tertiary,#888);margin-right:1px}\n.dsh-wspath-sid-popover{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-head{padding:2px 4px 6px}\n.dsh-wspath-sid-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-label{margin-top:6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-wspath-sid-codebox{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--dsw-alias-bg-layer-1, rgba(128,128,128,0.08));border:1px solid var(--dsw-alias-border-l2)}\n.dsh-wspath-sid-code{font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--dsw-alias-label-primary);user-select:all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-copybtn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;flex-shrink:0}\n.dsh-wspath-sid-copybtn:hover{background:var(--dsw-alias-interactive-bg-hover);color:#2563eb}\n[class*=\"_footArea\"]:has(.dsh-wspath){flex-direction:row !important;align-items:center !important;gap:4px !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_settingsArea\"]{flex:1 1 auto !important;width:auto !important;min-width:0 !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_footerActions\"]{order:2 !important;flex:none !important;width:auto !important;display:flex !important;align-items:center !important;justify-content:flex-end !important}\n.dsh-hero-tools{order:99;display:inline-flex;align-items:center;gap:4px;margin-left:6px;flex:none}\n.dsh-hero-tools-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-hero-tool-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;height:24px;min-width:24px;padding:0 6px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-hero-tool-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14));color:var(--dsw-alias-label-primary);border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-tool-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3)}\n.dsh-hero-split-btn{display:inline-flex;align-items:center;height:24px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));transition:border-color 120ms ease;position:relative}\n.dsh-hero-split-btn:hover,.dsh-hero-split-btn.is-open{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-split-main{appearance:none;display:inline-flex;align-items:center;gap:4px;height:100%;padding:0 6px 0 8px;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:11px 0 0 11px;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-main:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-split-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));flex:none}\n.dsh-hero-split-arrow{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:18px;height:100%;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:0 11px 11px 0;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-arrow:hover,.dsh-hero-split-btn.is-open .dsh-hero-split-arrow{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-menu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;min-width:160px;padding:4px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:all 100ms ease}\n.dsh-hero-app-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item.is-selected{color:var(--dsw-alias-brand-primary, #2563eb);font-weight:500}\n.dsh-hero-app-icon{width:14px;height:14px;object-fit:contain;flex:none}\n.dsh-hero-app-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-hero-app-badge{font-size:11px;color:var(--dsw-alias-label-tertiary);flex:none}\n.dsh-dev-actions{display:inline-flex;align-items:center;gap:2px;flex:none}\n.dsh-dev-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-dev-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-dev-btn.is-bordered{height:24px;min-width:24px;padding:0 4px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06))}\n.dsh-dev-btn.is-bordered:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38));background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14))}\n.dsh-dev-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}\n.dsh-dev-modal{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:16px;border-radius:12px;background:var(--dsw-alias-bg-layer-2,#1e1e1e);border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));box-shadow:var(--dsw-shadow-lv3, 0 10px 30px rgba(0,0,0,0.35));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}\n.dsh-dev-modal-title{font-size:14px;font-weight:600}\n.dsh-dev-modal-close{appearance:none;border:none;background:transparent;font-size:18px;line-height:1;color:var(--dsw-alias-label-tertiary,#888);cursor:pointer;padding:0 4px}\n.dsh-dev-modal-close:hover{color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-form{display:flex;flex-direction:column;gap:10px}\n.dsh-dev-modal-path{font-size:11px;font-family:ui-monospace,Menlo,Monaco,monospace;color:var(--dsw-alias-label-tertiary,#888);word-break:break-all;background:var(--dsw-alias-bg-layer-1,rgba(0,0,0,0.2));padding:4px 8px;border-radius:6px}\n.dsh-dev-modal-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.3));background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.05));color:inherit;font:inherit;font-size:13px;font-family:ui-monospace,Menlo,Monaco,monospace}\n.dsh-dev-modal-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-presets{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:2px}\n.dsh-dev-modal-preset-label{font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-dev-modal-preset-btn{appearance:none;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));border-radius:6px;background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.04));color:var(--dsw-alias-label-secondary,#bbb);font-size:11px;font-family:ui-monospace,Menlo,monospace;padding:2px 6px;cursor:pointer;transition:all 100ms ease}\n.dsh-dev-modal-preset-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.1));color:var(--dsw-alias-label-primary,#fff);border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}\n.dsh-dev-modal-btn{appearance:none;height:30px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none}\n.dsh-dev-modal-btn.is-cancel{background:transparent;color:var(--dsw-alias-label-secondary,#bbb)}\n.dsh-dev-modal-btn.is-cancel:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.08));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-btn.is-primary{background:var(--dsw-alias-brand-primary,#2563eb);color:#fff}\n.dsh-dev-modal-btn.is-primary:hover{opacity:0.9}\n"
+    const css = ".dsh-wspath{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center}\n.dsh-wspath-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:50%;padding:0;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 120ms ease,color 120ms ease}\n.dsh-wspath-btn:hover,.dsh-wspath-btn.is-open{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel{box-sizing:border-box;z-index:80;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));max-height:min(440px,calc(100vh - 24px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel.is-hero{z-index:120}\n.dsh-wspath-search-row{display:flex;align-items:center;gap:6px;margin:0 4px 6px}\n.dsh-wspath-search-row input{flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-primary);font:inherit;font-size:13px}\n.dsh-wspath-search-row input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}\n.dsh-wspath-add-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-secondary);cursor:pointer}\n.dsh-wspath-add-btn:hover,.dsh-wspath-add-btn.is-active{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-new-box{box-sizing:border-box;display:flex;gap:6px;margin:0 4px 6px;padding:6px;border-radius:8px;background:var(--dsw-alias-interactive-bg-hover)}\n.dsh-wspath-new-box input{flex:1;min-width:0;height:28px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2);border-radius:6px;background:var(--dsw-alias-bg-layer-2);color:inherit;font:inherit;font-size:12px}\n.dsh-wspath-new-box button{appearance:none;flex:none;height:28px;padding:0 8px;border:none;border-radius:6px;background:var(--dsw-alias-brand-primary);color:#fff;font-size:12px;cursor:pointer}\n.dsh-wspath-new-box button:disabled{opacity:.5;cursor:default}\n.dsh-wspath-list{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:auto}\n.dsh-wspath-empty{padding:12px 8px;font-size:13px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-section{flex:none;padding:6px 8px 2px;font-size:11px;font-weight:600;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-back,.dsh-wspath-days-btn{appearance:none;display:flex;align-items:center;gap:6px;width:100%;height:32px;margin:0;padding:0 8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left}\n.dsh-wspath-days-btn{justify-content:space-between;margin-top:4px;flex:none}\n.dsh-wspath-back:hover,.dsh-wspath-days-btn:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-row{box-sizing:border-box;width:100%;display:flex;align-items:center;gap:2px;padding:2px;border-radius:8px}\n.dsh-wspath-row.is-current,.dsh-wspath-row:hover{background:var(--dsw-alias-interactive-bg-hover)}\n.dsh-wspath-item{appearance:none;box-sizing:border-box;min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;margin:0;padding:6px 8px;border:none;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}\n.dsh-wspath-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--dsw-alias-brand-primary)}\n.dsh-wspath-title{display:flex;align-items:center;gap:6px;min-width:0}\n.dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}\n.dsh-wspath-badge,.dsh-wspath-kind{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:16px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-kind{font-size:10px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-git{flex:none;display:inline-flex;align-items:center;font-size:11px;line-height:16px;font-weight:600;color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-git.is-dirty{color:#f59e0b}\n.dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-actions{display:flex;align-items:center;gap:2px;flex:none}\n.dsh-wspath-icon-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}\n.dsh-wspath-icon-btn:hover{background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}\n.dsh-wspath-hbadge,.dsh-wspath-hgroup{display:inline-flex;align-items:center;height:24px;padding:0 3px 0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));gap:2px;flex:none;transition:border-color 120ms ease}\n.dsh-wspath-hgroup:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-wspath-hbtn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:20px;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;font-weight:500;line-height:20px;cursor:pointer;max-width:180px;user-select:none;transition:color 120ms ease}\n.dsh-wspath-hbtn:hover{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hbtn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-hicon{flex:none;color:inherit;display:inline-flex;align-items:center}\n.dsh-wspath-hname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}\n.dsh-wspath-hsep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-wspath-hactions{display:inline-flex;align-items:center;gap:1px}\n.dsh-wspath-haction-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-haction-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-wspath-haction-btn:active{background:var(--dsw-alias-border-l2, rgba(128,128,128,0.26))}\n.dsh-wspath-haction-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12)}\n.dsh-wspath-hmenu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(320px,calc(100vw - 16px));padding:6px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-head{padding:4px 8px 6px}\n.dsh-wspath-hmenu-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-hmenu-path{margin-top:3px;font-size:11px;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}\n.dsh-wspath-hmenu-divider{height:1px;background:var(--dsw-alias-border-l2);margin:4px 0}\n.dsh-wspath-hmenu-list{display:flex;flex-direction:column;gap:2px}\n.dsh-wspath-hmenu-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-hmenu-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-item.is-active{color:var(--dsw-alias-brand-primary, #2563eb)}\n.dsh-wspath-hmenu-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;flex:none;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-hmenu-item:hover .dsh-wspath-hmenu-icon{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-status{padding:4px 8px;font-size:11px;border-radius:6px;color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.1);margin-top:2px;text-align:center}\n.dsh-wspath-sid-badge{position:relative;display:inline-flex;align-items:center;flex:none;margin-left:4px}\n.dsh-wspath-sid-btn{appearance:none;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:22px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-wspath-sid-btn:hover,.dsh-wspath-sid-btn.is-open{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.15));border-color:#2563eb;color:#2563eb}\n.dsh-wspath-sid-icon{font-weight:700;font-size:11px;color:var(--dsw-alias-label-tertiary,#888);margin-right:1px}\n.dsh-wspath-sid-popover{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-head{padding:2px 4px 6px}\n.dsh-wspath-sid-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-label{margin-top:6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-wspath-sid-codebox{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--dsw-alias-bg-layer-1, rgba(128,128,128,0.08));border:1px solid var(--dsw-alias-border-l2)}\n.dsh-wspath-sid-code{font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--dsw-alias-label-primary);user-select:all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-copybtn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;flex-shrink:0}\n.dsh-wspath-sid-copybtn:hover{background:var(--dsw-alias-interactive-bg-hover);color:#2563eb}\n[class*=\"_footArea\"]:has(.dsh-wspath){flex-direction:row !important;align-items:center !important;gap:4px !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_settingsArea\"]{flex:1 1 auto !important;width:auto !important;min-width:0 !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_footerActions\"]{order:2 !important;flex:none !important;width:auto !important;display:flex !important;align-items:center !important;justify-content:flex-end !important}\n.dsh-hero-tools{order:99;display:inline-flex;align-items:center;gap:4px;margin-left:6px;flex:none}\n.dsh-hero-tools-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-hero-tool-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;height:24px;min-width:24px;padding:0 6px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-hero-tool-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14));color:var(--dsw-alias-label-primary);border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-tool-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3)}\n.dsh-hero-split-btn{display:inline-flex;align-items:center;height:24px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));transition:border-color 120ms ease;position:relative}\n.dsh-hero-split-btn:hover,.dsh-hero-split-btn.is-open{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-split-main{appearance:none;display:inline-flex;align-items:center;gap:4px;height:100%;padding:0 6px 0 8px;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:11px 0 0 11px;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-main:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-split-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));flex:none}\n.dsh-hero-split-arrow{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:18px;height:100%;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:0 11px 11px 0;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-arrow:hover,.dsh-hero-split-btn.is-open .dsh-hero-split-arrow{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-menu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;min-width:160px;padding:4px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:all 100ms ease}\n.dsh-hero-app-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item.is-selected{color:var(--dsw-alias-brand-primary, #2563eb);font-weight:500}\n.dsh-hero-app-icon{width:14px;height:14px;object-fit:contain;flex:none}\n.dsh-hero-app-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-hero-app-badge{font-size:11px;color:var(--dsw-alias-label-tertiary);flex:none}\n.dsh-dev-actions{display:inline-flex;align-items:center;gap:2px;flex:none}\n.dsh-dev-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-dev-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-dev-btn.is-bordered{height:24px;min-width:24px;padding:0 4px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06))}\n.dsh-dev-btn.is-bordered:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38));background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14))}\n.dsh-dev-actions.is-big{gap:4px}\n.dsh-dev-btn.is-big{width:28px;height:28px;border-radius:6px}\n.dsh-dev-btn.is-big:hover{background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.10))}\n.dsh-dev-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}\n.dsh-dev-modal{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:16px;border-radius:12px;background:var(--dsw-alias-bg-layer-2,#1e1e1e);border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));box-shadow:var(--dsw-shadow-lv3, 0 10px 30px rgba(0,0,0,0.35));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}\n.dsh-dev-modal-title{font-size:14px;font-weight:600}\n.dsh-dev-modal-close{appearance:none;border:none;background:transparent;font-size:18px;line-height:1;color:var(--dsw-alias-label-tertiary,#888);cursor:pointer;padding:0 4px}\n.dsh-dev-modal-close:hover{color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-form{display:flex;flex-direction:column;gap:10px}\n.dsh-dev-modal-path{font-size:11px;font-family:ui-monospace,Menlo,Monaco,monospace;color:var(--dsw-alias-label-tertiary,#888);word-break:break-all;background:var(--dsw-alias-bg-layer-1,rgba(0,0,0,0.2));padding:4px 8px;border-radius:6px}\n.dsh-dev-modal-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.3));background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.05));color:inherit;font:inherit;font-size:13px;font-family:ui-monospace,Menlo,Monaco,monospace}\n.dsh-dev-modal-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-presets{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:2px}\n.dsh-dev-modal-preset-label{font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-dev-modal-preset-btn{appearance:none;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));border-radius:6px;background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.04));color:var(--dsw-alias-label-secondary,#bbb);font-size:11px;font-family:ui-monospace,Menlo,monospace;padding:2px 6px;cursor:pointer;transition:all 100ms ease}\n.dsh-dev-modal-preset-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.1));color:var(--dsw-alias-label-primary,#fff);border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}\n.dsh-dev-modal-btn{appearance:none;height:30px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none}\n.dsh-dev-modal-btn.is-cancel{background:transparent;color:var(--dsw-alias-label-secondary,#bbb)}\n.dsh-dev-modal-btn.is-cancel:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.08));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-btn.is-primary{background:var(--dsw-alias-brand-primary,#2563eb);color:#fff}\n.dsh-dev-modal-btn.is-primary:hover{opacity:0.9}\n.dsh-dev-modal-btn.is-primary:disabled{opacity:0.6;cursor:default}\n.dsh-dev-modal-error{font-size:11px;line-height:1.5;color:var(--dsw-alias-state-error-primary,#f87171);background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.35);border-radius:6px;padding:4px 8px;word-break:break-all}\n"
     if (typeof document !== 'undefined') {
       const id = 'dsh-workspace-path/ui.css'
       let tag = document.querySelector('style[data-plugin-css=' + JSON.stringify(id) + ']')
@@ -165,6 +165,26 @@ function pinCurrentWorkspace(rows, currentId) {
 }
 
 /**
+ * Display label of one git summary row: '' for non-repositories, '✓' for a
+ * clean tree, '● n' for n pending changes, '?' when the probe failed (-1).
+ * @param {{ isRepo?: boolean, changed?: number } | null | undefined} info
+ */
+function gitStatusLabel(info) {
+  if (!info || info.isRepo !== true) return ''
+  if (info.changed === -1) return '?'
+  return info.changed > 0 ? `● ${info.changed}` : '✓'
+}
+
+/**
+ * Whether a git summary row reads as "has pending changes" (an unknown probe
+ * result counts as pending so the marker never claims a false clean).
+ * @param {{ isRepo?: boolean, changed?: number } | null | undefined} info
+ */
+function isGitDirty(info) {
+  return Boolean(info && info.isRepo === true && info.changed !== 0)
+}
+
+/**
  * Default view is projects only. A non-empty query searches both kinds so a
  * date can be typed without opening the day list. `view: 'days'` is the extra step.
  * @param {{ items?: readonly object[], query?: string, home?: string, view?: 'projects' | 'days', currentId?: string, now?: Date }} opts
@@ -197,8 +217,8 @@ function pickerModel(opts = {}) {
 }
 
     const copy = {
-      zh: { trigger: '工作区中心 (点击切换)', search: '搜索项目 (也可搜日期)...', empty: '暂无项目工作区', emptyDays: '暂无按天工作区', noMatches: '无匹配工作区', current: '当前工作区', copied: '已复制路径', copyFailed: '复制失败', copyBtn: '复制绝对路径', terminal: '在终端打开', openMac: '在访达中显示', openWindows: '在资源管理器中显示', openGeneric: '在文件管理器中显示', newSubdir: '在当前工作区下新建子目录', createBtn: '创建并进入', creating: '创建中...', promptName: '子目录名称 (如 feature-1)', newSessionInWs: '在此工作区新建会话', clickActionHint: '点击查看快捷操作', sessionTitle: '当前会话', sessionIdTitle: '会话唯一标识 (Session ID)', copySessionId: '复制会话 ID', copiedSessionId: '已复制会话 ID', openInNewWindow: '在新独立窗口中打开', daysEntry: '按天工作区', daysBack: '返回项目', today: '今天', dayKind: '按天', projects: '项目', addWorkspace: '添加工作区…' },
-      en: { trigger: 'Workspace Hub (Click to Switch)', search: 'Search projects (dates too)...', empty: 'No project workspaces', emptyDays: 'No day workspaces', noMatches: 'No matching workspaces', current: 'Current workspace', copied: 'Path copied', copyFailed: 'Copy failed', copyBtn: 'Copy absolute path', terminal: 'Open in Terminal', openMac: 'Show in Finder', openWindows: 'Show in File Explorer', openGeneric: 'Show in file manager', newSubdir: 'New subdir in current workspace', createBtn: 'Create & Enter', creating: 'Creating...', promptName: 'Subdirectory name (e.g. feature-1)', newSessionInWs: 'New session here', clickActionHint: 'Click for actions', sessionTitle: 'Current Session', sessionIdTitle: 'Session Identifier (Session ID)', copySessionId: 'Copy Session ID', copiedSessionId: 'Session ID Copied', openInNewWindow: 'Open in New Window', daysEntry: 'Day workspaces', daysBack: 'Back to projects', today: 'Today', dayKind: 'Day', projects: 'Projects', addWorkspace: 'Add workspace…' },
+      zh: { trigger: '工作区中心 (点击切换)', search: '搜索项目 (也可搜日期)...', empty: '暂无项目工作区', emptyDays: '暂无按天工作区', noMatches: '无匹配工作区', current: '当前工作区', copied: '已复制路径', copyFailed: '复制失败', copyBtn: '复制绝对路径', terminal: '在终端打开', openMac: '在访达中显示', openWindows: '在资源管理器中显示', openGeneric: '在文件管理器中显示', newSubdir: '在当前工作区下新建子目录', createBtn: '创建并进入', creating: '创建中...', promptName: '子目录名称 (如 feature-1)', newSessionInWs: '在此工作区新建会话', clickActionHint: '点击查看快捷操作', sessionTitle: '当前会话', sessionIdTitle: '会话唯一标识 (Session ID)', copySessionId: '复制会话 ID', copiedSessionId: '已复制会话 ID', openInNewWindow: '在新独立窗口中打开', daysEntry: '按天工作区', daysBack: '返回项目', today: '今天', dayKind: '按天', projects: '项目', addWorkspace: '添加工作区…', gitClean: '工作区干净', gitDirty: '{n} 个未提交改动', gitUnknown: 'git 状态未知' },
+      en: { trigger: 'Workspace Hub (Click to Switch)', search: 'Search projects (dates too)...', empty: 'No project workspaces', emptyDays: 'No day workspaces', noMatches: 'No matching workspaces', current: 'Current workspace', copied: 'Path copied', copyFailed: 'Copy failed', copyBtn: 'Copy absolute path', terminal: 'Open in Terminal', openMac: 'Show in Finder', openWindows: 'Show in File Explorer', openGeneric: 'Show in file manager', newSubdir: 'New subdir in current workspace', createBtn: 'Create & Enter', creating: 'Creating...', promptName: 'Subdirectory name (e.g. feature-1)', newSessionInWs: 'New session here', clickActionHint: 'Click for actions', sessionTitle: 'Current Session', sessionIdTitle: 'Session Identifier (Session ID)', copySessionId: 'Copy Session ID', copiedSessionId: 'Session ID Copied', openInNewWindow: 'Open in New Window', daysEntry: 'Day workspaces', daysBack: 'Back to projects', today: 'Today', dayKind: 'Day', projects: 'Projects', addWorkspace: 'Add workspace…', gitClean: 'Clean working tree', gitDirty: '{n} uncommitted change(s)', gitUnknown: 'git status unavailable' },
     }
     const locale = () => (typeof document !== 'undefined' && String(document.documentElement.lang).toLowerCase().startsWith('en')) ? copy.en : copy.zh
     function hostRevealLabel(t, home) {
@@ -214,12 +234,49 @@ function pickerModel(opts = {}) {
       React.useEffect(() => store?.subscribe?.(() => bump((n) => n + 1)), [store])
       return store?.getSnapshot?.()
     }
+    // 本插件通过 Portal 挂到 body 的浮层：它们不在触发器的 DOM 子树里。
+    // 点它们内部不算“点外部”，否则 pointerdown 会先关掉面板、把浮层一起卸载，
+    // 目标按钮永远收不到 click（保存并启动无效、Hero 打开方式菜单点不动都源于此）。
+    const PORTAL_SURFACES = '.dsh-dev-modal-overlay, .dsh-hero-app-menu, .dsh-wspath-sid-popover, .dsh-dev-menu'
+    // 工作区列表的 git 概览：开面板时批量拉取（5s 缓存），失败静默，绝不阻塞列表渲染。
+    const GIT_SUMMARY_TTL = 5000
+    const gitSummaryCache = new Map()
+    async function fetchGitSummaries(connection, paths) {
+      const now = Date.now(), result = {}, stale = []
+      for (const p of paths) {
+        const hit = gitSummaryCache.get(p)
+        if (hit !== undefined && now - hit.at < GIT_SUMMARY_TTL) { if (hit.info) result[p] = hit.info; continue }
+        stale.push(p)
+      }
+      if (stale.length === 0 || typeof connection?.rpc?.call !== 'function') return result
+      let res
+      try { res = await connection.rpc.call('/dsh-workspace-path', 'git-summary', { paths: stale }) } catch { return result }
+      if (!res || res.ok === false) return result
+      const summaries = (res.value && res.value.summaries) || {}
+      for (const p of stale) {
+        const info = summaries[p] || null
+        gitSummaryCache.set(p, { at: Date.now(), info })
+        if (info) result[p] = info
+      }
+      return result
+    }
+    function gitTooltip(t, info) {
+      if (!info || info.isRepo !== true) return ''
+      if (info.changed === -1) return t.gitUnknown
+      if (info.changed > 0) return t.gitDirty.replace('{n}', String(info.changed))
+      return t.gitClean
+    }
     function usePopover(open, setOpen, place, triggerRef, panelClass) {
       React.useEffect(() => {
         if (!open) return undefined
         place()
         const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
-        const onPtr = (e) => { if (!triggerRef.current?.contains(e.target) && !e.target.closest?.(panelClass)) setOpen(false) }
+        const onPtr = (e) => {
+          if (triggerRef.current?.contains(e.target)) return
+          if (e.target.closest?.(panelClass)) return
+          if (e.target.closest?.(PORTAL_SURFACES)) return
+          setOpen(false)
+        }
         window.addEventListener('resize', place)
         document.addEventListener('keydown', onKey)
         document.addEventListener('pointerdown', onPtr)
@@ -247,12 +304,14 @@ function pickerModel(opts = {}) {
     const IconChat = ({ size = 13 }) => svg(size, h('path', { d: 'M2.5 3.5A1.5 1.5 0 0 1 4 2h8a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 12 11H5.5L2.8 13.7A.5.5 0 0 1 2 13.3V3.5z', stroke: 'currentColor', strokeWidth: 1.25, strokeLinejoin: 'round' }))
     const IconCheck = ({ size = 13 }) => svg(size, h('path', { d: 'M3 8.5l3.5 3.5 6.5-7', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
 
-    function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection }) {
+    function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo }) {
       const isCur = ws.workspaceId === currentId, display = abbreviateHomePath(ws.path, home)
       const badges = []
       if (ws.isToday) badges.push(h('span', { key: 'today', className: 'dsh-wspath-badge' }, t.today))
       if (isCur) badges.push(h('span', { key: 'cur', className: 'dsh-wspath-badge' }, t.current))
       if (ws.kind === 'day' && !ws.isToday) badges.push(h('span', { key: 'kind', className: 'dsh-wspath-kind' }, t.dayKind))
+      const gitLabel = gitStatusLabel(gitInfo)
+      if (gitLabel) badges.push(h('span', { key: 'git', className: 'dsh-wspath-git' + (isGitDirty(gitInfo) ? ' is-dirty' : ''), title: gitTooltip(t, gitInfo) }, gitLabel))
       return h('div', { className: 'dsh-wspath-row' + (isCur ? ' is-current' : '') },
         h('button', { type: 'button', className: 'dsh-wspath-item', title: ws.path, onClick: () => onSelect(ws) },
           h('span', { className: 'dsh-wspath-title' }, h('span', { className: 'dsh-wspath-name' }, ws.title || ws.path), badges),
@@ -270,12 +329,26 @@ function pickerModel(opts = {}) {
     function PathPanel(props) {
       const { t, model, query, onQuery, inputRef, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, onCreateSubdir, showNewBox, setShowNewBox, newSubdir, setNewSubdir, creatingSubdir, onAddWorkspace, canAddWorkspace, status, error, revealLabel, onOpenDays, onBack, connection } = props
       const rows = model.rows, searching = model.searching, view = model.view
+      const [gitMap, setGitMap] = React.useState(null)
+      // 打开工作区中心时拉一次 git 概览（只查项目行；按天目录不查）。查询在后台跑，
+      // 结果回来前列表照常显示，行只是暂时没有 git 标记。
+      React.useEffect(() => {
+        if (variant !== 'hub' || !canOpen || typeof connection?.rpc?.call !== 'function') return undefined
+        const paths = []
+        for (const ws of model.rows) {
+          if (ws.kind === 'project' && typeof ws.path === 'string' && ws.path !== '') paths.push(ws.path)
+        }
+        if (paths.length === 0) return undefined
+        let alive = true
+        fetchGitSummaries(connection, paths).then((map) => { if (alive) setGitMap(map) }).catch(() => {})
+        return () => { alive = false }
+      }, [variant, canOpen])
       const projectRows = searching ? rows.filter((ws) => ws.kind === 'project') : (view === 'projects' ? rows : [])
       const dayRows = searching ? rows.filter((ws) => ws.kind === 'day') : (view === 'days' ? rows : [])
       const emptyText = query ? t.noMatches : (view === 'days' ? t.emptyDays : t.empty)
       const renderGroup = (label, list) => list.length === 0 ? null : h(React.Fragment, null,
         searching ? h('div', { className: 'dsh-wspath-section' }, label) : null,
-        list.map((ws) => h(WorkspaceRow, { key: ws.workspaceId, t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection })),
+        list.map((ws) => h(WorkspaceRow, { key: ws.workspaceId, t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo: gitMap ? gitMap[ws.path] : undefined })),
       )
       const plusTitle = variant === 'picker' ? t.addWorkspace : t.newSubdir
       const plusClick = variant === 'picker' ? onAddWorkspace : () => setShowNewBox((v) => !v)
@@ -446,23 +519,55 @@ function pickerModel(opts = {}) {
       return connection.rpc.call('/dsh-workspace-path', 'run-command', { path, cmd })
     }
 
+    // Git 按钮默认动作（全局偏好）：'sidebar' 打开 Better Sidebar 的「文件变动」页，
+    // 'terminal' 保持旧行为（外部终端跑 git status）。右键菜单里可随时切换。
+    const GIT_ACTION_KEY = 'dsh.git-action'
+    function getGitAction() {
+      if (typeof localStorage === 'undefined') return 'sidebar'
+      return localStorage.getItem(GIT_ACTION_KEY) === 'terminal' ? 'terminal' : 'sidebar'
+    }
+    function setGitAction(action) {
+      if (typeof localStorage === 'undefined') return
+      try { localStorage.setItem(GIT_ACTION_KEY, action === 'terminal' ? 'terminal' : 'sidebar') } catch {}
+    }
+
+    /**
+     * 在 Better Sidebar 打开当前会话的「文件变动」页。
+     * 服务缺失、tab 被禁用或抛错时返回 false，调用方回退外部终端。
+     */
+    function openChangesPage(getBetterSidebar, sessionId) {
+      const sb = typeof getBetterSidebar === 'function' ? getBetterSidebar() : undefined
+      if (!sb || typeof sb.openTab !== 'function') return false
+      if (typeof sb.isTabEnabled === 'function' && sb.isTabEnabled('git') === false) return false
+      try {
+        sb.openTab({ type: 'git' }, sessionId ? { sessionId } : undefined)
+        return true
+      } catch { return false }
+    }
+
     function DevCmdConfigModal(props) {
-      const { open, onClose, wsPath, onSave } = props
+      const { open, onClose, wsPath, onSave, error } = props
       const [cmd, setCmd] = React.useState('')
+      const [busy, setBusy] = React.useState(false)
 
       React.useEffect(() => {
-        if (open) setCmd(getWsDevCmd(wsPath) || 'npm run dev')
+        if (open) { setCmd(getWsDevCmd(wsPath) || 'npm run dev'); setBusy(false) }
       }, [open, wsPath])
 
       if (!open || typeof document === 'undefined') return null
 
       const presets = ['npm run dev', 'pnpm dev', 'yarn start', 'cargo run', 'python main.py']
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         if (e) e.preventDefault()
         const trimmed = cmd.trim()
         setWsDevCmd(wsPath, trimmed)
-        onSave?.(trimmed)
+        if (!trimmed || !onSave) { onClose(); return }
+        setBusy(true)
+        const res = await onSave(trimmed)
+        setBusy(false)
+        // 启动失败时保持对话框打开并展示原因，不再静默关闭。
+        if (res && res.ok === false) return
         onClose()
       }
 
@@ -492,9 +597,10 @@ function pickerModel(opts = {}) {
                   onClick: () => setCmd(p),
                 }, p)),
               ),
+              error ? h('div', { className: 'dsh-dev-modal-error' }, error) : null,
               h('div', { className: 'dsh-dev-modal-foot' },
                 h('button', { type: 'button', className: 'dsh-dev-modal-btn is-cancel', onClick: onClose }, '取消'),
-                h('button', { type: 'submit', className: 'dsh-dev-modal-btn is-primary' }, '保存并启动'),
+                h('button', { type: 'submit', className: 'dsh-dev-modal-btn is-primary', disabled: busy }, busy ? '启动中…' : '保存并启动'),
               ),
             ),
           ),
@@ -503,46 +609,119 @@ function pickerModel(opts = {}) {
       )
     }
 
+    /** Git 按钮右键菜单：列出两种动作，点击项 = 设为默认并立即执行。 */
+    function DevGitMenu({ open, anchorRef, current, onPick, onClose }) {
+      const [coords, setCoords] = React.useState(null)
+      const place = React.useCallback(() => {
+        const btn = anchorRef.current
+        if (!btn) return
+        const r = btn.getBoundingClientRect(), w = Math.min(260, window.innerWidth - 16)
+        let l = r.right - w
+        if (l < 8) l = 8
+        setCoords({ left: l, top: r.bottom + 6, width: w })
+      }, [anchorRef])
+      usePopover(open, (next) => { if (!next && typeof onClose === 'function') onClose() }, place, anchorRef, '.dsh-dev-menu')
+      if (!open || !coords || typeof document === 'undefined') return null
+      const item = (value, label) => h('button', {
+        type: 'button',
+        className: 'dsh-wspath-hmenu-item' + (current === value ? ' is-active' : ''),
+        onClick: () => onPick(value),
+      },
+        h('span', { className: 'dsh-wspath-hmenu-icon' }, current === value ? h(IconCheck, { size: 13 }) : null),
+        h('span', null, label),
+      )
+      return ReactDOM.createPortal(
+        h('div', { className: 'dsh-wspath-hmenu dsh-dev-menu', style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' } },
+          h('div', { className: 'dsh-wspath-hmenu-head' },
+            h('div', { className: 'dsh-wspath-hmenu-title' }, 'Git 按钮默认动作'),
+            h('div', { className: 'dsh-wspath-sid-label' }, '点击即设为默认并执行'),
+          ),
+          h('div', { className: 'dsh-wspath-hmenu-list' },
+            item('sidebar', '打开「文件变动」页'),
+            item('terminal', '在外部终端运行 git status'),
+          ),
+        ), document.body)
+    }
+
     function DevActionButtons(props) {
-      const { connection, wsPath, size = 13, showBorder = false } = props
+      const { connection, wsPath, size = 13, showBorder = false, sessionId, getBetterSidebar, variant = 'row', big = false } = props
       const [modalOpen, setModalOpen] = React.useState(false)
+      const [modalError, setModalError] = React.useState('')
+      const [menuOpen, setMenuOpen] = React.useState(false)
+      const [gitAction, setGitActionState] = React.useState(getGitAction)
+      const gitBtnRef = React.useRef(null)
 
       if (!wsPath) return null
 
-      const onGitStatus = (e) => {
-        if (e) e.stopPropagation()
-        runWorkspaceCommand(connection, wsPath, 'git status')
+      // 宿主调用失败（通道 4xx/5xx、脚本被系统拒绝等）必须变成可见错误，不能静默吞掉。
+      const launch = async (cmd) => {
+        try {
+          const res = await runWorkspaceCommand(connection, wsPath, cmd)
+          return res && typeof res === 'object' ? res : { ok: false, error: { message: '宿主连接不可用，请刷新页面后重试' } }
+        } catch (err) {
+          return { ok: false, error: { message: String(err?.message || err) } }
+        }
       }
 
-      const onRunDev = (e) => {
+      const openModal = (message) => { setModalError(message || ''); setModalOpen(true) }
+
+      // header 位置按偏好动作执行；工作区列表行保持旧行为（外部终端 git status）。
+      const runGitAction = (action) => {
+        if (action !== 'terminal' && openChangesPage(getBetterSidebar, sessionId)) return
+        launch('git status')
+      }
+
+      const onGitClick = (e) => {
+        if (e) e.stopPropagation()
+        setMenuOpen(false)
+        runGitAction(variant === 'header' ? gitAction : 'terminal')
+      }
+
+      const onGitContext = (e) => {
+        if (variant !== 'header') return
+        e.preventDefault()
+        e.stopPropagation()
+        setMenuOpen(true)
+      }
+
+      const pickGitAction = (value) => {
+        setGitAction(value)
+        setGitActionState(value)
+        setMenuOpen(false)
+        runGitAction(value)
+      }
+
+      const onRunDev = async (e) => {
         if (e) e.stopPropagation()
         const savedCmd = getWsDevCmd(wsPath)
-        if (!savedCmd) {
-          setModalOpen(true)
-          return
-        }
-        runWorkspaceCommand(connection, wsPath, savedCmd)
+        if (!savedCmd) { openModal(''); return }
+        const res = await launch(savedCmd)
+        if (res && res.ok === false) openModal(res.error?.message || '启动失败')
       }
 
       const onContextMenu = (e) => {
         e.preventDefault()
         e.stopPropagation()
-        setModalOpen(true)
+        openModal('')
       }
 
       const devCmd = getWsDevCmd(wsPath)
       const devTip = devCmd ? `启动: ${devCmd}\n(右键修改启动命令)` : '设置并启动项目开发命令'
-      const gitTip = '在外部终端运行 git status'
+      const gitTip = variant === 'header'
+        ? (gitAction === 'terminal' ? '在外部终端运行 git status\n(右键切换默认动作)' : '打开「文件变动」页 (Better Sidebar)\n(右键切换默认动作)')
+        : '在外部终端运行 git status'
 
-      const btnCls = showBorder ? 'dsh-dev-btn is-bordered' : 'dsh-dev-btn'
+      const btnCls = (showBorder ? 'dsh-dev-btn is-bordered' : 'dsh-dev-btn') + (big ? ' is-big' : '')
 
-      return h('div', { className: 'dsh-dev-actions' },
+      return h('div', { className: 'dsh-dev-actions' + (big ? ' is-big' : '') },
         h('button', {
+          ref: gitBtnRef,
           type: 'button',
           className: btnCls,
           title: gitTip,
-          'aria-label': 'Git Status',
-          onClick: onGitStatus,
+          'aria-label': 'Git',
+          onClick: onGitClick,
+          onContextMenu: onGitContext,
         }, h(IconGit, { size })),
         h('button', {
           type: 'button',
@@ -552,15 +731,32 @@ function pickerModel(opts = {}) {
           onClick: onRunDev,
           onContextMenu: onContextMenu,
         }, h(IconRocket, { size })),
+        h(DevGitMenu, { open: menuOpen, anchorRef: gitBtnRef, current: gitAction, onPick: pickGitAction, onClose: () => setMenuOpen(false) }),
         h(DevCmdConfigModal, {
           open: modalOpen,
           onClose: () => setModalOpen(false),
           wsPath,
-          onSave: (newCmd) => {
-            if (newCmd) runWorkspaceCommand(connection, wsPath, newCmd)
+          error: modalError,
+          onSave: async (newCmd) => {
+            if (!newCmd) return undefined
+            const res = await launch(newCmd)
+            setModalError(res && res.ok === false ? (res.error?.message || '启动失败') : '')
+            return res
           },
         }),
       )
+    }
+
+    /** 会话头部右上角的 Git + 启动命令按钮（跟随当前会话的工作区，28px 大号样式）。 */
+    function SessionDevActions({ sessionId, workspaces, sessions, connection, getBetterSidebar }) {
+      const sesSnap = useSnapshot(sessions?.list), wsSnap = useSnapshot(workspaces?.list)
+      const targetId = sessionId || sesSnap?.current
+      const ws = findSessionWorkspace(wsSnap, sesSnap, targetId)
+      if (!ws || !ws.path) return null
+      return h(DevActionButtons, {
+        connection, wsPath: ws.path, sessionId: targetId, getBetterSidebar,
+        size: 16, variant: 'header', big: true,
+      })
     }
 
     const APP_NAMES = {
@@ -808,7 +1004,6 @@ function pickerModel(opts = {}) {
         ),
        h('span', { className: 'dsh-wspath-hsep' }),
        h('div', { className: 'dsh-wspath-hactions' },
-          h(DevActionButtons, { connection, wsPath: ws.path, size: 12 }),
          h('button', {
             type: 'button',
             className: 'dsh-wspath-haction-btn' + (copied ? ' is-copied' : ''),
@@ -890,6 +1085,14 @@ function pickerModel(opts = {}) {
           return () => { uiWorkspace = undefined }
         })
       }
+      // Better Sidebar 服务（可选）：晚到也行，Git 按钮通过 getter 取最新值。
+      let betterSidebar
+      if (typeof ctx.inject === 'function') {
+        ctx.inject(['betterSidebar'], (sub) => {
+          betterSidebar = sub.betterSidebar
+          return () => { betterSidebar = undefined }
+        })
+      }
       const startSession = (workspaceId) => {
         const owner = (uiWorkspace && typeof uiWorkspace.startSession === 'function') ? uiWorkspace : ctx.workspaces
         if (owner && typeof owner.startSession === 'function') owner.startSession(workspaceId)
@@ -915,6 +1118,21 @@ function pickerModel(opts = {}) {
             h(SessionIdBadge, { sessionId: props?.sessionId, sessions: ctx.sessions }))
         } catch { disposeWs = undefined; disposeSid = undefined }
         return () => { if (disposeWs) disposeWs(); if (disposeSid) disposeSid() }
+      })
+      // 会话头部右上角：大号 Git + 启动命令按钮（utilities 槽，order 升序排列）。
+      ctx.slots.inject('conversation.session.header.utilities', () => {
+        let dispose
+        try {
+          dispose = ctx.slots.register({ name: 'conversation.session.header.utilities', id: 'dsh-workspace-path-dev', order: 40 }, (props) =>
+            h(SessionDevActions, {
+              sessionId: props?.sessionId,
+              workspaces: ctx.workspaces,
+              sessions: ctx.sessions,
+              connection: ctx.connection,
+              getBetterSidebar: () => betterSidebar,
+            }))
+        } catch { dispose = undefined }
+        return () => { if (dispose) dispose() }
       })
       ctx.slots.inject('conversation.hero.workspace', () => {
         let dispose

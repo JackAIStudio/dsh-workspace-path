@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { abbreviateHomePath, filterWorkspaces, hostFileManagerKind, listCopyableWorkspaces } from '../paths.js'
+import { abbreviateHomePath, filterWorkspaces, gitStatusLabel, hostFileManagerKind, isGitDirty, listCopyableWorkspaces } from '../paths.js'
 
 describe('abbreviateHomePath', () => {
   it('returns empty for missing path', () => {
@@ -85,5 +85,28 @@ describe('filterWorkspaces', () => {
 
   it('is case-insensitive', () => {
     assert.deepEqual(filterWorkspaces([day, plugin], 'PLUGINS'), [plugin])
+  })
+})
+
+describe('gitStatusLabel / isGitDirty', () => {
+  it('hides non-repositories', () => {
+    assert.equal(gitStatusLabel(undefined), '')
+    assert.equal(gitStatusLabel({ isRepo: false, changed: 0 }), '')
+    assert.equal(isGitDirty({ isRepo: false, changed: 0 }), false)
+  })
+
+  it('labels a clean tree and counts pending changes', () => {
+    const clean = { isRepo: true, changed: 0 }
+    assert.equal(gitStatusLabel(clean), '✓')
+    assert.equal(isGitDirty(clean), false)
+    const dirty = { isRepo: true, changed: 3 }
+    assert.equal(gitStatusLabel(dirty), '● 3')
+    assert.equal(isGitDirty(dirty), true)
+  })
+
+  it('marks a failed probe as unknown and dirty', () => {
+    const unknown = { isRepo: true, changed: -1 }
+    assert.equal(gitStatusLabel(unknown), '?')
+    assert.equal(isGitDirty(unknown), true)
   })
 })

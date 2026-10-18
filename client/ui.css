@@ -26,6 +26,8 @@
 .dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}
 .dsh-wspath-badge,.dsh-wspath-kind{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:16px;color:var(--dsw-alias-label-secondary)}
 .dsh-wspath-kind{font-size:10px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-tertiary)}
+.dsh-wspath-git{flex:none;display:inline-flex;align-items:center;font-size:11px;line-height:16px;font-weight:600;color:var(--dsw-alias-state-success-primary, #10b981)}
+.dsh-wspath-git.is-dirty{color:#f59e0b}
 .dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--dsw-alias-label-tertiary)}
 .dsh-wspath-actions{display:flex;align-items:center;gap:2px;flex:none}
 .dsh-wspath-icon-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}
@@ -54,6 +56,7 @@
 .dsh-wspath-hmenu-list{display:flex;flex-direction:column;gap:2px}
 .dsh-wspath-hmenu-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:background-color 100ms ease,color 100ms ease}
 .dsh-wspath-hmenu-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}
+.dsh-wspath-hmenu-item.is-active{color:var(--dsw-alias-brand-primary, #2563eb)}
 .dsh-wspath-hmenu-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;flex:none;color:var(--dsw-alias-label-tertiary)}
 .dsh-wspath-hmenu-item:hover .dsh-wspath-hmenu-icon{color:var(--dsw-alias-label-primary)}
 .dsh-wspath-hmenu-status{padding:4px 8px;font-size:11px;border-radius:6px;color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.1);margin-top:2px;text-align:center}
@@ -97,6 +100,9 @@
 .dsh-dev-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}
 .dsh-dev-btn.is-bordered{height:24px;min-width:24px;padding:0 4px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06))}
 .dsh-dev-btn.is-bordered:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38));background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14))}
+.dsh-dev-actions.is-big{gap:4px}
+.dsh-dev-btn.is-big{width:28px;height:28px;border-radius:6px}
+.dsh-dev-btn.is-big:hover{background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.10))}
 .dsh-dev-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .dsh-dev-modal{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:16px;border-radius:12px;background:var(--dsw-alias-bg-layer-2,#1e1e1e);border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));box-shadow:var(--dsw-shadow-lv3, 0 10px 30px rgba(0,0,0,0.35));color:var(--dsw-alias-label-primary,#fff)}
 .dsh-dev-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -117,3 +123,5 @@
 .dsh-dev-modal-btn.is-cancel:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.08));color:var(--dsw-alias-label-primary,#fff)}
 .dsh-dev-modal-btn.is-primary{background:var(--dsw-alias-brand-primary,#2563eb);color:#fff}
 .dsh-dev-modal-btn.is-primary:hover{opacity:0.9}
+.dsh-dev-modal-btn.is-primary:disabled{opacity:0.6;cursor:default}
+.dsh-dev-modal-error{font-size:11px;line-height:1.5;color:var(--dsw-alias-state-error-primary,#f87171);background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.35);border-radius:6px;padding:4px 8px;word-break:break-all}

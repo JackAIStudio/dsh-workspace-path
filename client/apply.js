@@ -7,6 +7,14 @@
           return () => { uiWorkspace = undefined }
         })
       }
+      // Better Sidebar 服务（可选）：晚到也行，Git 按钮通过 getter 取最新值。
+      let betterSidebar
+      if (typeof ctx.inject === 'function') {
+        ctx.inject(['betterSidebar'], (sub) => {
+          betterSidebar = sub.betterSidebar
+          return () => { betterSidebar = undefined }
+        })
+      }
       const startSession = (workspaceId) => {
         const owner = (uiWorkspace && typeof uiWorkspace.startSession === 'function') ? uiWorkspace : ctx.workspaces
         if (owner && typeof owner.startSession === 'function') owner.startSession(workspaceId)
@@ -32,6 +40,21 @@
             h(SessionIdBadge, { sessionId: props?.sessionId, sessions: ctx.sessions }))
         } catch { disposeWs = undefined; disposeSid = undefined }
         return () => { if (disposeWs) disposeWs(); if (disposeSid) disposeSid() }
+      })
+      // 会话头部右上角：大号 Git + 启动命令按钮（utilities 槽，order 升序排列）。
+      ctx.slots.inject('conversation.session.header.utilities', () => {
+        let dispose
+        try {
+          dispose = ctx.slots.register({ name: 'conversation.session.header.utilities', id: 'dsh-workspace-path-dev', order: 40 }, (props) =>
+            h(SessionDevActions, {
+              sessionId: props?.sessionId,
+              workspaces: ctx.workspaces,
+              sessions: ctx.sessions,
+              connection: ctx.connection,
+              getBetterSidebar: () => betterSidebar,
+            }))
+        } catch { dispose = undefined }
+        return () => { if (dispose) dispose() }
       })
       ctx.slots.inject('conversation.hero.workspace', () => {
         let dispose

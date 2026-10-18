@@ -13,4 +13,20 @@ describe('packed client.js', () => {
     assert.match(src, /conversation\.hero\.workspace/)
     assert.match(src, /dsh-workspace-path-hero/)
   })
+
+  it('keeps portaled popups exempt from the click-outside close (regression: 保存并启动 无效)', () => {
+    // 面板内的 pointerdown 关闭逻辑必须放过 Portal 浮层（启动命令对话框 / Hero 打开方式菜单 / 会话 ID 气泡 / Git 默认动作菜单），
+    // 否则点“保存并启动”会先关掉面板并卸载对话框，click 永远到不了按钮。
+    assert.match(src, /const PORTAL_SURFACES = '\.dsh-dev-modal-overlay, \.dsh-hero-app-menu, \.dsh-wspath-sid-popover, \.dsh-dev-menu'/)
+    assert.match(src, /if \(e\.target\.closest\?\.\(PORTAL_SURFACES\)\) return/)
+    assert.match(src, /dsh-dev-modal-error/)
+  })
+
+  it('ships the right-corner dev pair, the git-action menu and the git-summary probe', () => {
+    assert.match(src, /conversation\.session\.header\.utilities/)
+    assert.match(src, /function SessionDevActions/)
+    assert.match(src, /function DevGitMenu/)
+    assert.match(src, /git-summary/)
+    assert.match(src, /function gitStatusLabel/)
+  })
 })

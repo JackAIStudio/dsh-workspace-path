@@ -149,6 +149,26 @@ export function pinCurrentWorkspace(rows, currentId) {
 }
 
 /**
+ * Display label of one git summary row: '' for non-repositories, '✓' for a
+ * clean tree, '● n' for n pending changes, '?' when the probe failed (-1).
+ * @param {{ isRepo?: boolean, changed?: number } | null | undefined} info
+ */
+export function gitStatusLabel(info) {
+  if (!info || info.isRepo !== true) return ''
+  if (info.changed === -1) return '?'
+  return info.changed > 0 ? `● ${info.changed}` : '✓'
+}
+
+/**
+ * Whether a git summary row reads as "has pending changes" (an unknown probe
+ * result counts as pending so the marker never claims a false clean).
+ * @param {{ isRepo?: boolean, changed?: number } | null | undefined} info
+ */
+export function isGitDirty(info) {
+  return Boolean(info && info.isRepo === true && info.changed !== 0)
+}
+
+/**
  * Default view is projects only. A non-empty query searches both kinds so a
  * date can be typed without opening the day list. `view: 'days'` is the extra step.
  * @param {{ items?: readonly object[], query?: string, home?: string, view?: 'projects' | 'days', currentId?: string, now?: Date }} opts

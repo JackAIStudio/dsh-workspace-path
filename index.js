@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import path from 'node:path'
+import { summarizeGitRepos } from './git-summary.js'
 
 const execFileAsync = promisify(execFile)
 
@@ -20,6 +21,10 @@ export function apply(ctx) {
     const channel = '/dsh-workspace-path'
     const handler = async (endpoint, payload) => {
       try {
+        if (endpoint === 'git-summary') {
+          const summaries = await summarizeGitRepos(payload.paths)
+          return { ok: true, value: { summaries } }
+        }
         const targetPath = payload.path
         if (!targetPath) return { ok: false, error: { code: 'bad_request', message: 'path required' } }
 
