@@ -27,7 +27,7 @@
         let dispose
         try {
           dispose = ctx.slots.register({ name: 'sidebar.footer.action', id: 'dsh-workspace-path' }, (props) =>
-            h(PathButton, { wide: props?.wide, workspaces: ctx.workspaces, sessions: ctx.sessions, connection: ctx.connection, startSession }))
+            h(PathButton, { wide: props?.wide, workspaces: ctx.workspaces, sessions: ctx.sessions, uiWorkspace, getUiWorkspace: () => uiWorkspace, connection: ctx.connection, startSession }))
         } catch { dispose = undefined }
         return () => { if (dispose) dispose() }
       })
@@ -66,7 +66,9 @@
           }, (props) => h(HeroWorkspacePicker, {
             ...props,
             workspaces: ctx.workspaces,
+            sessions: ctx.sessions,
             uiWorkspace,
+            getUiWorkspace: () => uiWorkspace,
             connection: ctx.connection,
           }))
         } catch (e) {

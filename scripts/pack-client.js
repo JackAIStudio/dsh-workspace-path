@@ -6,6 +6,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const css = readFileSync(join(root, 'client/ui.css'), 'utf8')
 const paths = readFileSync(join(root, 'paths.js'), 'utf8').replace(/^export /gm, '')
 const ui = readFileSync(join(root, 'client/ui.js'), 'utf8')
+const addWorkspace = readFileSync(join(root, 'client/add-workspace.js'), 'utf8')
 const devTools = readFileSync(join(root, 'client/dev-tools.js'), 'utf8')
 const heroTools = readFileSync(join(root, 'client/hero-tools.js'), 'utf8')
 const badges = readFileSync(join(root, 'client/badges.js'), 'utf8')
@@ -29,6 +30,7 @@ const out = `window.__ModuleLoader__.load({
     }
 ${paths}
 ${ui}
+${addWorkspace}
 ${devTools}
 ${heroTools}
 ${badges}

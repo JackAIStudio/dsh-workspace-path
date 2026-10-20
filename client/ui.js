@@ -1,6 +1,6 @@
     const copy = {
-      zh: { trigger: '工作区中心 (点击切换)', search: '搜索项目 (也可搜日期)...', empty: '暂无项目工作区', emptyDays: '暂无按天工作区', noMatches: '无匹配工作区', current: '当前工作区', copied: '已复制路径', copyFailed: '复制失败', copyBtn: '复制绝对路径', terminal: '在终端打开', openMac: '在访达中显示', openWindows: '在资源管理器中显示', openGeneric: '在文件管理器中显示', newSubdir: '在当前工作区下新建子目录', createBtn: '创建并进入', creating: '创建中...', promptName: '子目录名称 (如 feature-1)', newSessionInWs: '在此工作区新建会话', clickActionHint: '点击查看快捷操作', sessionTitle: '当前会话', sessionIdTitle: '会话唯一标识 (Session ID)', copySessionId: '复制会话 ID', copiedSessionId: '已复制会话 ID', openInNewWindow: '在新独立窗口中打开', daysEntry: '按天工作区', daysBack: '返回项目', today: '今天', dayKind: '按天', projects: '项目', addWorkspace: '添加工作区…', gitClean: '工作区干净', gitDirty: '{n} 个未提交改动', gitUnknown: 'git 状态未知' },
-      en: { trigger: 'Workspace Hub (Click to Switch)', search: 'Search projects (dates too)...', empty: 'No project workspaces', emptyDays: 'No day workspaces', noMatches: 'No matching workspaces', current: 'Current workspace', copied: 'Path copied', copyFailed: 'Copy failed', copyBtn: 'Copy absolute path', terminal: 'Open in Terminal', openMac: 'Show in Finder', openWindows: 'Show in File Explorer', openGeneric: 'Show in file manager', newSubdir: 'New subdir in current workspace', createBtn: 'Create & Enter', creating: 'Creating...', promptName: 'Subdirectory name (e.g. feature-1)', newSessionInWs: 'New session here', clickActionHint: 'Click for actions', sessionTitle: 'Current Session', sessionIdTitle: 'Session Identifier (Session ID)', copySessionId: 'Copy Session ID', copiedSessionId: 'Session ID Copied', openInNewWindow: 'Open in New Window', daysEntry: 'Day workspaces', daysBack: 'Back to projects', today: 'Today', dayKind: 'Day', projects: 'Projects', addWorkspace: 'Add workspace…', gitClean: 'Clean working tree', gitDirty: '{n} uncommitted change(s)', gitUnknown: 'git status unavailable' },
+      zh: { trigger: '工作区中心 (点击切换)', search: '搜索项目 (也可搜日期)...', empty: '暂无项目工作区', emptyDays: '暂无按天工作区', noMatches: '无匹配工作区', current: '当前工作区', copied: '已复制路径', copyFailed: '复制失败', copyBtn: '复制绝对路径', terminal: '在终端打开', openMac: '在访达中显示', openWindows: '在资源管理器中显示', openGeneric: '在文件管理器中显示', newSessionInWs: '在此工作区新建会话', clickActionHint: '点击查看快捷操作', sessionTitle: '当前会话', sessionIdTitle: '会话唯一标识 (Session ID)', copySessionId: '复制会话 ID', copiedSessionId: '已复制会话 ID', openInNewWindow: '在新独立窗口中打开', daysEntry: '按天工作区', daysBack: '返回项目', today: '今天', dayKind: '按天', projects: '项目', addWorkspace: '添加工作区…', pickerUnavailable: '当前宿主没有可用的目录选择器', gitClean: '工作区干净', gitDirty: '{n} 个未提交改动', gitUnknown: 'git 状态未知' },
+      en: { trigger: 'Workspace Hub (Click to Switch)', search: 'Search projects (dates too)...', empty: 'No project workspaces', emptyDays: 'No day workspaces', noMatches: 'No matching workspaces', current: 'Current workspace', copied: 'Path copied', copyFailed: 'Copy failed', copyBtn: 'Copy absolute path', terminal: 'Open in Terminal', openMac: 'Show in Finder', openWindows: 'Show in File Explorer', openGeneric: 'Show in file manager', newSessionInWs: 'New session here', clickActionHint: 'Click for actions', sessionTitle: 'Current Session', sessionIdTitle: 'Session Identifier (Session ID)', copySessionId: 'Copy Session ID', copiedSessionId: 'Session ID Copied', openInNewWindow: 'Open in New Window', daysEntry: 'Day workspaces', daysBack: 'Back to projects', today: 'Today', dayKind: 'Day', projects: 'Projects', addWorkspace: 'Add workspace…', pickerUnavailable: 'No directory picker is available on this host', gitClean: 'Clean working tree', gitDirty: '{n} uncommitted change(s)', gitUnknown: 'git status unavailable' },
     }
     const locale = () => (typeof document !== 'undefined' && String(document.documentElement.lang).toLowerCase().startsWith('en')) ? copy.en : copy.zh
     function hostRevealLabel(t, home) {
@@ -85,6 +85,7 @@
     const IconChevronLeft = ({ size = 12 }) => svg(size, h('path', { d: 'M10 4L6 8l4 4', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
     const IconChat = ({ size = 13 }) => svg(size, h('path', { d: 'M2.5 3.5A1.5 1.5 0 0 1 4 2h8a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 12 11H5.5L2.8 13.7A.5.5 0 0 1 2 13.3V3.5z', stroke: 'currentColor', strokeWidth: 1.25, strokeLinejoin: 'round' }))
     const IconCheck = ({ size = 13 }) => svg(size, h('path', { d: 'M3 8.5l3.5 3.5 6.5-7', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
+    const IconSpinner = ({ size = 14 }) => svg(size, h('circle', { cx: 8, cy: 8, r: 5.2, stroke: 'currentColor', strokeWidth: 1.4, strokeDasharray: '9 7', strokeLinecap: 'round' }))
 
     function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo }) {
       const isCur = ws.workspaceId === currentId, display = abbreviateHomePath(ws.path, home)
@@ -109,7 +110,7 @@
     }
 
     function PathPanel(props) {
-      const { t, model, query, onQuery, inputRef, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, onCreateSubdir, showNewBox, setShowNewBox, newSubdir, setNewSubdir, creatingSubdir, onAddWorkspace, canAddWorkspace, status, error, revealLabel, onOpenDays, onBack, connection } = props
+      const { t, model, query, onQuery, inputRef, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, onAddWorkspace, canAddWorkspace, adding, status, error, revealLabel, onOpenDays, onBack, connection } = props
       const rows = model.rows, searching = model.searching, view = model.view
       const [gitMap, setGitMap] = React.useState(null)
       // 打开工作区中心时拉一次 git 概览（只查项目行；按天目录不查）。查询在后台跑，
@@ -132,19 +133,16 @@
         searching ? h('div', { className: 'dsh-wspath-section' }, label) : null,
         list.map((ws) => h(WorkspaceRow, { key: ws.workspaceId, t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo: gitMap ? gitMap[ws.path] : undefined })),
       )
-      const plusTitle = variant === 'picker' ? t.addWorkspace : t.newSubdir
-      const plusClick = variant === 'picker' ? onAddWorkspace : () => setShowNewBox((v) => !v)
+      // 两处「＋」都走官方那条路：打开目录选择器（原生选择框自带新建文件夹）→ 采纳并打开。
+      const plusTitle = t.addWorkspace
+      const plusClick = onAddWorkspace
       const showPlus = variant === 'hub' || (variant === 'picker' && canAddWorkspace)
       return h(React.Fragment, null,
         h('div', { className: 'dsh-wspath-search-row' },
           h('input', { ref: inputRef, type: 'search', value: query, placeholder: t.search, 'aria-label': t.search, onChange: (e) => onQuery(e.target.value), onKeyDown: (e) => { if (e.key === 'Enter' && rows[0]) { e.preventDefault(); onSelect(rows[0]) } } }),
-          showPlus ? h('button', { type: 'button', className: 'dsh-wspath-add-btn' + (showNewBox ? ' is-active' : ''), title: plusTitle, 'aria-label': plusTitle, onClick: plusClick }, h(IconPlus)) : null,
+          showPlus ? h('button', { type: 'button', className: 'dsh-wspath-add-btn', title: plusTitle, 'aria-label': plusTitle, disabled: Boolean(adding) || !canAddWorkspace, onClick: plusClick }, adding ? h(IconSpinner) : h(IconPlus)) : null,
         ),
         view === 'days' ? h('button', { type: 'button', className: 'dsh-wspath-back', onClick: onBack }, h(IconChevronLeft), t.daysBack) : null,
-        variant === 'hub' && showNewBox ? h('form', { className: 'dsh-wspath-new-box', onSubmit: (e) => { e.preventDefault(); onCreateSubdir() } },
-          h('input', { type: 'text', autoFocus: true, value: newSubdir, placeholder: t.promptName, onChange: (e) => setNewSubdir(e.target.value) }),
-          h('button', { type: 'submit', disabled: creatingSubdir || !newSubdir.trim() }, creatingSubdir ? t.creating : t.createBtn),
-        ) : null,
         rows.length === 0 ? h('p', { className: 'dsh-wspath-empty' }, emptyText) : h('div', { className: 'dsh-wspath-list' },
           view === 'days' ? renderGroup(t.daysEntry, dayRows) : h(React.Fragment, null, renderGroup(t.projects, projectRows), renderGroup(t.daysEntry, dayRows)),
         ),
@@ -154,17 +152,18 @@
     }
 
     function PathButton(props) {
-      const { wide, workspaces, connection, startSession } = props
+      const { wide, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, startSession } = props
       const t = locale(), inputRef = React.useRef(null), buttonRef = React.useRef(null), copiedTimer = React.useRef(null)
       const [open, setOpen] = React.useState(false)
-      const [showNewBox, setShowNewBox] = React.useState(false), [newSubdir, setNewSubdir] = React.useState(''), [creatingSubdir, setCreatingSubdir] = React.useState(false)
+      const [adding, setAdding] = React.useState(false)
       const [coords, setCoords] = React.useState(null)
-      const panel = usePanelReset(open, () => { setShowNewBox(false); setNewSubdir('') })
-      const wsSnap = useSnapshot(workspaces?.list), host = useSnapshot(connection?.hostDescription)
+      const panel = usePanelReset(open)
+      const wsSnap = useSnapshot(workspaces?.list), sesSnap = useSnapshot(sessions?.list), host = useSnapshot(connection?.hostDescription)
       const items = wsSnap?.items || [], currentId = wsSnap?.current, home = host?.home
+      const sessionsById = sesSnap?.byId
       const canOpen = Boolean(connection?.isLoopback === true && (host ? host.canOpenPath === true : true))
       const currentWs = items.find((it) => it.workspaceId === currentId)
-      const model = pickerModel({ items, query: panel.query, home, view: panel.view, currentId })
+      const model = pickerModel({ items, query: panel.query, home, view: panel.view, currentId, sessionsById })
       const place = React.useCallback(() => {
         const btn = buttonRef.current
         if (!btn) return
@@ -184,21 +183,18 @@
       const onCopy = async (ws) => { const ok = await writeClipboard(ws.path); flash(ok ? t.copied : t.copyFailed, !ok) }
       const onOpen = (ws) => canOpen && connection?.rpc?.call('/dsh-workspace-path', 'reveal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
       const onTerminal = (ws) => canOpen && connection?.rpc?.call('/dsh-workspace-path', 'terminal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
-      const onCreateSubdir = async () => {
-        const name = newSubdir.trim()
-        if (!name || !currentWs?.path || creatingSubdir) return
-        setCreatingSubdir(true)
+      const onAddWorkspace = async () => {
+        if (adding) return
+        setAdding(true)
         try {
-          const childPath = await workspaces.createChildDirectory(currentWs.path, name)
-          const newWs = await workspaces.create({ path: childPath })
-          setOpen(false)
-          if (typeof startSession === 'function') startSession(newWs.workspaceId)
-        } catch (e) { flash(e?.message || 'Create failed', true) } finally { setCreatingSubdir(false) }
+          const added = await pickAndAddWorkspace({ uiWorkspace, getUiWorkspace, workspaces, startSession })
+          if (added) setOpen(false)
+        } catch (e) { flash(e?.message || String(e), true) } finally { setAdding(false) }
       }
       const node = open && coords && typeof document !== 'undefined'
         ? ReactDOM.createPortal(
             h('div', { className: 'dsh-wspath-panel', style: { position: 'fixed', left: coords.left + 'px', bottom: coords.bottom + 'px', width: coords.width + 'px' } },
-              h(PathPanel, { t, model, query: panel.query, onQuery: panel.setQuery, inputRef, currentId: currentWs?.workspaceId, home, variant: 'hub', canOpen, onSelect, onCopy, onOpen, onTerminal, onCreateSubdir, showNewBox, setShowNewBox, newSubdir, setNewSubdir, creatingSubdir, status: panel.status, error: panel.error, revealLabel: hostRevealLabel(t, home), onOpenDays: () => { panel.setQuery(''); panel.setView('days') }, onBack: () => { panel.setQuery(''); panel.setView('projects') }, connection }),
+              h(PathPanel, { t, model, query: panel.query, onQuery: panel.setQuery, inputRef, currentId: currentWs?.workspaceId, home, variant: 'hub', canOpen, onSelect, onCopy, onOpen, onTerminal, canAddWorkspace: typeof (getUiWorkspace?.() ?? uiWorkspace)?.pickDirectory === 'function' && typeof workspaces?.create === 'function', onAddWorkspace, adding, status: panel.status, error: panel.error, revealLabel: hostRevealLabel(t, home), onOpenDays: () => { panel.setQuery(''); panel.setView('days') }, onBack: () => { panel.setQuery(''); panel.setView('projects') }, connection }),
             ), document.body) : null
       return h('div', { className: wide === false ? 'dsh-wspath' : 'dsh-wspath dsh-wspath-wide' },
         h('button', { ref: buttonRef, type: 'button', className: 'dsh-wspath-btn' + (open ? ' is-open' : ''), title: t.trigger, 'aria-label': t.trigger, onClick: () => { setOpen((v) => !v); panel.setStatus('') } }, h(IconFolder, { size: 18 })),
@@ -207,16 +203,17 @@
     }
 
     function HeroWorkspacePicker(props) {
-      const { open, anchorRef, selectedId, onPick, onClose, workspaces, uiWorkspace, connection, useWorkspaces } = props
+      const { open, anchorRef, selectedId, onPick, onClose, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, useWorkspaces } = props
       const t = locale(), inputRef = React.useRef(null)
       const [coords, setCoords] = React.useState(null)
       const panel = usePanelReset(open)
       const wsSnap = useSnapshot(workspaces?.list)
+      const sesSnap = useSnapshot(sessions?.list)
       const host = useSnapshot(connection?.hostDescription)
       const home = host?.homeDirectory || host?.home
       const snap = typeof useWorkspaces === 'function' ? useWorkspaces((state) => state) : wsSnap
       const items = snap?.items || wsSnap?.items || []
-      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId })
+      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId, sessionsById: sesSnap?.byId })
       const place = React.useCallback(() => {
         const btn = anchorRef?.current
         if (!btn) return
@@ -231,20 +228,18 @@
         if (typeof onPick === 'function') onPick(ws.workspaceId)
         if (typeof onClose === 'function') onClose()
       }
-      const canPickDir = typeof uiWorkspace?.pickDirectory === 'function' && typeof workspaces?.create === 'function'
+      const canPickDir = typeof (getUiWorkspace?.() ?? uiWorkspace)?.pickDirectory === 'function' && typeof workspaces?.create === 'function'
+      const [adding, setAdding] = React.useState(false)
       const handleAddWorkspace = async () => {
-        if (!canPickDir) return
+        if (!canPickDir || adding) return
+        setAdding(true)
         try {
-          const pickedPath = await uiWorkspace.pickDirectory()
-          if (!pickedPath) return
-          const res = await workspaces.create({ path: pickedPath })
-          if (res?.workspaceId) {
-            handleSelect(res)
-          }
+          const added = await pickAndAddWorkspace({ uiWorkspace, getUiWorkspace, workspaces, startSession: (workspaceId) => handleSelect({ workspaceId }) })
+          if (added) onClose?.()
         } catch (err) {
           panel.setError(true)
           panel.setStatus(err instanceof Error ? err.message : String(err))
-        }
+        } finally { setAdding(false) }
       }
       const node = open && coords && typeof document !== 'undefined'
         ? ReactDOM.createPortal(
@@ -261,6 +256,7 @@
                 onSelect: handleSelect,
                 canAddWorkspace: canPickDir,
                 onAddWorkspace: handleAddWorkspace,
+                adding,
                 status: panel.status,
                 error: panel.error,
                 onOpenDays: () => { panel.setQuery(''); panel.setView('days') },

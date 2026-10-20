@@ -149,6 +149,53 @@ export function pinCurrentWorkspace(rows, currentId) {
 }
 
 /**
+ * Last-used instant of one workspace: its newest session activity, falling
+ * back to the workspace's own mutation time for a workspace with no session.
+ * @param {{ workspaceId?: string, sessionIds?: readonly string[], updatedAt?: string }} ws
+ * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ */
+export function lastUsedAt(ws, sessionsById) {
+  let latest = 0
+  for (const id of ws?.sessionIds ?? []) {
+    const at = sessionsById?.[id]?.updatedAt
+    if (typeof at === 'number' && Number.isFinite(at) && at > latest) latest = at
+  }
+  if (latest > 0) return latest
+  const touched = Date.parse(String(ws?.updatedAt ?? ''))
+  return Number.isFinite(touched) ? touched : 0
+}
+
+/**
+ * Most recently used first; never-used rows keep their host order. The sort is
+ * stable, so equal timestamps preserve the registry order.
+ * @param {readonly object[]} rows
+ * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ */
+export function sortByRecentUse(rows, sessionsById) {
+  return (rows ?? [])
+    .map((row, index) => ({ row, index, at: lastUsedAt(row, sessionsById) }))
+    .sort((a, b) => (b.at - a.at) || (a.index - b.index))
+    .map((entry) => entry.row)
+}
+
+/**
+ * Project list order: most recently used first, with the current workspace
+ * leading only when it ties the newest row (no usage data at all, or the
+ * session the operator is looking at was the last thing touched).
+ * @param {readonly object[]} rows
+ * @param {string | undefined} currentId
+ * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ */
+export function orderProjectsByRecentUse(rows, currentId, sessionsById) {
+  const sorted = sortByRecentUse(rows, sessionsById)
+  if (!currentId || sorted.length === 0) return sorted
+  const current = sorted.find((item) => item.workspaceId === currentId)
+  if (current === undefined) return sorted
+  if (lastUsedAt(current, sessionsById) !== lastUsedAt(sorted[0], sessionsById)) return sorted
+  return [current, ...sorted.filter((item) => item.workspaceId !== currentId)]
+}
+
+/**
  * Display label of one git summary row: '' for non-repositories, '✓' for a
  * clean tree, '● n' for n pending changes, '?' when the probe failed (-1).
  * @param {{ isRepo?: boolean, changed?: number } | null | undefined} info
@@ -169,9 +216,10 @@ export function isGitDirty(info) {
 }
 
 /**
- * Default view is projects only. A non-empty query searches both kinds so a
- * date can be typed without opening the day list. `view: 'days'` is the extra step.
- * @param {{ items?: readonly object[], query?: string, home?: string, view?: 'projects' | 'days', currentId?: string, now?: Date }} opts
+ * Default view is projects only, most recently used first. A non-empty query
+ * searches both kinds so a date can be typed without opening the day list.
+ * `view: 'days'` is the extra step.
+ * @param {{ items?: readonly object[], query?: string, home?: string, view?: 'projects' | 'days', currentId?: string, now?: Date, sessionsById?: Record<string, { updatedAt?: number }> }} opts
  */
 export function pickerModel(opts = {}) {
   const items = (opts.items ?? []).filter((item) => typeof item.path === 'string' && item.path !== '')
@@ -193,7 +241,7 @@ export function pickerModel(opts = {}) {
   return {
     view,
     searching: false,
-    rows: pinCurrentWorkspace(projects.map(mark('project')), opts.currentId),
+    rows: orderProjectsByRecentUse(projects, opts.currentId, opts.sessionsById).map(mark('project')),
     dayCount: sortedDays.length,
     projectCount: projects.length,
     today,
