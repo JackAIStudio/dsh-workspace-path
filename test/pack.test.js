@@ -29,4 +29,10 @@ describe('packed client.js', () => {
     assert.match(src, /git-summary/)
     assert.match(src, /function gitStatusLabel/)
   })
+
+  it('ships workspace usage tracking for quick actions', () => {
+    assert.match(src, /function recordWorkspaceUse/)
+    assert.match(src, /function useWorkspaceUsageSnapshot/)
+    assert.match(src, /dsh\.ws-usage/)
+  })
 })

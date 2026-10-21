@@ -20,6 +20,7 @@
       const onCopy = async (e) => {
         if (e) e.stopPropagation()
         if (!ws.path) return
+        recordWorkspaceUse(ws)
         const ok = await writeClipboard(ws.path)
         if (ok) {
           setCopied(true)
@@ -30,6 +31,7 @@
 
       const onNewSession = async (e) => {
         if (e) e.stopPropagation()
+        recordWorkspaceUse(ws)
         if (ws.workspaceId && typeof startSession === 'function') startSession(ws.workspaceId)
         else if (ws.path && workspaces?.create) {
           try { const res = await workspaces.create({ path: ws.path }); if (res?.workspaceId && typeof startSession === 'function') startSession(res.workspaceId) } catch {}

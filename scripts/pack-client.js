@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const css = readFileSync(join(root, 'client/ui.css'), 'utf8')
 const paths = readFileSync(join(root, 'paths.js'), 'utf8').replace(/^export /gm, '')
+const usage = readFileSync(join(root, 'client/usage.js'), 'utf8')
 const ui = readFileSync(join(root, 'client/ui.js'), 'utf8')
 const addWorkspace = readFileSync(join(root, 'client/add-workspace.js'), 'utf8')
 const devTools = readFileSync(join(root, 'client/dev-tools.js'), 'utf8')
@@ -29,6 +30,7 @@ const out = `window.__ModuleLoader__.load({
       tag.textContent = css
     }
 ${paths}
+${usage}
 ${ui}
 ${addWorkspace}
 ${devTools}

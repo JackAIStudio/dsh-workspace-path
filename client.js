@@ -164,50 +164,83 @@ function pinCurrentWorkspace(rows, currentId) {
   return [current, ...(rows ?? []).filter((item) => item.workspaceId !== current.workspaceId)]
 }
 
+function readUsage(usageMap, ws) {
+  const val = usageMap?.[ws?.workspaceId] ?? usageMap?.[ws?.path]
+  if (typeof val === 'number' && Number.isFinite(val)) return { lastUsedAt: val, count: 1 }
+  if (val && typeof val === 'object') return val
+  return undefined
+}
+
 /**
- * Last-used instant of one workspace: its newest session activity, falling
- * back to the workspace's own mutation time for a workspace with no session.
+ * Last-used instant of one workspace: its newest session activity or manual
+ * interaction (copy, dev, git, terminal, reveal, select), falling back to
+ * the workspace's own mutation time for a workspace with no activity.
  * @param {{ workspaceId?: string, sessionIds?: readonly string[], updatedAt?: string }} ws
  * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
  */
-function lastUsedAt(ws, sessionsById) {
+function lastUsedAt(ws, sessionsById, usageMap) {
   let latest = 0
   for (const id of ws?.sessionIds ?? []) {
     const at = sessionsById?.[id]?.updatedAt
     if (typeof at === 'number' && Number.isFinite(at) && at > latest) latest = at
   }
+  const explicit = readUsage(usageMap, ws)?.lastUsedAt
+  if (typeof explicit === 'number' && Number.isFinite(explicit) && explicit > latest) latest = explicit
   if (latest > 0) return latest
   const touched = Date.parse(String(ws?.updatedAt ?? ''))
   return Number.isFinite(touched) ? touched : 0
 }
 
 /**
- * Most recently used first; never-used rows keep their host order. The sort is
- * stable, so equal timestamps preserve the registry order.
+ * Cumulative usage count: explicit manual interactions plus existing session count.
+ * @param {{ workspaceId?: string, sessionIds?: readonly string[] }} ws
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
+ */
+function usageCount(ws, usageMap) {
+  const manual = readUsage(usageMap, ws)?.count
+  const sessionCount = Array.isArray(ws?.sessionIds) ? ws.sessionIds.length : 0
+  return (typeof manual === 'number' && Number.isFinite(manual) ? manual : 0) + sessionCount
+}
+
+/**
+ * Most recently / frequently used first; never-used rows keep their host order.
+ * The sort is stable, so equal timestamps and counts preserve the registry order.
  * @param {readonly object[]} rows
  * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
  */
-function sortByRecentUse(rows, sessionsById) {
+function sortByRecentUse(rows, sessionsById, usageMap) {
   return (rows ?? [])
-    .map((row, index) => ({ row, index, at: lastUsedAt(row, sessionsById) }))
-    .sort((a, b) => (b.at - a.at) || (a.index - b.index))
+    .map((row, index) => ({
+      row,
+      index,
+      at: lastUsedAt(row, sessionsById, usageMap),
+      count: usageCount(row, usageMap),
+    }))
+    .sort((a, b) => (b.at - a.at) || (b.count - a.count) || (a.index - b.index))
     .map((entry) => entry.row)
 }
 
 /**
- * Project list order: most recently used first, with the current workspace
- * leading only when it ties the newest row (no usage data at all, or the
- * session the operator is looking at was the last thing touched).
+ * Project list order: most recently / frequently used first, with the current
+ * workspace leading only when it ties the newest row.
  * @param {readonly object[]} rows
  * @param {string | undefined} currentId
  * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
  */
-function orderProjectsByRecentUse(rows, currentId, sessionsById) {
-  const sorted = sortByRecentUse(rows, sessionsById)
+function orderProjectsByRecentUse(rows, currentId, sessionsById, usageMap) {
+  const sorted = sortByRecentUse(rows, sessionsById, usageMap)
   if (!currentId || sorted.length === 0) return sorted
   const current = sorted.find((item) => item.workspaceId === currentId)
   if (current === undefined) return sorted
-  if (lastUsedAt(current, sessionsById) !== lastUsedAt(sorted[0], sessionsById)) return sorted
+  const curAt = lastUsedAt(current, sessionsById, usageMap)
+  const topAt = lastUsedAt(sorted[0], sessionsById, usageMap)
+  if (curAt !== topAt) return sorted
+  const curCount = usageCount(current, usageMap)
+  const topCount = usageCount(sorted[0], usageMap)
+  if (curCount < topCount) return sorted
   return [current, ...sorted.filter((item) => item.workspaceId !== currentId)]
 }
 
@@ -257,12 +290,61 @@ function pickerModel(opts = {}) {
   return {
     view,
     searching: false,
-    rows: orderProjectsByRecentUse(projects, opts.currentId, opts.sessionsById).map(mark('project')),
+    rows: orderProjectsByRecentUse(projects, opts.currentId, opts.sessionsById, opts.usageMap).map(mark('project')),
     dayCount: sortedDays.length,
     projectCount: projects.length,
     today,
   }
 }
+
+    // Workspace usage tracking (clicks on copy, dev, git, terminal, reveal, select)
+    const WS_USAGE_KEY = 'dsh.ws-usage'
+    const usageListeners = new Set()
+
+    function getWorkspaceUsageMap() {
+      if (typeof localStorage === 'undefined') return {}
+      try {
+        const raw = localStorage.getItem(WS_USAGE_KEY)
+        if (!raw) return {}
+        const parsed = JSON.parse(raw)
+        return (parsed && typeof parsed === 'object') ? parsed : {}
+      } catch {
+        return {}
+      }
+    }
+
+    function recordWorkspaceUse(wsOrPath, now = Date.now()) {
+      if (!wsOrPath || typeof localStorage === 'undefined') return undefined
+      const path = typeof wsOrPath === 'string' ? wsOrPath : wsOrPath.path
+      const id = typeof wsOrPath === 'object' ? wsOrPath.workspaceId : undefined
+      const map = getWorkspaceUsageMap()
+      const prev = (id && map[id]) || (path && map[path]) || {}
+      const next = {
+        lastUsedAt: typeof now === 'number' ? now : Date.now(),
+        count: (typeof prev.count === 'number' ? prev.count : 0) + 1,
+      }
+      if (path) map[path] = next
+      if (id) map[id] = next
+      try {
+        localStorage.setItem(WS_USAGE_KEY, JSON.stringify(map))
+      } catch {}
+      for (const fn of usageListeners) {
+        try { fn(map) } catch {}
+      }
+      return next
+    }
+
+    function subscribeWorkspaceUsage(listener) {
+      if (typeof listener !== 'function') return () => {}
+      usageListeners.add(listener)
+      return () => usageListeners.delete(listener)
+    }
+
+    function useWorkspaceUsageSnapshot(open) {
+      const [snapshot, setSnapshot] = React.useState(getWorkspaceUsageMap)
+      React.useEffect(() => { if (open) setSnapshot(getWorkspaceUsageMap()) }, [open])
+      return snapshot
+    }
 
     const copy = {
       zh: { trigger: '工作区中心 (点击切换)', search: '搜索项目 (也可搜日期)...', empty: '暂无项目工作区', emptyDays: '暂无按天工作区', noMatches: '无匹配工作区', current: '当前工作区', copied: '已复制路径', copyFailed: '复制失败', copyBtn: '复制绝对路径', terminal: '在终端打开', openMac: '在访达中显示', openWindows: '在资源管理器中显示', openGeneric: '在文件管理器中显示', newSessionInWs: '在此工作区新建会话', clickActionHint: '点击查看快捷操作', sessionTitle: '当前会话', sessionIdTitle: '会话唯一标识 (Session ID)', copySessionId: '复制会话 ID', copiedSessionId: '已复制会话 ID', openInNewWindow: '在新独立窗口中打开', daysEntry: '按天工作区', daysBack: '返回项目', today: '今天', dayKind: '按天', projects: '项目', addWorkspace: '添加工作区…', pickerUnavailable: '当前宿主没有可用的目录选择器', gitClean: '工作区干净', gitDirty: '{n} 个未提交改动', gitUnknown: 'git 状态未知' },
@@ -429,7 +511,8 @@ function pickerModel(opts = {}) {
       const sessionsById = sesSnap?.byId
       const canOpen = Boolean(connection?.isLoopback === true && (host ? host.canOpenPath === true : true))
       const currentWs = items.find((it) => it.workspaceId === currentId)
-      const model = pickerModel({ items, query: panel.query, home, view: panel.view, currentId, sessionsById })
+      const usageMap = useWorkspaceUsageSnapshot(open)
+      const model = pickerModel({ items, query: panel.query, home, view: panel.view, currentId, sessionsById, usageMap })
       const place = React.useCallback(() => {
         const btn = buttonRef.current
         if (!btn) return
@@ -445,10 +528,10 @@ function pickerModel(opts = {}) {
         if (copiedTimer.current) clearTimeout(copiedTimer.current)
         copiedTimer.current = setTimeout(() => panel.setStatus(''), 1500)
       }
-      const onSelect = (ws) => { setOpen(false); if (typeof startSession === 'function') startSession(ws.workspaceId) }
-      const onCopy = async (ws) => { const ok = await writeClipboard(ws.path); flash(ok ? t.copied : t.copyFailed, !ok) }
-      const onOpen = (ws) => canOpen && connection?.rpc?.call('/dsh-workspace-path', 'reveal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
-      const onTerminal = (ws) => canOpen && connection?.rpc?.call('/dsh-workspace-path', 'terminal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
+      const onSelect = (ws) => { recordWorkspaceUse(ws); setOpen(false); if (typeof startSession === 'function') startSession(ws.workspaceId) }
+      const onCopy = async (ws) => { recordWorkspaceUse(ws); const ok = await writeClipboard(ws.path); flash(ok ? t.copied : t.copyFailed, !ok) }
+      const onOpen = (ws) => { recordWorkspaceUse(ws); if (canOpen) connection?.rpc?.call('/dsh-workspace-path', 'reveal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true)) }
+      const onTerminal = (ws) => { recordWorkspaceUse(ws); if (canOpen) connection?.rpc?.call('/dsh-workspace-path', 'terminal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true)) }
       const onAddWorkspace = async () => {
         if (adding) return
         setAdding(true)
@@ -479,7 +562,8 @@ function pickerModel(opts = {}) {
       const home = host?.homeDirectory || host?.home
       const snap = typeof useWorkspaces === 'function' ? useWorkspaces((state) => state) : wsSnap
       const items = snap?.items || wsSnap?.items || []
-      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId, sessionsById: sesSnap?.byId })
+      const usageMap = useWorkspaceUsageSnapshot(open)
+      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId, sessionsById: sesSnap?.byId, usageMap })
       const place = React.useCallback(() => {
         const btn = anchorRef?.current
         if (!btn) return
@@ -491,6 +575,7 @@ function pickerModel(opts = {}) {
       usePopover(open, (next) => { if (!next) onClose?.() }, place, anchorRef || { current: null }, '.dsh-wspath-panel')
       React.useEffect(() => { if (open) inputRef.current?.focus() }, [open])
       const handleSelect = (ws) => {
+        recordWorkspaceUse(ws)
         if (typeof onPick === 'function') onPick(ws.workspaceId)
         if (typeof onClose === 'function') onClose()
       }
@@ -738,6 +823,7 @@ function pickerModel(opts = {}) {
       const onGitClick = (e) => {
         if (e) e.stopPropagation()
         setMenuOpen(false)
+        recordWorkspaceUse(wsPath)
         runGitAction(variant === 'header' ? gitAction : 'terminal')
       }
 
@@ -752,11 +838,13 @@ function pickerModel(opts = {}) {
         setGitAction(value)
         setGitActionState(value)
         setMenuOpen(false)
+        recordWorkspaceUse(wsPath)
         runGitAction(value)
       }
 
       const onRunDev = async (e) => {
         if (e) e.stopPropagation()
+        recordWorkspaceUse(wsPath)
         const savedCmd = getWsDevCmd(wsPath)
         if (!savedCmd) { openModal(''); return }
         const res = await launch(savedCmd)
@@ -803,6 +891,7 @@ function pickerModel(opts = {}) {
           error: modalError,
           onSave: async (newCmd) => {
             if (!newCmd) return undefined
+            recordWorkspaceUse(wsPath)
             const res = await launch(newCmd)
             setModalError(res && res.ok === false ? (res.error?.message || '启动失败') : '')
             return res
@@ -907,6 +996,7 @@ function pickerModel(opts = {}) {
       const onCopy = async (e) => {
         if (e) e.stopPropagation()
         if (!currentWs?.path) return
+        recordWorkspaceUse(currentWs)
         const ok = await writeClipboard(currentWs.path)
         if (ok) {
           setCopied(true)
@@ -917,6 +1007,7 @@ function pickerModel(opts = {}) {
 
       const launchApp = async (appId) => {
         if (!currentWs?.path) return
+        recordWorkspaceUse(currentWs)
         try {
           const res = await fetch('/open-in-app/open', {
             method: 'POST',
@@ -1035,6 +1126,7 @@ function pickerModel(opts = {}) {
       const onCopy = async (e) => {
         if (e) e.stopPropagation()
         if (!ws.path) return
+        recordWorkspaceUse(ws)
         const ok = await writeClipboard(ws.path)
         if (ok) {
           setCopied(true)
@@ -1045,6 +1137,7 @@ function pickerModel(opts = {}) {
 
       const onNewSession = async (e) => {
         if (e) e.stopPropagation()
+        recordWorkspaceUse(ws)
         if (ws.workspaceId && typeof startSession === 'function') startSession(ws.workspaceId)
         else if (ws.path && workspaces?.create) {
           try { const res = await workspaces.create({ path: ws.path }); if (res?.workspaceId && typeof startSession === 'function') startSession(res.workspaceId) } catch {}

@@ -148,50 +148,83 @@ export function pinCurrentWorkspace(rows, currentId) {
   return [current, ...(rows ?? []).filter((item) => item.workspaceId !== current.workspaceId)]
 }
 
+function readUsage(usageMap, ws) {
+  const val = usageMap?.[ws?.workspaceId] ?? usageMap?.[ws?.path]
+  if (typeof val === 'number' && Number.isFinite(val)) return { lastUsedAt: val, count: 1 }
+  if (val && typeof val === 'object') return val
+  return undefined
+}
+
 /**
- * Last-used instant of one workspace: its newest session activity, falling
- * back to the workspace's own mutation time for a workspace with no session.
+ * Last-used instant of one workspace: its newest session activity or manual
+ * interaction (copy, dev, git, terminal, reveal, select), falling back to
+ * the workspace's own mutation time for a workspace with no activity.
  * @param {{ workspaceId?: string, sessionIds?: readonly string[], updatedAt?: string }} ws
  * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
  */
-export function lastUsedAt(ws, sessionsById) {
+export function lastUsedAt(ws, sessionsById, usageMap) {
   let latest = 0
   for (const id of ws?.sessionIds ?? []) {
     const at = sessionsById?.[id]?.updatedAt
     if (typeof at === 'number' && Number.isFinite(at) && at > latest) latest = at
   }
+  const explicit = readUsage(usageMap, ws)?.lastUsedAt
+  if (typeof explicit === 'number' && Number.isFinite(explicit) && explicit > latest) latest = explicit
   if (latest > 0) return latest
   const touched = Date.parse(String(ws?.updatedAt ?? ''))
   return Number.isFinite(touched) ? touched : 0
 }
 
 /**
- * Most recently used first; never-used rows keep their host order. The sort is
- * stable, so equal timestamps preserve the registry order.
+ * Cumulative usage count: explicit manual interactions plus existing session count.
+ * @param {{ workspaceId?: string, sessionIds?: readonly string[] }} ws
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
+ */
+export function usageCount(ws, usageMap) {
+  const manual = readUsage(usageMap, ws)?.count
+  const sessionCount = Array.isArray(ws?.sessionIds) ? ws.sessionIds.length : 0
+  return (typeof manual === 'number' && Number.isFinite(manual) ? manual : 0) + sessionCount
+}
+
+/**
+ * Most recently / frequently used first; never-used rows keep their host order.
+ * The sort is stable, so equal timestamps and counts preserve the registry order.
  * @param {readonly object[]} rows
  * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
  */
-export function sortByRecentUse(rows, sessionsById) {
+export function sortByRecentUse(rows, sessionsById, usageMap) {
   return (rows ?? [])
-    .map((row, index) => ({ row, index, at: lastUsedAt(row, sessionsById) }))
-    .sort((a, b) => (b.at - a.at) || (a.index - b.index))
+    .map((row, index) => ({
+      row,
+      index,
+      at: lastUsedAt(row, sessionsById, usageMap),
+      count: usageCount(row, usageMap),
+    }))
+    .sort((a, b) => (b.at - a.at) || (b.count - a.count) || (a.index - b.index))
     .map((entry) => entry.row)
 }
 
 /**
- * Project list order: most recently used first, with the current workspace
- * leading only when it ties the newest row (no usage data at all, or the
- * session the operator is looking at was the last thing touched).
+ * Project list order: most recently / frequently used first, with the current
+ * workspace leading only when it ties the newest row.
  * @param {readonly object[]} rows
  * @param {string | undefined} currentId
  * @param {Record<string, { updatedAt?: number }> | undefined} sessionsById
+ * @param {Record<string, { lastUsedAt?: number, count?: number } | number> | undefined} usageMap
  */
-export function orderProjectsByRecentUse(rows, currentId, sessionsById) {
-  const sorted = sortByRecentUse(rows, sessionsById)
+export function orderProjectsByRecentUse(rows, currentId, sessionsById, usageMap) {
+  const sorted = sortByRecentUse(rows, sessionsById, usageMap)
   if (!currentId || sorted.length === 0) return sorted
   const current = sorted.find((item) => item.workspaceId === currentId)
   if (current === undefined) return sorted
-  if (lastUsedAt(current, sessionsById) !== lastUsedAt(sorted[0], sessionsById)) return sorted
+  const curAt = lastUsedAt(current, sessionsById, usageMap)
+  const topAt = lastUsedAt(sorted[0], sessionsById, usageMap)
+  if (curAt !== topAt) return sorted
+  const curCount = usageCount(current, usageMap)
+  const topCount = usageCount(sorted[0], usageMap)
+  if (curCount < topCount) return sorted
   return [current, ...sorted.filter((item) => item.workspaceId !== currentId)]
 }
 
@@ -241,7 +274,7 @@ export function pickerModel(opts = {}) {
   return {
     view,
     searching: false,
-    rows: orderProjectsByRecentUse(projects, opts.currentId, opts.sessionsById).map(mark('project')),
+    rows: orderProjectsByRecentUse(projects, opts.currentId, opts.sessionsById, opts.usageMap).map(mark('project')),
     dayCount: sortedDays.length,
     projectCount: projects.length,
     today,

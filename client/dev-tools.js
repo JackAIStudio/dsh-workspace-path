@@ -180,6 +180,7 @@
       const onGitClick = (e) => {
         if (e) e.stopPropagation()
         setMenuOpen(false)
+        recordWorkspaceUse(wsPath)
         runGitAction(variant === 'header' ? gitAction : 'terminal')
       }
 
@@ -194,11 +195,13 @@
         setGitAction(value)
         setGitActionState(value)
         setMenuOpen(false)
+        recordWorkspaceUse(wsPath)
         runGitAction(value)
       }
 
       const onRunDev = async (e) => {
         if (e) e.stopPropagation()
+        recordWorkspaceUse(wsPath)
         const savedCmd = getWsDevCmd(wsPath)
         if (!savedCmd) { openModal(''); return }
         const res = await launch(savedCmd)
@@ -245,6 +248,7 @@
           error: modalError,
           onSave: async (newCmd) => {
             if (!newCmd) return undefined
+            recordWorkspaceUse(wsPath)
             const res = await launch(newCmd)
             setModalError(res && res.ok === false ? (res.error?.message || '启动失败') : '')
             return res

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { lastUsedAt, orderProjectsByRecentUse, pickerModel, sortByRecentUse } from '../paths.js'
+import { lastUsedAt, orderProjectsByRecentUse, pickerModel, sortByRecentUse, usageCount } from '../paths.js'
 
 const ws = (id, sessionIds = [], updatedAt = '2026-01-01T00:00:00.000Z') => ({
   workspaceId: id,
@@ -23,6 +23,32 @@ describe('lastUsedAt', () => {
   it('returns 0 for a workspace without any usable timestamp', () => {
     assert.equal(lastUsedAt({ workspaceId: 'a' }, undefined), 0)
   })
+
+  it('prioritizes explicit usage record (button clicks) over older session activity', () => {
+    const sessions = { s1: { updatedAt: 100 } }
+    const usageMap = { a: { lastUsedAt: 500, count: 2 } }
+    assert.equal(lastUsedAt(ws('a', ['s1']), sessions, usageMap), 500)
+  })
+
+  it('matches usage record by workspace path when id is missing', () => {
+    const usageMap = { '/ws/custom': { lastUsedAt: 888, count: 1 } }
+    assert.equal(lastUsedAt({ path: '/ws/custom' }, {}, usageMap), 888)
+  })
+
+  it('accepts numeric timestamps in usageMap', () => {
+    assert.equal(lastUsedAt(ws('a'), {}, { a: 999 }), 999)
+  })
+})
+
+describe('usageCount', () => {
+  it('combines explicit interactions and session count', () => {
+    const usageMap = { a: { lastUsedAt: 500, count: 4 } }
+    assert.equal(usageCount(ws('a', ['s1', 's2']), usageMap), 6)
+  })
+
+  it('falls back to session count when no manual usage exists', () => {
+    assert.equal(usageCount(ws('a', ['s1']), {}), 1)
+  })
 })
 
 describe('sortByRecentUse', () => {
@@ -36,6 +62,20 @@ describe('sortByRecentUse', () => {
   it('keeps host order among never-used rows', () => {
     const rows = [ws('x', [], '1970-01-01T00:00:00.000Z'), ws('y', [], '1970-01-01T00:00:00.000Z')]
     assert.deepEqual(sortByRecentUse(rows, {}).map((row) => row.workspaceId), ['x', 'y'])
+  })
+
+  it('promotes a workspace that was recently clicked (e.g. copied/opened) to the top', () => {
+    const rows = [ws('a', ['s1']), ws('b', ['s2'])]
+    // a had old session at 100, b at 300, but user clicked a button on a at 999
+    const usageMap = { a: { lastUsedAt: 999, count: 1 } }
+    assert.deepEqual(sortByRecentUse(rows, sessions, usageMap).map((row) => row.workspaceId), ['a', 'b'])
+  })
+
+  it('breaks recency ties by usage frequency', () => {
+    const rows = [ws('a', ['s1']), ws('b', ['s2'])]
+    const tieSessions = { s1: { updatedAt: 200 }, s2: { updatedAt: 200 } }
+    const usageMap = { a: { lastUsedAt: 200, count: 1 }, b: { lastUsedAt: 200, count: 5 } }
+    assert.deepEqual(sortByRecentUse(rows, tieSessions, usageMap).map((row) => row.workspaceId), ['b', 'a'])
   })
 })
 
@@ -62,5 +102,12 @@ describe('pickerModel recent order', () => {
     ]
     const model = pickerModel({ items, sessionsById: { s1: { updatedAt: 100 }, s2: { updatedAt: 400 } } })
     assert.deepEqual(model.rows.map((row) => row.workspaceId), ['p2', 'p1'])
+  })
+
+  it('promotes workspace clicked via quick action buttons in pickerModel', () => {
+    const items = [ws('p1', ['s1']), ws('p2', ['s2'])]
+    const usageMap = { p1: { lastUsedAt: 900, count: 3 } }
+    const model = pickerModel({ items, sessionsById: { s1: { updatedAt: 100 }, s2: { updatedAt: 400 } }, usageMap })
+    assert.deepEqual(model.rows.map((row) => row.workspaceId), ['p1', 'p2'])
   })
 })

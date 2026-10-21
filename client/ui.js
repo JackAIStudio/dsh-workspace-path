@@ -163,7 +163,8 @@
       const sessionsById = sesSnap?.byId
       const canOpen = Boolean(connection?.isLoopback === true && (host ? host.canOpenPath === true : true))
       const currentWs = items.find((it) => it.workspaceId === currentId)
-      const model = pickerModel({ items, query: panel.query, home, view: panel.view, currentId, sessionsById })
+      const usageMap = useWorkspaceUsageSnapshot(open)
+      const model = pickerModel({ items, query: panel.query, home, view: panel.view, currentId, sessionsById, usageMap })
       const place = React.useCallback(() => {
         const btn = buttonRef.current
         if (!btn) return
@@ -179,10 +180,10 @@
         if (copiedTimer.current) clearTimeout(copiedTimer.current)
         copiedTimer.current = setTimeout(() => panel.setStatus(''), 1500)
       }
-      const onSelect = (ws) => { setOpen(false); if (typeof startSession === 'function') startSession(ws.workspaceId) }
-      const onCopy = async (ws) => { const ok = await writeClipboard(ws.path); flash(ok ? t.copied : t.copyFailed, !ok) }
-      const onOpen = (ws) => canOpen && connection?.rpc?.call('/dsh-workspace-path', 'reveal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
-      const onTerminal = (ws) => canOpen && connection?.rpc?.call('/dsh-workspace-path', 'terminal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true))
+      const onSelect = (ws) => { recordWorkspaceUse(ws); setOpen(false); if (typeof startSession === 'function') startSession(ws.workspaceId) }
+      const onCopy = async (ws) => { recordWorkspaceUse(ws); const ok = await writeClipboard(ws.path); flash(ok ? t.copied : t.copyFailed, !ok) }
+      const onOpen = (ws) => { recordWorkspaceUse(ws); if (canOpen) connection?.rpc?.call('/dsh-workspace-path', 'reveal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true)) }
+      const onTerminal = (ws) => { recordWorkspaceUse(ws); if (canOpen) connection?.rpc?.call('/dsh-workspace-path', 'terminal', { path: ws.path }).then((r) => { if (!r.ok) flash(r.error?.message, true) }).catch((e) => flash(e?.message, true)) }
       const onAddWorkspace = async () => {
         if (adding) return
         setAdding(true)
@@ -213,7 +214,8 @@
       const home = host?.homeDirectory || host?.home
       const snap = typeof useWorkspaces === 'function' ? useWorkspaces((state) => state) : wsSnap
       const items = snap?.items || wsSnap?.items || []
-      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId, sessionsById: sesSnap?.byId })
+      const usageMap = useWorkspaceUsageSnapshot(open)
+      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId, sessionsById: sesSnap?.byId, usageMap })
       const place = React.useCallback(() => {
         const btn = anchorRef?.current
         if (!btn) return
@@ -225,6 +227,7 @@
       usePopover(open, (next) => { if (!next) onClose?.() }, place, anchorRef || { current: null }, '.dsh-wspath-panel')
       React.useEffect(() => { if (open) inputRef.current?.focus() }, [open])
       const handleSelect = (ws) => {
+        recordWorkspaceUse(ws)
         if (typeof onPick === 'function') onPick(ws.workspaceId)
         if (typeof onClose === 'function') onClose()
       }

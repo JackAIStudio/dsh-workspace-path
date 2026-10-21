@@ -1,6 +1,6 @@
 {
   "name": "dsh-workspace-path",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "description": "Sidebar workspace hub and official picker: project workspaces first, day folders one step away, plus session-header path/ID badges.",
   "type": "module",

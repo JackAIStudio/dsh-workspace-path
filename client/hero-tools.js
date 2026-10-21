@@ -82,6 +82,7 @@
       const onCopy = async (e) => {
         if (e) e.stopPropagation()
         if (!currentWs?.path) return
+        recordWorkspaceUse(currentWs)
         const ok = await writeClipboard(currentWs.path)
         if (ok) {
           setCopied(true)
@@ -92,6 +93,7 @@
 
       const launchApp = async (appId) => {
         if (!currentWs?.path) return
+        recordWorkspaceUse(currentWs)
         try {
           const res = await fetch('/open-in-app/open', {
             method: 'POST',
