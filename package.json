@@ -1,8 +1,8 @@
 {
   "name": "dsh-workspace-path",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
-  "description": "Sidebar workspace hub, official picker, and an official-sidebar filter that keeps day folders out of the way; plus session-header path/ID badges.",
+  "description": "Sidebar workspace hub, official picker, and an official-sidebar filter that keeps day folders out of the way; plus session-header path/ID badges and a button that opens the authenticated Web GUI in the system browser.",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -13,6 +13,7 @@
   },
   "files": [
     "index.js",
+    "open-web.js",
     "git-summary.js",
     "sidebar-filter.js",
     "client.js",

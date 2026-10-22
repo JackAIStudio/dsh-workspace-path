@@ -15,6 +15,7 @@ const devTools = readFileSync(join(root, 'client/dev-tools.js'), 'utf8')
 const heroTools = readFileSync(join(root, 'client/hero-tools.js'), 'utf8')
 const heroPicker = readFileSync(join(root, 'client/hero-picker.js'), 'utf8')
 const badges = readFileSync(join(root, 'client/badges.js'), 'utf8')
+const openWeb = readFileSync(join(root, 'client/open-web.js'), 'utf8')
 const sidebarFilter = readFileSync(join(root, 'client/sidebar-filter.js'), 'utf8')
 const apply = readFileSync(join(root, 'client/apply.js'), 'utf8')
 
@@ -43,6 +44,7 @@ ${devTools}
 ${heroTools}
 ${heroPicker}
 ${badges}
+${openWeb}
 ${sidebarFilter}
 ${apply}
     return module.exports

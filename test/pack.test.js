@@ -59,4 +59,13 @@ describe('packed client.js', () => {
     assert.match(src, /dsh-wspath-sf-hidden/)
     assert.match(src, /dsh\.wspath\.sidebar-filter/)
   })
+
+  it('ships the merged open-in-browser button and its authenticated URL path', () => {
+    assert.match(src, /function OpenInBrowserButton/)
+    assert.match(src, /function openWebInBrowser/)
+    assert.match(src, /dsh-workspace-path-web/)
+    assert.match(src, /open-web/)
+    // The session-ID popover must not go back to a relative dsh-app:// URL.
+    assert.doesNotMatch(src, /window\.open\(`\/\?session=/)
+  })
 })

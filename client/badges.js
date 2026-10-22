@@ -73,7 +73,7 @@
       )
     }
 
-    function SessionIdBadge({ sessionId, sessions }) {
+    function SessionIdBadge({ sessionId, sessions, connection }) {
       const t = locale(), badgeRef = React.useRef(null)
       const [open, setOpen] = React.useState(false), [coords, setCoords] = React.useState(null), [status, setStatus] = React.useState('')
       const hoverTimer = React.useRef(null), copiedTimer = React.useRef(null), sesSnap = useSnapshot(sessions?.list)
@@ -97,7 +97,10 @@
         copiedTimer.current = setTimeout(() => { setStatus('') }, 1500)
       }
       const onCopyId = async () => { flash((await writeClipboard(targetId)) ? t.copiedSessionId : t.copyFailed) }
-      const onNewWindow = () => { setOpen(false); window.open(`/?session=${encodeURIComponent(targetId)}`, '_blank') }
+      const onNewWindow = () => {
+        setOpen(false)
+        openWebInBrowser(connection, targetId).then((error) => { if (error !== '') flash(error) })
+      }
       const popover = open && coords && typeof document !== 'undefined'
         ? ReactDOM.createPortal(
             h('div', { className: 'dsh-wspath-sid-popover', style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' }, onMouseEnter: onEnter, onMouseLeave: onLeave },

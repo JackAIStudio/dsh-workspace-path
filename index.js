@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import path from 'node:path'
 import { summarizeGitRepos } from './git-summary.js'
+import { createOpenWebHandler } from './open-web.js'
 
 const execFileAsync = promisify(execFile)
 
@@ -11,20 +12,18 @@ export const inject = ['connection', 'webServer']
 export function apply(ctx) {
   ctx.inject(['connection', 'webServer'], () => {
     // Stock dsh 0.1.5-rc.2 registers the channel from the connection plugin's
-    // own fiber. That fiber does not inject webServer, so rpc.handle throws
-    // "cannot get property webServer without inject", the route never mounts,
-    // and the SPA fallback answers the POST with HTTP 405.
-    // Dev dsh was patched so rpc.handle re-injects webServer; JackDSH ships
-    // the stock package. Register from this injected context, which already
-    // has both services, and keep rpc.handle for hosts where that patch is
-    // already in the connection package.
+    // fiber, which does not inject webServer; rpc.handle then throws and the
+    // SPA fallback answers 405. Register from this injected context instead,
+    // and keep rpc.handle for hosts whose connection package already patches it.
     const channel = '/dsh-workspace-path'
+    const openWeb = createOpenWebHandler(ctx)
     const handler = async (endpoint, payload) => {
       try {
         if (endpoint === 'git-summary') {
           const summaries = await summarizeGitRepos(payload.paths)
           return { ok: true, value: { summaries } }
         }
+        if (endpoint === 'open-web') return openWeb(payload)
         const targetPath = payload.path
         if (!targetPath) return { ok: false, error: { code: 'bad_request', message: 'path required' } }
 

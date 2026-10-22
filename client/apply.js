@@ -39,7 +39,7 @@
           disposeWs = ctx.slots.register({ name: 'conversation.session.header.actions', id: 'dsh-workspace-path-badge', order: -20 }, (props) =>
             h(WorkspaceHeaderBadge, { sessionId: props?.sessionId, workspaces: ctx.workspaces, sessions: ctx.sessions, connection: ctx.connection, startSession }))
           disposeSid = ctx.slots.register({ name: 'conversation.session.header.actions', id: 'dsh-workspace-session-id-badge', order: -19 }, (props) =>
-            h(SessionIdBadge, { sessionId: props?.sessionId, sessions: ctx.sessions }))
+            h(SessionIdBadge, { sessionId: props?.sessionId, sessions: ctx.sessions, connection: ctx.connection }))
         } catch { disposeWs = undefined; disposeSid = undefined }
         return () => { if (disposeWs) disposeWs(); if (disposeSid) disposeSid() }
       })
@@ -80,6 +80,9 @@
         }
         return () => { if (dispose) dispose() }
       })
+      // 顶栏「Web」：用系统默认浏览器打开同一套 Harness 界面（合并自
+      // dsh-open-in-browser；鉴权 URL 与会话 ID 浮层共用 open-web.js）。
+      mountOpenInBrowser(ctx)
       // 官方左侧列表的「默认只看项目」筛层：DOM 适配 + 区头入口。
       ctx.effect(() => mountSidebarFilter(ctx, hubRef), 'dsh-workspace-path: sidebar filter')
     }

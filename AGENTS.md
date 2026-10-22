@@ -17,6 +17,7 @@
      - `client/ui.css`：样式。
      - `client/ui.js`：工作区列表面板、侧栏中心、官方 Hero 选择器。
      - `client/badges.js`：会话顶栏工作区胶囊与会话 ID 芯片。
+     - `client/open-web.js`：顶栏「Web」按钮、鉴权 URL 请求，以及会话 ID 浮层复用的打开逻辑。
      - `client/apply.js`：Slot 注册（< 100 行）。
    - DSH 只加载 `exports["./client"]`。改前端源码后必须跑 `node scripts/pack-client.js` 再测。
 
