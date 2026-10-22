@@ -86,6 +86,7 @@
     const IconChat = ({ size = 13 }) => svg(size, h('path', { d: 'M2.5 3.5A1.5 1.5 0 0 1 4 2h8a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 12 11H5.5L2.8 13.7A.5.5 0 0 1 2 13.3V3.5z', stroke: 'currentColor', strokeWidth: 1.25, strokeLinejoin: 'round' }))
     const IconCheck = ({ size = 13 }) => svg(size, h('path', { d: 'M3 8.5l3.5 3.5 6.5-7', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
     const IconSpinner = ({ size = 14 }) => svg(size, h('circle', { cx: 8, cy: 8, r: 5.2, stroke: 'currentColor', strokeWidth: 1.4, strokeDasharray: '9 7', strokeLinecap: 'round' }))
+    const IconFilter = ({ size = 12 }) => svg(size, h('path', { d: 'M2.5 4h11M4.5 8h7M6.5 12h3', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round' }))
 
     function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo }) {
       const isCur = ws.workspaceId === currentId, display = abbreviateHomePath(ws.path, home)
@@ -152,7 +153,7 @@
     }
 
     function PathButton(props) {
-      const { wide, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, startSession } = props
+      const { wide, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, startSession, controllerRef } = props
       const t = locale(), inputRef = React.useRef(null), buttonRef = React.useRef(null), copiedTimer = React.useRef(null)
       const [open, setOpen] = React.useState(false)
       const [adding, setAdding] = React.useState(false)
@@ -197,6 +198,16 @@
             h('div', { className: 'dsh-wspath-panel', style: { position: 'fixed', left: coords.left + 'px', bottom: coords.bottom + 'px', width: coords.width + 'px' } },
               h(PathPanel, { t, model, query: panel.query, onQuery: panel.setQuery, inputRef, currentId: currentWs?.workspaceId, home, variant: 'hub', canOpen, onSelect, onCopy, onOpen, onTerminal, canAddWorkspace: typeof (getUiWorkspace?.() ?? uiWorkspace)?.pickDirectory === 'function' && typeof workspaces?.create === 'function', onAddWorkspace, adding, status: panel.status, error: panel.error, revealLabel: hostRevealLabel(t, home), onOpenDays: () => { panel.setQuery(''); panel.setView('days') }, onBack: () => { panel.setQuery(''); panel.setView('projects') }, connection }),
             ), document.body) : null
+      // 侧栏筛选菜单里的「查看按天工作区」：从外部打开面板的第二页。
+      React.useEffect(() => {
+        if (!controllerRef) return undefined
+        controllerRef.current = {
+          openDays: () => { panel.setQuery(''); panel.setView('days'); setOpen(true) },
+        }
+        return () => {
+          if (controllerRef.current?.openDays) controllerRef.current = null
+        }
+      }, [controllerRef, panel.setQuery, panel.setView])
       return h('div', { className: wide === false ? 'dsh-wspath' : 'dsh-wspath dsh-wspath-wide' },
         h('button', { ref: buttonRef, type: 'button', className: 'dsh-wspath-btn' + (open ? ' is-open' : ''), title: t.trigger, 'aria-label': t.trigger, onClick: () => { setOpen((v) => !v); panel.setStatus('') } }, h(IconFolder, { size: 18 })),
         node,

@@ -35,4 +35,13 @@ describe('packed client.js', () => {
     assert.match(src, /function useWorkspaceUsageSnapshot/)
     assert.match(src, /dsh\.ws-usage/)
   })
+
+  it('ships the official-sidebar workspace filter', () => {
+    assert.match(src, /function sidebarFilterModel/)
+    assert.match(src, /function currentWorkspaceId/)
+    assert.match(src, /function SidebarFilterButton/)
+    assert.match(src, /function mountSidebarFilter/)
+    assert.match(src, /dsh-wspath-sf-hidden/)
+    assert.match(src, /dsh\.wspath\.sidebar-filter/)
+  })
 })

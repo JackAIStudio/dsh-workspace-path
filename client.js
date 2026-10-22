@@ -2,7 +2,7 @@ window.__ModuleLoader__.load({
   id: 'dsh-workspace-path',
   factory: (require) => {
     const module = { exports: {} }, React = require('react'), ReactDOM = require('react-dom'), h = React.createElement
-    const css = ".dsh-wspath{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center}\n.dsh-wspath-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:50%;padding:0;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 120ms ease,color 120ms ease}\n.dsh-wspath-btn:hover,.dsh-wspath-btn.is-open{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel{box-sizing:border-box;z-index:80;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));max-height:min(440px,calc(100vh - 24px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel.is-hero{z-index:120}\n.dsh-wspath-search-row{display:flex;align-items:center;gap:6px;margin:0 4px 6px}\n.dsh-wspath-search-row input{flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-primary);font:inherit;font-size:13px}\n.dsh-wspath-search-row input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}\n.dsh-wspath-add-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-secondary);cursor:pointer}\n.dsh-wspath-add-btn:hover,.dsh-wspath-add-btn.is-active{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-add-btn:disabled{opacity:.45;cursor:default}\n.dsh-wspath-list{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:auto}\n.dsh-wspath-empty{padding:12px 8px;font-size:13px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-section{flex:none;padding:6px 8px 2px;font-size:11px;font-weight:600;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-back,.dsh-wspath-days-btn{appearance:none;display:flex;align-items:center;gap:6px;width:100%;height:32px;margin:0;padding:0 8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left}\n.dsh-wspath-days-btn{justify-content:space-between;margin-top:4px;flex:none}\n.dsh-wspath-back:hover,.dsh-wspath-days-btn:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-row{box-sizing:border-box;width:100%;display:flex;align-items:center;gap:2px;padding:2px;border-radius:8px}\n.dsh-wspath-row.is-current,.dsh-wspath-row:hover{background:var(--dsw-alias-interactive-bg-hover)}\n.dsh-wspath-item{appearance:none;box-sizing:border-box;min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;margin:0;padding:6px 8px;border:none;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}\n.dsh-wspath-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--dsw-alias-brand-primary)}\n.dsh-wspath-title{display:flex;align-items:center;gap:6px;min-width:0}\n.dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}\n.dsh-wspath-badge,.dsh-wspath-kind{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:16px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-kind{font-size:10px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-git{flex:none;display:inline-flex;align-items:center;font-size:11px;line-height:16px;font-weight:600;color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-git.is-dirty{color:#f59e0b}\n.dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-actions{display:flex;align-items:center;gap:2px;flex:none}\n.dsh-wspath-icon-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}\n.dsh-wspath-icon-btn:hover{background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}\n.dsh-wspath-hbadge,.dsh-wspath-hgroup{display:inline-flex;align-items:center;height:24px;padding:0 3px 0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));gap:2px;flex:none;transition:border-color 120ms ease}\n.dsh-wspath-hgroup:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-wspath-hbtn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:20px;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;font-weight:500;line-height:20px;cursor:pointer;max-width:180px;user-select:none;transition:color 120ms ease}\n.dsh-wspath-hbtn:hover{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hbtn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-hicon{flex:none;color:inherit;display:inline-flex;align-items:center}\n.dsh-wspath-hname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}\n.dsh-wspath-hsep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-wspath-hactions{display:inline-flex;align-items:center;gap:1px}\n.dsh-wspath-haction-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-haction-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-wspath-haction-btn:active{background:var(--dsw-alias-border-l2, rgba(128,128,128,0.26))}\n.dsh-wspath-haction-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12)}\n.dsh-wspath-hmenu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(320px,calc(100vw - 16px));padding:6px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-head{padding:4px 8px 6px}\n.dsh-wspath-hmenu-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-hmenu-path{margin-top:3px;font-size:11px;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}\n.dsh-wspath-hmenu-divider{height:1px;background:var(--dsw-alias-border-l2);margin:4px 0}\n.dsh-wspath-hmenu-list{display:flex;flex-direction:column;gap:2px}\n.dsh-wspath-hmenu-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-hmenu-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-item.is-active{color:var(--dsw-alias-brand-primary, #2563eb)}\n.dsh-wspath-hmenu-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;flex:none;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-hmenu-item:hover .dsh-wspath-hmenu-icon{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-status{padding:4px 8px;font-size:11px;border-radius:6px;color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.1);margin-top:2px;text-align:center}\n.dsh-wspath-sid-badge{position:relative;display:inline-flex;align-items:center;flex:none;margin-left:4px}\n.dsh-wspath-sid-btn{appearance:none;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:22px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-wspath-sid-btn:hover,.dsh-wspath-sid-btn.is-open{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.15));border-color:#2563eb;color:#2563eb}\n.dsh-wspath-sid-icon{font-weight:700;font-size:11px;color:var(--dsw-alias-label-tertiary,#888);margin-right:1px}\n.dsh-wspath-sid-popover{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-head{padding:2px 4px 6px}\n.dsh-wspath-sid-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-label{margin-top:6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-wspath-sid-codebox{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--dsw-alias-bg-layer-1, rgba(128,128,128,0.08));border:1px solid var(--dsw-alias-border-l2)}\n.dsh-wspath-sid-code{font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--dsw-alias-label-primary);user-select:all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-copybtn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;flex-shrink:0}\n.dsh-wspath-sid-copybtn:hover{background:var(--dsw-alias-interactive-bg-hover);color:#2563eb}\n[class*=\"_footArea\"]:has(.dsh-wspath){flex-direction:row !important;align-items:center !important;gap:4px !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_settingsArea\"]{flex:1 1 auto !important;width:auto !important;min-width:0 !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_footerActions\"]{order:2 !important;flex:none !important;width:auto !important;display:flex !important;align-items:center !important;justify-content:flex-end !important}\n.dsh-hero-tools{order:99;display:inline-flex;align-items:center;gap:4px;margin-left:6px;flex:none}\n.dsh-hero-tools-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-hero-tool-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;height:24px;min-width:24px;padding:0 6px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-hero-tool-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14));color:var(--dsw-alias-label-primary);border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-tool-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3)}\n.dsh-hero-split-btn{display:inline-flex;align-items:center;height:24px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));transition:border-color 120ms ease;position:relative}\n.dsh-hero-split-btn:hover,.dsh-hero-split-btn.is-open{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-split-main{appearance:none;display:inline-flex;align-items:center;gap:4px;height:100%;padding:0 6px 0 8px;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:11px 0 0 11px;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-main:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-split-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));flex:none}\n.dsh-hero-split-arrow{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:18px;height:100%;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:0 11px 11px 0;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-arrow:hover,.dsh-hero-split-btn.is-open .dsh-hero-split-arrow{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-menu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;min-width:160px;padding:4px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:all 100ms ease}\n.dsh-hero-app-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item.is-selected{color:var(--dsw-alias-brand-primary, #2563eb);font-weight:500}\n.dsh-hero-app-icon{width:14px;height:14px;object-fit:contain;flex:none}\n.dsh-hero-app-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-hero-app-badge{font-size:11px;color:var(--dsw-alias-label-tertiary);flex:none}\n.dsh-dev-actions{display:inline-flex;align-items:center;gap:2px;flex:none}\n.dsh-dev-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-dev-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-dev-btn.is-bordered{height:24px;min-width:24px;padding:0 4px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06))}\n.dsh-dev-btn.is-bordered:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38));background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14))}\n.dsh-dev-actions.is-big{gap:4px}\n.dsh-dev-btn.is-big{width:28px;height:28px;border-radius:6px}\n.dsh-dev-btn.is-big:hover{background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.10))}\n.dsh-dev-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}\n.dsh-dev-modal{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:16px;border-radius:12px;background:var(--dsw-alias-bg-layer-2,#1e1e1e);border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));box-shadow:var(--dsw-shadow-lv3, 0 10px 30px rgba(0,0,0,0.35));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}\n.dsh-dev-modal-title{font-size:14px;font-weight:600}\n.dsh-dev-modal-close{appearance:none;border:none;background:transparent;font-size:18px;line-height:1;color:var(--dsw-alias-label-tertiary,#888);cursor:pointer;padding:0 4px}\n.dsh-dev-modal-close:hover{color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-form{display:flex;flex-direction:column;gap:10px}\n.dsh-dev-modal-path{font-size:11px;font-family:ui-monospace,Menlo,Monaco,monospace;color:var(--dsw-alias-label-tertiary,#888);word-break:break-all;background:var(--dsw-alias-bg-layer-1,rgba(0,0,0,0.2));padding:4px 8px;border-radius:6px}\n.dsh-dev-modal-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.3));background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.05));color:inherit;font:inherit;font-size:13px;font-family:ui-monospace,Menlo,Monaco,monospace}\n.dsh-dev-modal-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-presets{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:2px}\n.dsh-dev-modal-preset-label{font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-dev-modal-preset-btn{appearance:none;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));border-radius:6px;background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.04));color:var(--dsw-alias-label-secondary,#bbb);font-size:11px;font-family:ui-monospace,Menlo,monospace;padding:2px 6px;cursor:pointer;transition:all 100ms ease}\n.dsh-dev-modal-preset-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.1));color:var(--dsw-alias-label-primary,#fff);border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}\n.dsh-dev-modal-btn{appearance:none;height:30px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none}\n.dsh-dev-modal-btn.is-cancel{background:transparent;color:var(--dsw-alias-label-secondary,#bbb)}\n.dsh-dev-modal-btn.is-cancel:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.08));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-btn.is-primary{background:var(--dsw-alias-brand-primary,#2563eb);color:#fff}\n.dsh-dev-modal-btn.is-primary:hover{opacity:0.9}\n.dsh-dev-modal-btn.is-primary:disabled{opacity:0.6;cursor:default}\n.dsh-dev-modal-error{font-size:11px;line-height:1.5;color:var(--dsw-alias-state-error-primary,#f87171);background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.35);border-radius:6px;padding:4px 8px;word-break:break-all}\n"
+    const css = ".dsh-wspath{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center}\n.dsh-wspath-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:50%;padding:0;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 120ms ease,color 120ms ease}\n.dsh-wspath-btn:hover,.dsh-wspath-btn.is-open{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel{box-sizing:border-box;z-index:80;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));max-height:min(440px,calc(100vh - 24px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-panel.is-hero{z-index:120}\n.dsh-wspath-search-row{display:flex;align-items:center;gap:6px;margin:0 4px 6px}\n.dsh-wspath-search-row input{flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-primary);font:inherit;font-size:13px}\n.dsh-wspath-search-row input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}\n.dsh-wspath-add-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-layer-1,transparent);color:var(--dsw-alias-label-secondary);cursor:pointer}\n.dsh-wspath-add-btn:hover,.dsh-wspath-add-btn.is-active{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-add-btn:disabled{opacity:.45;cursor:default}\n.dsh-wspath-list{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:auto}\n.dsh-wspath-empty{padding:12px 8px;font-size:13px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-section{flex:none;padding:6px 8px 2px;font-size:11px;font-weight:600;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-back,.dsh-wspath-days-btn{appearance:none;display:flex;align-items:center;gap:6px;width:100%;height:32px;margin:0;padding:0 8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left}\n.dsh-wspath-days-btn{justify-content:space-between;margin-top:4px;flex:none}\n.dsh-wspath-back:hover,.dsh-wspath-days-btn:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-row{box-sizing:border-box;width:100%;display:flex;align-items:center;gap:2px;padding:2px;border-radius:8px}\n.dsh-wspath-row.is-current,.dsh-wspath-row:hover{background:var(--dsw-alias-interactive-bg-hover)}\n.dsh-wspath-item{appearance:none;box-sizing:border-box;min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;margin:0;padding:6px 8px;border:none;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}\n.dsh-wspath-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--dsw-alias-brand-primary)}\n.dsh-wspath-title{display:flex;align-items:center;gap:6px;min-width:0}\n.dsh-wspath-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}\n.dsh-wspath-badge,.dsh-wspath-kind{flex:none;padding:0 6px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active, var(--dsw-alias-bg-layer-1));font-size:11px;line-height:16px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-kind{font-size:10px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-git{flex:none;display:inline-flex;align-items:center;font-size:11px;line-height:16px;font-weight:600;color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-git.is-dirty{color:#f59e0b}\n.dsh-wspath-path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-actions{display:flex;align-items:center;gap:2px;flex:none}\n.dsh-wspath-icon-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}\n.dsh-wspath-icon-btn:hover{background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-status{flex:none;padding:6px 8px 2px;font-size:12px;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-status.is-error{color:var(--dsw-alias-state-error-primary)}\n.dsh-wspath-hbadge,.dsh-wspath-hgroup{display:inline-flex;align-items:center;height:24px;padding:0 3px 0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));gap:2px;flex:none;transition:border-color 120ms ease}\n.dsh-wspath-hgroup:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-wspath-hbtn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:20px;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;font-weight:500;line-height:20px;cursor:pointer;max-width:180px;user-select:none;transition:color 120ms ease}\n.dsh-wspath-hbtn:hover{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hbtn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981)}\n.dsh-wspath-hicon{flex:none;color:inherit;display:inline-flex;align-items:center}\n.dsh-wspath-hname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}\n.dsh-wspath-hsep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-wspath-hactions{display:inline-flex;align-items:center;gap:1px}\n.dsh-wspath-haction-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-haction-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-wspath-haction-btn:active{background:var(--dsw-alias-border-l2, rgba(128,128,128,0.26))}\n.dsh-wspath-haction-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12)}\n.dsh-wspath-hmenu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(320px,calc(100vw - 16px));padding:6px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-head{padding:4px 8px 6px}\n.dsh-wspath-hmenu-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-hmenu-path{margin-top:3px;font-size:11px;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}\n.dsh-wspath-hmenu-divider{height:1px;background:var(--dsw-alias-border-l2);margin:4px 0}\n.dsh-wspath-hmenu-list{display:flex;flex-direction:column;gap:2px}\n.dsh-wspath-hmenu-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:background-color 100ms ease,color 100ms ease}\n.dsh-wspath-hmenu-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-item.is-active{color:var(--dsw-alias-brand-primary, #2563eb)}\n.dsh-wspath-hmenu-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;flex:none;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-hmenu-item:hover .dsh-wspath-hmenu-icon{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-hmenu-status{padding:4px 8px;font-size:11px;border-radius:6px;color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.1);margin-top:2px;text-align:center}\n.dsh-wspath-sid-badge{position:relative;display:inline-flex;align-items:center;flex:none;margin-left:4px}\n.dsh-wspath-sid-btn{appearance:none;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:22px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-wspath-sid-btn:hover,.dsh-wspath-sid-btn.is-open{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.15));border-color:#2563eb;color:#2563eb}\n.dsh-wspath-sid-icon{font-weight:700;font-size:11px;color:var(--dsw-alias-label-tertiary,#888);margin-right:1px}\n.dsh-wspath-sid-popover{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;width:min(340px,calc(100vw - 16px));padding:8px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-head{padding:2px 4px 6px}\n.dsh-wspath-sid-title{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sid-titletxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-label{margin-top:6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-wspath-sid-codebox{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--dsw-alias-bg-layer-1, rgba(128,128,128,0.08));border:1px solid var(--dsw-alias-border-l2)}\n.dsh-wspath-sid-code{font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--dsw-alias-label-primary);user-select:all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sid-copybtn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;flex-shrink:0}\n.dsh-wspath-sid-copybtn:hover{background:var(--dsw-alias-interactive-bg-hover);color:#2563eb}\n[class*=\"_footArea\"]:has(.dsh-wspath){flex-direction:row !important;align-items:center !important;gap:4px !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_settingsArea\"]{flex:1 1 auto !important;width:auto !important;min-width:0 !important}\n[class*=\"_footArea\"]:has(.dsh-wspath) [class*=\"_footerActions\"]{order:2 !important;flex:none !important;width:auto !important;display:flex !important;align-items:center !important;justify-content:flex-end !important}\n.dsh-hero-tools{order:99;display:inline-flex;align-items:center;gap:4px;margin-left:6px;flex:none}\n.dsh-hero-tools-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));margin:0 2px;flex:none}\n.dsh-hero-tool-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;height:24px;min-width:24px;padding:0 6px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;transition:all 120ms ease;user-select:none}\n.dsh-hero-tool-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14));color:var(--dsw-alias-label-primary);border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-tool-btn.is-copied{color:var(--dsw-alias-state-success-primary, #10b981);background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3)}\n.dsh-hero-split-btn{display:inline-flex;align-items:center;height:24px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06));transition:border-color 120ms ease;position:relative}\n.dsh-hero-split-btn:hover,.dsh-hero-split-btn.is-open{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38))}\n.dsh-hero-split-main{appearance:none;display:inline-flex;align-items:center;gap:4px;height:100%;padding:0 6px 0 8px;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:11px 0 0 11px;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-main:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-split-sep{width:1px;height:12px;background:var(--dsw-alias-border-l2, rgba(128,128,128,0.22));flex:none}\n.dsh-hero-split-arrow{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:18px;height:100%;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;border-radius:0 11px 11px 0;transition:background-color 100ms ease,color 100ms ease}\n.dsh-hero-split-arrow:hover,.dsh-hero-split-btn.is-open .dsh-hero-split-arrow{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.12));color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-menu{box-sizing:border-box;z-index:100;display:flex;flex-direction:column;min-width:160px;padding:4px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item{appearance:none;display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;cursor:pointer;text-align:left;transition:all 100ms ease}\n.dsh-hero-app-item:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}\n.dsh-hero-app-item.is-selected{color:var(--dsw-alias-brand-primary, #2563eb);font-weight:500}\n.dsh-hero-app-icon{width:14px;height:14px;object-fit:contain;flex:none}\n.dsh-hero-app-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-hero-app-badge{font-size:11px;color:var(--dsw-alias-label-tertiary);flex:none}\n.dsh-dev-actions{display:inline-flex;align-items:center;gap:2px;flex:none}\n.dsh-dev-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:none;border-radius:4px;background:transparent;color:var(--dsw-alias-label-secondary);cursor:pointer;transition:background-color 100ms ease,color 100ms ease}\n.dsh-dev-btn:hover{background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.16));color:var(--dsw-alias-label-primary)}\n.dsh-dev-btn.is-bordered{height:24px;min-width:24px;padding:0 4px;border:1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.22));border-radius:12px;background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.06))}\n.dsh-dev-btn.is-bordered:hover{border-color:var(--dsw-alias-border-l1, rgba(128,128,128,0.38));background:var(--dsw-alias-interactive-bg-pressed, rgba(128,128,128,0.14))}\n.dsh-dev-actions.is-big{gap:4px}\n.dsh-dev-btn.is-big{width:28px;height:28px;border-radius:6px}\n.dsh-dev-btn.is-big:hover{background:var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.10))}\n.dsh-dev-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}\n.dsh-dev-modal{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:16px;border-radius:12px;background:var(--dsw-alias-bg-layer-2,#1e1e1e);border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));box-shadow:var(--dsw-shadow-lv3, 0 10px 30px rgba(0,0,0,0.35));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}\n.dsh-dev-modal-title{font-size:14px;font-weight:600}\n.dsh-dev-modal-close{appearance:none;border:none;background:transparent;font-size:18px;line-height:1;color:var(--dsw-alias-label-tertiary,#888);cursor:pointer;padding:0 4px}\n.dsh-dev-modal-close:hover{color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-form{display:flex;flex-direction:column;gap:10px}\n.dsh-dev-modal-path{font-size:11px;font-family:ui-monospace,Menlo,Monaco,monospace;color:var(--dsw-alias-label-tertiary,#888);word-break:break-all;background:var(--dsw-alias-bg-layer-1,rgba(0,0,0,0.2));padding:4px 8px;border-radius:6px}\n.dsh-dev-modal-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.3));background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.05));color:inherit;font:inherit;font-size:13px;font-family:ui-monospace,Menlo,Monaco,monospace}\n.dsh-dev-modal-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-presets{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:2px}\n.dsh-dev-modal-preset-label{font-size:11px;color:var(--dsw-alias-label-tertiary,#888)}\n.dsh-dev-modal-preset-btn{appearance:none;border:1px solid var(--dsw-alias-border-l2,rgba(128,128,128,0.2));border-radius:6px;background:var(--dsw-alias-bg-layer-1,rgba(255,255,255,0.04));color:var(--dsw-alias-label-secondary,#bbb);font-size:11px;font-family:ui-monospace,Menlo,monospace;padding:2px 6px;cursor:pointer;transition:all 100ms ease}\n.dsh-dev-modal-preset-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.1));color:var(--dsw-alias-label-primary,#fff);border-color:var(--dsw-alias-brand-primary,#2563eb)}\n.dsh-dev-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}\n.dsh-dev-modal-btn{appearance:none;height:30px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none}\n.dsh-dev-modal-btn.is-cancel{background:transparent;color:var(--dsw-alias-label-secondary,#bbb)}\n.dsh-dev-modal-btn.is-cancel:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,0.08));color:var(--dsw-alias-label-primary,#fff)}\n.dsh-dev-modal-btn.is-primary{background:var(--dsw-alias-brand-primary,#2563eb);color:#fff}\n.dsh-dev-modal-btn.is-primary:hover{opacity:0.9}\n.dsh-dev-modal-btn.is-primary:disabled{opacity:0.6;cursor:default}\n.dsh-dev-modal-error{font-size:11px;line-height:1.5;color:var(--dsw-alias-state-error-primary,#f87171);background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.35);border-radius:6px;padding:4px 8px;word-break:break-all}\n\n/* 官方侧栏工作区筛选：树下方一行状态条，不占用区头的 36px 固定高度 */\n.dsh-wspath-sf-mount{display:contents}\n.dsh-wspath-sf-slot{display:flex;flex:none;align-items:center;min-height:0;margin-top:2px}\n.dsh-wspath-sf-slot.is-searching{display:none}\n.dsh-wspath-sf-btn{appearance:none;display:flex;align-items:center;gap:6px;width:100%;height:30px;min-width:0;padding:0 8px;margin:0;border:none;border-radius:var(--dsw-radius-sm,6px);background:transparent;color:var(--dsw-alias-label-tertiary);font:inherit;font-size:12px;line-height:18px;text-align:left;cursor:pointer;overflow:hidden;transition:background-color 120ms ease,color 120ms ease}\n.dsh-wspath-sf-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(128,128,128,0.08));color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-sf-btn:focus-visible{outline:var(--dsw-focus-ring-width,2px) solid var(--dsw-focus-ring-color,var(--dsw-alias-state-business-primary));outline-offset:-2px}\n.dsh-wspath-sf-btn svg{flex:none}\n.dsh-wspath-sf-lead{display:inline-flex;align-items:center;gap:4px;flex:none;max-width:46%;color:var(--dsw-alias-label-secondary)}\n.dsh-wspath-sf-text{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}\n.dsh-wspath-sf-count{flex:none;min-width:16px;padding:0 4px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active,rgba(128,128,128,0.16));font-size:10px;line-height:15px;text-align:center;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-sf-hint{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--dsw-alias-label-tertiary);font-size:11px}\n.dsh-wspath-sf-btn.is-all .dsh-wspath-sf-lead{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sf-hidden{display:none!important}\n\n/* 筛选菜单：与官方 Menu（dense）同一套底色、圆角与阴影 */\n.dsh-wspath-sf-menu{box-sizing:border-box;z-index:400;display:flex;flex-direction:column;gap:2px;padding:6px;border:1px solid var(--dsw-alias-border-l2);border-radius:var(--dsw-radius-lg,10px);background:var(--dsw-alias-bg-layer-2);box-shadow:var(--dsw-shadow-lv2);color:var(--dsw-alias-label-primary);font-size:12px;line-height:18px}\n.dsh-wspath-sf-menu-title{padding:2px 8px 4px;font-size:11px;font-weight:600;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-sf-item{appearance:none;display:flex;align-items:center;gap:6px;width:100%;height:28px;padding:0 8px;border:none;border-radius:var(--dsw-radius-sm,6px);background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;text-align:left;cursor:pointer}\n.dsh-wspath-sf-item:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(128,128,128,0.08));color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sf-item.is-checked{color:var(--dsw-alias-label-primary)}\n.dsh-wspath-sf-check{display:inline-flex;align-items:center;justify-content:center;width:14px;flex:none;color:var(--dsw-alias-state-business-primary,var(--dsw-alias-brand-primary))}\n.dsh-wspath-sf-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.dsh-wspath-sf-count{flex:none;min-width:18px;padding:0 5px;border-radius:999px;background:var(--dsw-alias-interactive-bg-active,rgba(128,128,128,0.16));font-size:10px;line-height:16px;text-align:center;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-sf-note{padding:0 8px 4px 28px;font-size:11px;line-height:16px;color:var(--dsw-alias-label-tertiary)}\n.dsh-wspath-sf-sep{height:1px;margin:4px 2px;background:var(--dsw-alias-border-l2)}\n"
     if (typeof document !== 'undefined') {
       const id = 'dsh-workspace-path/ui.css'
       let tag = document.querySelector('style[data-plugin-css=' + JSON.stringify(id) + ']')
@@ -297,6 +297,63 @@ function pickerModel(opts = {}) {
   }
 }
 
+
+/**
+ * Workspace that owns the session currently shown in the main view, or `''`.
+ * Ownership comes from `sessionIds`; a session without recorded membership
+ * falls back to its `cwd`, so a freshly created folder still resolves.
+ * @param {readonly { workspaceId?: string, path?: string, sessionIds?: readonly string[] }[]} items
+ * @param {Record<string, { id?: string, retainedBy?: Record<string, number>, cwd?: string }>} [sessionsById]
+ */
+function currentWorkspaceId(items, sessionsById) {
+  const list = items ?? []
+  const byId = sessionsById ?? {}
+  const current = Object.values(byId).find((row) => ((row?.retainedBy?.mainView) ?? 0) > 0)
+  if (current === undefined || current === null) return ''
+  const owned = list.find((item) => Array.isArray(item.sessionIds) && current.id !== undefined && item.sessionIds.includes(current.id))
+  if (owned !== undefined) return owned.workspaceId ?? ''
+  if (typeof current.cwd === 'string' && current.cwd !== '') {
+    const byPath = list.find((item) => item.path === current.cwd)
+    if (byPath !== undefined) return byPath.workspaceId ?? ''
+  }
+  return ''
+}
+
+/**
+ * Which day workspaces the official sidebar should hide right now.
+ *
+ * `mode: 'projects'` hides dated folders except today's and the workspace of
+ * the open session, so the list never loses the row the user is looking at.
+ * `mode: 'all'` hides nothing. The id set is what the DOM adapter toggles; the
+ * counts drive the filter entry and its menu copy.
+ * @param {readonly { workspaceId?: string, title?: string, path?: string, sessionIds?: readonly string[] }[]} items
+ * @param {{ mode?: 'projects' | 'all', currentId?: string, now?: Date }} [opts]
+ */
+function sidebarFilterModel(items, opts = {}) {
+  const all = (items ?? []).filter((item) => typeof item.path === 'string' && item.path !== '')
+  const { projects, days } = splitWorkspaces(all)
+  const today = todayStamp(opts.now)
+  const mode = opts.mode === 'all' ? 'all' : 'projects'
+  const currentId = typeof opts.currentId === 'string' ? opts.currentId : ''
+  const hidden = new Set()
+  if (mode === 'projects') {
+    for (const day of days) {
+      if (day.workspaceId === currentId) continue
+      if (dayStampOf(day) === today) continue
+      hidden.add(day.workspaceId)
+    }
+  }
+  return {
+    mode,
+    today,
+    hidden,
+    hiddenCount: hidden.size,
+    dayCount: days.length,
+    projectCount: projects.length,
+    currentId,
+  }
+}
+
     // Workspace usage tracking (clicks on copy, dev, git, terminal, reveal, select)
     const WS_USAGE_KEY = 'dsh.ws-usage'
     const usageListeners = new Set()
@@ -434,6 +491,7 @@ function pickerModel(opts = {}) {
     const IconChat = ({ size = 13 }) => svg(size, h('path', { d: 'M2.5 3.5A1.5 1.5 0 0 1 4 2h8a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 12 11H5.5L2.8 13.7A.5.5 0 0 1 2 13.3V3.5z', stroke: 'currentColor', strokeWidth: 1.25, strokeLinejoin: 'round' }))
     const IconCheck = ({ size = 13 }) => svg(size, h('path', { d: 'M3 8.5l3.5 3.5 6.5-7', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }))
     const IconSpinner = ({ size = 14 }) => svg(size, h('circle', { cx: 8, cy: 8, r: 5.2, stroke: 'currentColor', strokeWidth: 1.4, strokeDasharray: '9 7', strokeLinecap: 'round' }))
+    const IconFilter = ({ size = 12 }) => svg(size, h('path', { d: 'M2.5 4h11M4.5 8h7M6.5 12h3', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round' }))
 
     function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo }) {
       const isCur = ws.workspaceId === currentId, display = abbreviateHomePath(ws.path, home)
@@ -500,7 +558,7 @@ function pickerModel(opts = {}) {
     }
 
     function PathButton(props) {
-      const { wide, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, startSession } = props
+      const { wide, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, startSession, controllerRef } = props
       const t = locale(), inputRef = React.useRef(null), buttonRef = React.useRef(null), copiedTimer = React.useRef(null)
       const [open, setOpen] = React.useState(false)
       const [adding, setAdding] = React.useState(false)
@@ -545,6 +603,16 @@ function pickerModel(opts = {}) {
             h('div', { className: 'dsh-wspath-panel', style: { position: 'fixed', left: coords.left + 'px', bottom: coords.bottom + 'px', width: coords.width + 'px' } },
               h(PathPanel, { t, model, query: panel.query, onQuery: panel.setQuery, inputRef, currentId: currentWs?.workspaceId, home, variant: 'hub', canOpen, onSelect, onCopy, onOpen, onTerminal, canAddWorkspace: typeof (getUiWorkspace?.() ?? uiWorkspace)?.pickDirectory === 'function' && typeof workspaces?.create === 'function', onAddWorkspace, adding, status: panel.status, error: panel.error, revealLabel: hostRevealLabel(t, home), onOpenDays: () => { panel.setQuery(''); panel.setView('days') }, onBack: () => { panel.setQuery(''); panel.setView('projects') }, connection }),
             ), document.body) : null
+      // 侧栏筛选菜单里的「查看按天工作区」：从外部打开面板的第二页。
+      React.useEffect(() => {
+        if (!controllerRef) return undefined
+        controllerRef.current = {
+          openDays: () => { panel.setQuery(''); panel.setView('days'); setOpen(true) },
+        }
+        return () => {
+          if (controllerRef.current?.openDays) controllerRef.current = null
+        }
+      }, [controllerRef, panel.setQuery, panel.setView])
       return h('div', { className: wide === false ? 'dsh-wspath' : 'dsh-wspath dsh-wspath-wide' },
         h('button', { ref: buttonRef, type: 'button', className: 'dsh-wspath-btn' + (open ? ' is-open' : ''), title: t.trigger, 'aria-label': t.trigger, onClick: () => { setOpen((v) => !v); panel.setStatus('') } }, h(IconFolder, { size: 18 })),
         node,
@@ -1233,8 +1301,303 @@ function pickerModel(opts = {}) {
       )
     }
 
+    // Official sidebar workspace filter: projects first by default.
+    //
+    // The stock list renders one group per registered Workspace, and day folders
+    // (days/YYYY-MM-DD) accumulate until they crowd out real projects. This layer
+    // hides dated groups while always keeping today's folder and the folder of the
+    // open session. It is presentation only: workspace.json, directories and
+    // session membership are untouched, and choosing "all" restores the list.
+    const SF_MODE_KEY = 'dsh.wspath.sidebar-filter'
+    const SF_HIDDEN = 'dsh-wspath-sf-hidden'
+
+    function sfCopy() {
+      const en = typeof document !== 'undefined' && String(document.documentElement.lang).toLowerCase().startsWith('en')
+      return en
+        ? { projects: 'Projects', all: 'All', filter: 'Filter workspaces', onlyProjects: 'Projects only', showAll: 'All workspaces', hidden: '{n} day workspaces hidden', none: 'No day workspaces hidden', hiddenShort: '{n} day folders hidden', noneShort: 'No day folders', allShort: 'Showing all, incl. {n} day folders', byDay: 'Open day workspaces' }
+        : { projects: '项目', all: '全部', filter: '筛选工作区', onlyProjects: '只看项目', showAll: '全部工作区', hidden: '已收起 {n} 个按天工作区', none: '没有收起按天工作区', hiddenShort: '已收起 {n} 个按天目录', noneShort: '没有按天目录', allShort: '显示全部，含 {n} 个按天目录', byDay: '查看按天工作区' }
+    }
+
+    function readSidebarFilterMode() {
+      try { return localStorage.getItem(SF_MODE_KEY) === 'all' ? 'all' : 'projects' } catch { return 'projects' }
+    }
+
+    function writeSidebarFilterMode(mode) {
+      try { localStorage.setItem(SF_MODE_KEY, mode === 'all' ? 'all' : 'projects') } catch {}
+    }
+
+    function sfQueryLabel(labels) {
+      for (const label of labels) {
+        const node = document.querySelector('button[aria-label=' + JSON.stringify(label) + ']')
+        if (node) return node
+      }
+      return null
+    }
+
+    function sfViewOptionsButton() { return sfQueryLabel(['视图选项', 'View options']) }
+    function sfSearchExpanded() { return Boolean(sfQueryLabel(['清除搜索', 'Clear search'])) }
+
+    // The sidebar tree, found from the official view-options button so a look-alike
+    // list in a side panel can never be filtered by accident.
+    function sfFindTree(anchor) {
+      let node = anchor
+      while (node && node !== document.body) {
+        const tree = node.querySelector?.(':scope div[role="tree"]')
+        if (tree) return tree
+        node = node.parentElement
+      }
+      return null
+    }
+
+    // Footer slot: one quiet status row under the tree. The section header is a
+    // fixed 36px strip that already holds search, view options and add; a new
+    // control there pushes those official buttons out of the clipped header, so
+    // the filter lives where it can also explain the shortened list.
+    function sfEnsureSlot() {
+      const anchor = sfViewOptionsButton()
+      if (!anchor) return { slot: null, tree: null }
+      const tree = sfFindTree(anchor)
+      const treeBody = tree?.parentElement
+      const listArea = treeBody?.parentElement
+      const root = listArea?.parentElement
+      if (!tree || !treeBody || !listArea || !root) return { slot: null, tree }
+      // 固定在区头与列表之间：随内容滚动会看不见，贴底又会被输入区挡住。
+      let slot = root.querySelector(':scope > .dsh-wspath-sf-slot')
+      if (!slot) {
+        slot = document.createElement('div')
+        slot.className = 'dsh-wspath-sf-slot'
+        root.insertBefore(slot, listArea)
+      }
+      // 搜索时官方用扁平结果替换整棵树，筛选不参与，提示行也一并收起。
+      slot.classList.toggle('is-searching', sfSearchExpanded())
+      return { slot, tree }
+    }
+
+    function sfSessionOwners(items) {
+      const owner = new Map()
+      for (const ws of items ?? []) {
+        for (const id of ws?.sessionIds ?? []) owner.set(id, ws.workspaceId)
+      }
+      return owner
+    }
+
+    // Grouped modes hide the group container (its sessions go with it); the flat
+    // mode has no groups, so its session rows are hidden instead. Only classes
+    // change, so the stock store and drag state stay authoritative.
+    function sfApply(tree, model, owner, applied) {
+      if (!tree) return
+      for (const el of [...applied]) if (!el.isConnected) applied.delete(el)
+      const mark = (el, hide) => {
+        if (!el) return
+        if (hide) {
+          if (el.classList.contains(SF_HIDDEN)) return
+          el.classList.add(SF_HIDDEN)
+          applied.add(el)
+        } else if (el.classList.contains(SF_HIDDEN)) {
+          el.classList.remove(SF_HIDDEN)
+          applied.delete(el)
+        }
+      }
+      for (const row of tree.querySelectorAll('[data-row-key^="workspace:"]')) {
+        const id = (row.getAttribute('data-row-key') || '').slice('workspace:'.length)
+        mark(row.parentElement, model.hidden.has(id))
+      }
+      for (const row of tree.querySelectorAll('[data-row-key^="session:"]')) {
+        const id = (row.getAttribute('data-row-key') || '').slice('session:'.length)
+        const workspaceId = owner.get(id)
+        mark(row, workspaceId !== undefined && model.hidden.has(workspaceId))
+      }
+    }
+
+    function SidebarFilterButton({ ctx, hubRef }) {
+      const t = sfCopy()
+      const wsSnap = useSnapshot(ctx.workspaces?.list)
+      const sesSnap = useSnapshot(ctx.sessions?.list)
+      const [mode, setMode] = React.useState(readSidebarFilterMode)
+      const [slot, setSlot] = React.useState(null)
+      const [open, setOpen] = React.useState(false)
+      const [coords, setCoords] = React.useState(null)
+      const buttonRef = React.useRef(null)
+      const slotRef = React.useRef(null)
+      const treeRef = React.useRef(null)
+      const appliedRef = React.useRef(new Set())
+      const stateRef = React.useRef({})
+
+      const items = wsSnap?.items || []
+      const currentId = currentWorkspaceId(items, sesSnap?.byId)
+      const model = sidebarFilterModel(items, { mode, currentId })
+      stateRef.current = { model, items }
+
+      const sync = React.useCallback(() => {
+        const found = sfEnsureSlot()
+        if (found.slot && found.slot !== slotRef.current) {
+          slotRef.current = found.slot
+          setSlot(found.slot)
+        }
+        if (found.tree) treeRef.current = found.tree
+        sfApply(treeRef.current, stateRef.current.model, sfSessionOwners(stateRef.current.items), appliedRef.current)
+      }, [])
+
+      React.useEffect(() => {
+        let frame = 0
+        let disposed = false
+        const schedule = () => {
+          if (frame || disposed) return
+          frame = requestAnimationFrame(() => {
+            frame = 0
+            if (disposed) return
+            if (slotRef.current && !slotRef.current.isConnected) {
+              slotRef.current = null
+              treeRef.current = null
+              setSlot(null)
+            }
+            sync()
+          })
+        }
+        const observer = new MutationObserver((records) => {
+          for (const record of records) {
+            if (record.target instanceof Element && record.target.closest?.('.dsh-wspath-sf-slot')) return
+            const tree = treeRef.current
+            if (tree) {
+              if (record.target instanceof Node && (record.target === tree || tree.contains(record.target))) return schedule()
+              for (const node of record.removedNodes) {
+                if (node instanceof Element && (node === tree || node.contains(tree))) return schedule()
+              }
+            }
+            for (const node of record.addedNodes) {
+              if (!(node instanceof Element)) continue
+              if (node.matches?.('div[role="tree"]') || node.querySelector?.('div[role="tree"]')) return schedule()
+            }
+          }
+        })
+        observer.observe(document.body, { childList: true, subtree: true })
+        schedule()
+        return () => {
+          disposed = true
+          observer.disconnect()
+          if (frame) cancelAnimationFrame(frame)
+        }
+      }, [sync])
+
+      // Data changes (session switch, new day folder, filter flip) re-apply at once.
+      React.useEffect(() => { sync() }, [sync, model, items])
+
+      const place = React.useCallback(() => {
+        const button = buttonRef.current
+        if (!button) return
+        const rect = button.getBoundingClientRect()
+        const width = Math.min(236, window.innerWidth - 16)
+        const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8))
+        // 靠近窗口底部时向上弹，避免被输入区与底部面板遮住。
+        const menuHeight = 200
+        const below = rect.bottom + 6
+        const top = below + menuHeight > window.innerHeight - 12
+          ? Math.max(12, rect.top - menuHeight - 6)
+          : below
+        setCoords({ left, top, width })
+      }, [])
+      usePopover(open, setOpen, place, buttonRef, '.dsh-wspath-sf-menu')
+
+      const pick = (next) => {
+        setMode(next)
+        writeSidebarFilterMode(next)
+        setOpen(false)
+      }
+      const openDays = () => {
+        setOpen(false)
+        const hub = hubRef?.current
+        if (hub && typeof hub.openDays === 'function') hub.openDays()
+      }
+
+      const hiddenText = model.hiddenCount > 0 ? t.hidden.replace('{n}', String(model.hiddenCount)) : t.none
+      const label = `${t.filter}：${mode === 'projects' ? t.onlyProjects : t.showAll}`
+      const shortHint = mode === 'projects'
+        ? (model.hiddenCount > 0 ? t.hiddenShort.replace('{n}', String(model.hiddenCount)) : t.noneShort)
+        : t.allShort.replace('{n}', String(model.dayCount))
+
+      const button = h('button', {
+        ref: buttonRef,
+        type: 'button',
+        className: 'dsh-wspath-sf-btn' + (mode === 'projects' ? ' is-projects' : ' is-all'),
+        title: `${label}\n${hiddenText}`,
+        'aria-label': label,
+        'aria-haspopup': 'menu',
+        'aria-expanded': open ? 'true' : 'false',
+        onClick: () => setOpen((v) => !v),
+      },
+        h('span', { className: 'dsh-wspath-sf-lead' },
+          h(IconFilter, { size: 12 }),
+          h('span', { className: 'dsh-wspath-sf-text' }, mode === 'projects' ? t.projects : t.all),
+          mode === 'projects' && model.projectCount > 0 ? h('span', { className: 'dsh-wspath-sf-count' }, String(model.projectCount)) : null,
+        ),
+        h('span', { className: 'dsh-wspath-sf-hint' }, shortHint),
+      )
+
+      const menu = open && coords && typeof document !== 'undefined'
+        ? ReactDOM.createPortal(h('div', {
+            className: 'dsh-wspath-sf-menu',
+            role: 'menu',
+            'aria-label': t.filter,
+            style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' },
+          },
+          h('div', { className: 'dsh-wspath-sf-menu-title' }, t.filter),
+          h('button', {
+            type: 'button', role: 'menuitemradio', 'aria-checked': mode === 'projects' ? 'true' : 'false',
+            className: 'dsh-wspath-sf-item' + (mode === 'projects' ? ' is-checked' : ''),
+            onClick: () => pick('projects'),
+          },
+            h('span', { className: 'dsh-wspath-sf-check' }, mode === 'projects' ? h(IconCheck, { size: 12 }) : null),
+            h('span', { className: 'dsh-wspath-sf-label' }, t.onlyProjects),
+            model.dayCount > 0 ? h('span', { className: 'dsh-wspath-sf-count' }, String(model.dayCount)) : null,
+          ),
+          h('div', { className: 'dsh-wspath-sf-note' }, hiddenText),
+          h('button', {
+            type: 'button', role: 'menuitemradio', 'aria-checked': mode === 'all' ? 'true' : 'false',
+            className: 'dsh-wspath-sf-item' + (mode === 'all' ? ' is-checked' : ''),
+            onClick: () => pick('all'),
+          },
+            h('span', { className: 'dsh-wspath-sf-check' }, mode === 'all' ? h(IconCheck, { size: 12 }) : null),
+            h('span', { className: 'dsh-wspath-sf-label' }, t.showAll),
+          ),
+          h('div', { className: 'dsh-wspath-sf-sep' }),
+          h('button', { type: 'button', role: 'menuitem', className: 'dsh-wspath-sf-item', onClick: openDays },
+            h('span', { className: 'dsh-wspath-sf-check' }, h(IconFolder, { size: 12 })),
+            h('span', { className: 'dsh-wspath-sf-label' }, t.byDay),
+          ),
+        ), document.body)
+        : null
+
+      return h(React.Fragment, null,
+        slot ? ReactDOM.createPortal(button, slot) : null,
+        menu,
+      )
+    }
+
+    function mountSidebarFilter(ctx, hubRef) {
+      if (typeof document === 'undefined' || !document.body) return () => {}
+      const host = document.createElement('div')
+      host.className = 'dsh-wspath-sf-mount'
+      document.body.appendChild(host)
+      let root
+      try { root = ReactDOM.createRoot(host) } catch { root = null }
+      if (!root) {
+        host.remove()
+        return () => {}
+      }
+      root.render(h(SidebarFilterButton, { ctx, hubRef }))
+      return () => {
+        try { root.unmount() } catch {}
+        host.remove()
+        for (const el of document.querySelectorAll('.' + SF_HIDDEN)) el.classList.remove(SF_HIDDEN)
+        const slot = document.querySelector('.dsh-wspath-sf-slot')
+        if (slot) slot.remove()
+      }
+    }
+
     const inject = ['slots', 'workspaces', 'sessions', 'connection']
     function apply(ctx) {
+      // 侧栏筛选菜单要能打开工作区中心的「按天」页，用一个共享把手把两边连起来。
+      const hubRef = { current: null }
       let uiWorkspace
       if (typeof ctx.inject === 'function') {
         ctx.inject(['uiWorkspace'], (sub) => {
@@ -1262,7 +1625,7 @@ function pickerModel(opts = {}) {
         let dispose
         try {
           dispose = ctx.slots.register({ name: 'sidebar.footer.action', id: 'dsh-workspace-path' }, (props) =>
-            h(PathButton, { wide: props?.wide, workspaces: ctx.workspaces, sessions: ctx.sessions, uiWorkspace, getUiWorkspace: () => uiWorkspace, connection: ctx.connection, startSession }))
+            h(PathButton, { wide: props?.wide, workspaces: ctx.workspaces, sessions: ctx.sessions, uiWorkspace, getUiWorkspace: () => uiWorkspace, connection: ctx.connection, startSession, controllerRef: hubRef }))
         } catch { dispose = undefined }
         return () => { if (dispose) dispose() }
       })
@@ -1312,6 +1675,8 @@ function pickerModel(opts = {}) {
         }
         return () => { if (dispose) dispose() }
       })
+      // 官方左侧列表的「默认只看项目」筛层：DOM 适配 + 区头入口。
+      ctx.effect(() => mountSidebarFilter(ctx, hubRef), 'dsh-workspace-path: sidebar filter')
     }
     module.exports.apply = apply
     module.exports.inject = inject

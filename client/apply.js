@@ -1,5 +1,7 @@
     const inject = ['slots', 'workspaces', 'sessions', 'connection']
     function apply(ctx) {
+      // 侧栏筛选菜单要能打开工作区中心的「按天」页，用一个共享把手把两边连起来。
+      const hubRef = { current: null }
       let uiWorkspace
       if (typeof ctx.inject === 'function') {
         ctx.inject(['uiWorkspace'], (sub) => {
@@ -27,7 +29,7 @@
         let dispose
         try {
           dispose = ctx.slots.register({ name: 'sidebar.footer.action', id: 'dsh-workspace-path' }, (props) =>
-            h(PathButton, { wide: props?.wide, workspaces: ctx.workspaces, sessions: ctx.sessions, uiWorkspace, getUiWorkspace: () => uiWorkspace, connection: ctx.connection, startSession }))
+            h(PathButton, { wide: props?.wide, workspaces: ctx.workspaces, sessions: ctx.sessions, uiWorkspace, getUiWorkspace: () => uiWorkspace, connection: ctx.connection, startSession, controllerRef: hubRef }))
         } catch { dispose = undefined }
         return () => { if (dispose) dispose() }
       })
@@ -77,6 +79,8 @@
         }
         return () => { if (dispose) dispose() }
       })
+      // 官方左侧列表的「默认只看项目」筛层：DOM 适配 + 区头入口。
+      ctx.effect(() => mountSidebarFilter(ctx, hubRef), 'dsh-workspace-path: sidebar filter')
     }
     module.exports.apply = apply
     module.exports.inject = inject

@@ -1,8 +1,8 @@
 {
   "name": "dsh-workspace-path",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "private": true,
-  "description": "Sidebar workspace hub and official picker: project workspaces first, day folders one step away, plus session-header path/ID badges.",
+  "description": "Sidebar workspace hub, official picker, and an official-sidebar filter that keeps day folders out of the way; plus session-header path/ID badges.",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -14,6 +14,7 @@
   "files": [
     "index.js",
     "git-summary.js",
+    "sidebar-filter.js",
     "client.js",
     "client",
     "paths.js",
