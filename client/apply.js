@@ -72,6 +72,7 @@
             uiWorkspace,
             getUiWorkspace: () => uiWorkspace,
             connection: ctx.connection,
+            getBetterSidebar: () => betterSidebar,
           }))
         } catch (e) {
           console.error('[dsh-workspace-path] failed to register conversation.hero.workspace:', e)

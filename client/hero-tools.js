@@ -34,7 +34,7 @@
     }
 
     function HeroWorkspaceTools(props) {
-      const { selectedId, workspaces, connection, useWorkspaces } = props
+      const { selectedId, workspaces, sessions, connection, useWorkspaces, getBetterSidebar } = props
       const t = locale()
       const [copied, setCopied] = React.useState(false)
       const copiedTimer = React.useRef(null)
@@ -45,11 +45,18 @@
       const [choice, setChoice] = React.useState('')
 
       const wsSnap = useSnapshot(workspaces?.list)
+      const sesSnap = useSnapshot(sessions?.list)
       const snap = typeof useWorkspaces === 'function' ? useWorkspaces((s) => s) : wsSnap
       const items = snap?.items || wsSnap?.items || []
       const currentWs = (selectedId ? items.find((it) => it.workspaceId === selectedId) : null) ||
                         items.find((it) => it.isCurrent) ||
                         items[0]
+      // A picked workspace already opens a blank Session (the Hero is only shown
+      // for that Session or for none at all), and the Hero slot carries no
+      // sessionId. Resolve the retained main-view Session here so the Git button
+      // can target Better Sidebar's page for it instead of falling back to an
+      // external terminal.
+      const sessionId = mainSessionId(sesSnap)
 
       React.useEffect(() => {
         let mounted = true
@@ -155,7 +162,10 @@
 
      return h('div', { className: 'dsh-hero-tools' },
        h('span', { className: 'dsh-hero-tools-sep' }),
-        h(DevActionButtons, { connection, wsPath: currentWs.path, showBorder: true }),
+        h(DevActionButtons, {
+          connection, wsPath: currentWs.path, showBorder: true,
+          sessionId, getBetterSidebar, variant: 'header',
+        }),
        h('button', {
           type: 'button',
           className: 'dsh-hero-tool-btn' + (copied ? ' is-copied' : ''),

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { abbreviateHomePath, filterWorkspaces, gitStatusLabel, hostFileManagerKind, isGitDirty, listCopyableWorkspaces } from '../paths.js'
+import { abbreviateHomePath, filterWorkspaces, gitStatusLabel, hostFileManagerKind, isGitDirty, listCopyableWorkspaces, mainSessionId } from '../paths.js'
 
 describe('abbreviateHomePath', () => {
   it('returns empty for missing path', () => {
@@ -62,6 +62,25 @@ describe('listCopyableWorkspaces', () => {
 
   it('keeps host order when the current session is ungrouped', () => {
     assert.deepEqual(listCopyableWorkspaces([a, b], 's9'), [a, b])
+  })
+})
+
+describe('mainSessionId', () => {
+  it('resolves the session the main view retains', () => {
+    const list = {
+      ids: ['a', 'b'],
+      byId: {
+        a: { id: 'a', retainedBy: {} },
+        b: { id: 'b', retainedBy: { mainView: 1 } },
+      },
+    }
+    assert.equal(mainSessionId(list), 'b')
+  })
+
+  it('returns nothing on a session-less new page', () => {
+    assert.equal(mainSessionId({ byId: {} }), undefined)
+    assert.equal(mainSessionId({ byId: { a: { id: 'a' } } }), undefined)
+    assert.equal(mainSessionId(undefined), undefined)
   })
 })
 

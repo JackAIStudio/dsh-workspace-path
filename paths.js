@@ -43,6 +43,22 @@ export function listCopyableWorkspaces(items, currentSessionId) {
   return [current, ...rows.filter((item) => item.workspaceId !== current.workspaceId)]
 }
 
+/**
+ * The Session the main view is retaining, when one is on screen. The Host's
+ * session-list snapshot publishes no current-session field; `retainedBy.mainView`
+ * is how DSH's own workspace UI resolves it. A Session-less new page has none.
+ * @param {{ byId?: Record<string, { retainedBy?: { mainView?: number } }> } | null | undefined} list
+ * @returns {string | undefined}
+ */
+export function mainSessionId(list) {
+  const byId = list?.byId
+  if (byId === null || typeof byId !== 'object') return undefined
+  for (const id of Object.keys(byId)) {
+    if ((byId[id]?.retainedBy?.mainView ?? 0) > 0) return id
+  }
+  return undefined
+}
+
 /** Last path segment, accepting both separators. */
 export function workspaceBasename(path) {
   if (typeof path !== 'string' || path === '') return ''

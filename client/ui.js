@@ -88,7 +88,7 @@
     const IconSpinner = ({ size = 14 }) => svg(size, h('circle', { cx: 8, cy: 8, r: 5.2, stroke: 'currentColor', strokeWidth: 1.4, strokeDasharray: '9 7', strokeLinecap: 'round' }))
     const IconFilter = ({ size = 12 }) => svg(size, h('path', { d: 'M2.5 4h11M4.5 8h7M6.5 12h3', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round' }))
 
-    function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo }) {
+    function WorkspaceRow({ t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo, actions }) {
       const isCur = ws.workspaceId === currentId, display = abbreviateHomePath(ws.path, home)
       const badges = []
       if (ws.isToday) badges.push(h('span', { key: 'today', className: 'dsh-wspath-badge' }, t.today))
@@ -96,28 +96,32 @@
       if (ws.kind === 'day' && !ws.isToday) badges.push(h('span', { key: 'kind', className: 'dsh-wspath-kind' }, t.dayKind))
       const gitLabel = gitStatusLabel(gitInfo)
       if (gitLabel) badges.push(h('span', { key: 'git', className: 'dsh-wspath-git' + (isGitDirty(gitInfo) ? ' is-dirty' : ''), title: gitTooltip(t, gitInfo) }, gitLabel))
+      // `variant` names the carrier; `actions` decides whether the row can act on
+      // it. The Hero picker asks for them too, so a project row behaves the same
+      // in both places (Git / dev command / reveal).
+      const rowActions = canOpen && actions !== false
       return h('div', { className: 'dsh-wspath-row' + (isCur ? ' is-current' : '') },
         h('button', { type: 'button', className: 'dsh-wspath-item', title: ws.path, onClick: () => onSelect(ws) },
           h('span', { className: 'dsh-wspath-title' }, h('span', { className: 'dsh-wspath-name' }, ws.title || ws.path), badges),
           variant === 'hub' || ws.kind === 'project' ? h('span', { className: 'dsh-wspath-path' }, display) : null,
         ),
-       variant === 'hub' ? h('div', { className: 'dsh-wspath-actions' },
+       rowActions ? h('div', { className: 'dsh-wspath-actions' },
          h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: t.copyBtn, onClick: (e) => { e.stopPropagation(); onCopy(ws) } }, h(IconCopy)),
-          canOpen && ws.path ? h(DevActionButtons, { connection, wsPath: ws.path, size: 12 }) : null,
-         canOpen ? h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: t.terminal, onClick: (e) => { e.stopPropagation(); onTerminal(ws) } }, h(IconTerminal)) : null,
-          canOpen ? h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: revealLabel, onClick: (e) => { e.stopPropagation(); onOpen(ws) } }, h(IconOpen)) : null,
+          ws.path ? h(DevActionButtons, { connection, wsPath: ws.path, size: 12 }) : null,
+          h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: t.terminal, onClick: (e) => { e.stopPropagation(); onTerminal(ws) } }, h(IconTerminal)),
+          h('button', { type: 'button', className: 'dsh-wspath-icon-btn', title: revealLabel, onClick: (e) => { e.stopPropagation(); onOpen(ws) } }, h(IconOpen)),
         ) : null,
       )
     }
 
     function PathPanel(props) {
-      const { t, model, query, onQuery, inputRef, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, onAddWorkspace, canAddWorkspace, adding, status, error, revealLabel, onOpenDays, onBack, connection } = props
+      const { t, model, query, onQuery, inputRef, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, onAddWorkspace, canAddWorkspace, adding, status, error, revealLabel, onOpenDays, onBack, connection, actions } = props
       const rows = model.rows, searching = model.searching, view = model.view
       const [gitMap, setGitMap] = React.useState(null)
       // 打开工作区中心时拉一次 git 概览（只查项目行；按天目录不查）。查询在后台跑，
       // 结果回来前列表照常显示，行只是暂时没有 git 标记。
       React.useEffect(() => {
-        if (variant !== 'hub' || !canOpen || typeof connection?.rpc?.call !== 'function') return undefined
+        if (actions === false || !canOpen || typeof connection?.rpc?.call !== 'function') return undefined
         const paths = []
         for (const ws of model.rows) {
           if (ws.kind === 'project' && typeof ws.path === 'string' && ws.path !== '') paths.push(ws.path)
@@ -126,13 +130,13 @@
         let alive = true
         fetchGitSummaries(connection, paths).then((map) => { if (alive) setGitMap(map) }).catch(() => {})
         return () => { alive = false }
-      }, [variant, canOpen])
+      }, [actions, canOpen, connection])
       const projectRows = searching ? rows.filter((ws) => ws.kind === 'project') : (view === 'projects' ? rows : [])
       const dayRows = searching ? rows.filter((ws) => ws.kind === 'day') : (view === 'days' ? rows : [])
       const emptyText = query ? t.noMatches : (view === 'days' ? t.emptyDays : t.empty)
       const renderGroup = (label, list) => list.length === 0 ? null : h(React.Fragment, null,
         searching ? h('div', { className: 'dsh-wspath-section' }, label) : null,
-        list.map((ws) => h(WorkspaceRow, { key: ws.workspaceId, t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, gitInfo: gitMap ? gitMap[ws.path] : undefined })),
+        list.map((ws) => h(WorkspaceRow, { key: ws.workspaceId, t, ws, currentId, home, variant, onSelect, onCopy, onOpen, onTerminal, canOpen, revealLabel, connection, actions, gitInfo: gitMap ? gitMap[ws.path] : undefined })),
       )
       // 两处「＋」都走官方那条路：打开目录选择器（原生选择框自带新建文件夹）→ 采纳并打开。
       const plusTitle = t.addWorkspace
@@ -210,76 +214,6 @@
       }, [controllerRef, panel.setQuery, panel.setView])
       return h('div', { className: wide === false ? 'dsh-wspath' : 'dsh-wspath dsh-wspath-wide' },
         h('button', { ref: buttonRef, type: 'button', className: 'dsh-wspath-btn' + (open ? ' is-open' : ''), title: t.trigger, 'aria-label': t.trigger, onClick: () => { setOpen((v) => !v); panel.setStatus('') } }, h(IconFolder, { size: 18 })),
-        node,
-      )
-    }
-
-    function HeroWorkspacePicker(props) {
-      const { open, anchorRef, selectedId, onPick, onClose, workspaces, sessions, uiWorkspace, getUiWorkspace, connection, useWorkspaces } = props
-      const t = locale(), inputRef = React.useRef(null)
-      const [coords, setCoords] = React.useState(null)
-      const panel = usePanelReset(open)
-      const wsSnap = useSnapshot(workspaces?.list)
-      const sesSnap = useSnapshot(sessions?.list)
-      const host = useSnapshot(connection?.hostDescription)
-      const home = host?.homeDirectory || host?.home
-      const snap = typeof useWorkspaces === 'function' ? useWorkspaces((state) => state) : wsSnap
-      const items = snap?.items || wsSnap?.items || []
-      const usageMap = useWorkspaceUsageSnapshot(open)
-      const model = pickerModel({ items, query: panel.query, view: panel.view, currentId: selectedId, sessionsById: sesSnap?.byId, usageMap })
-      const place = React.useCallback(() => {
-        const btn = anchorRef?.current
-        if (!btn) return
-        const r = btn.getBoundingClientRect(), w = Math.min(340, window.innerWidth - 16)
-        let l = r.left
-        if (l + w > window.innerWidth - 8) l = Math.max(8, window.innerWidth - w - 8)
-        setCoords({ left: Math.max(8, l), top: r.bottom + 6, width: w })
-      }, [anchorRef])
-      usePopover(open, (next) => { if (!next) onClose?.() }, place, anchorRef || { current: null }, '.dsh-wspath-panel')
-      React.useEffect(() => { if (open) inputRef.current?.focus() }, [open])
-      const handleSelect = (ws) => {
-        recordWorkspaceUse(ws)
-        if (typeof onPick === 'function') onPick(ws.workspaceId)
-        if (typeof onClose === 'function') onClose()
-      }
-      const canPickDir = typeof (getUiWorkspace?.() ?? uiWorkspace)?.pickDirectory === 'function' && typeof workspaces?.create === 'function'
-      const [adding, setAdding] = React.useState(false)
-      const handleAddWorkspace = async () => {
-        if (!canPickDir || adding) return
-        setAdding(true)
-        try {
-          const added = await pickAndAddWorkspace({ uiWorkspace, getUiWorkspace, workspaces, startSession: (workspaceId) => handleSelect({ workspaceId }) })
-          if (added) onClose?.()
-        } catch (err) {
-          panel.setError(true)
-          panel.setStatus(err instanceof Error ? err.message : String(err))
-        } finally { setAdding(false) }
-      }
-      const node = open && coords && typeof document !== 'undefined'
-        ? ReactDOM.createPortal(
-            h('div', { className: 'dsh-wspath-panel is-hero', style: { position: 'fixed', left: coords.left + 'px', top: coords.top + 'px', width: coords.width + 'px' } },
-              h(PathPanel, {
-                t,
-                model,
-                query: panel.query,
-                onQuery: panel.setQuery,
-                inputRef,
-                currentId: selectedId,
-                home,
-                variant: 'picker',
-                onSelect: handleSelect,
-                canAddWorkspace: canPickDir,
-                onAddWorkspace: handleAddWorkspace,
-                adding,
-                status: panel.status,
-                error: panel.error,
-                onOpenDays: () => { panel.setQuery(''); panel.setView('days') },
-                onBack: () => { panel.setQuery(''); panel.setView('projects') },
-                connection,
-              }),
-            ), document.body) : null
-      return h(React.Fragment, null,
-        h(HeroWorkspaceTools, { selectedId, workspaces, connection, useWorkspaces }),
         node,
       )
     }

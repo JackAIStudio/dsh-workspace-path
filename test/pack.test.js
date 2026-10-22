@@ -30,6 +30,21 @@ describe('packed client.js', () => {
     assert.match(src, /function gitStatusLabel/)
   })
 
+  it('wires the new-page hero tools to the repo actions and Better Sidebar', () => {
+    // The Hero Git button used to fall back to an external terminal because it
+    // received neither the native session nor the Better Sidebar service.
+    assert.match(src, /const sessionId = mainSessionId\(sesSnap\)/)
+    assert.match(src, /sessionId, getBetterSidebar, variant: 'header',/)
+    assert.match(src, /actions: true,/)
+    assert.match(src, /getBetterSidebar: \(\) => betterSidebar/)
+    // The carrier is its own module so hero-tools.js stays well under the
+    // 300-line source budget.
+    assert.match(src, /function HeroWorkspacePicker/)
+    // A seat-less open would be swallowed by the service (strict no-op), so the
+    // Hero Git button must fall back instead of claiming success.
+    assert.match(src, /if \(sessionId === undefined\) \{\s*const seat = typeof sb\.getSnapshot/)
+  })
+
   it('ships workspace usage tracking for quick actions', () => {
     assert.match(src, /function recordWorkspaceUse/)
     assert.match(src, /function useWorkspaceUsageSnapshot/)

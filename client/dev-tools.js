@@ -45,6 +45,13 @@
       const sb = typeof getBetterSidebar === 'function' ? getBetterSidebar() : undefined
       if (!sb || typeof sb.openTab !== 'function') return false
       if (typeof sb.isTabEnabled === 'function' && sb.isTabEnabled('git') === false) return false
+      // Without a seat session the service's openTab is a strict no-op, which
+      // would swallow the click (the caller would hear "opened" while nothing
+      // appeared). Fall back to the external terminal in that case.
+      if (sessionId === undefined) {
+        const seat = typeof sb.getSnapshot === 'function' ? sb.getSnapshot()?.sessionId : undefined
+        if (seat === undefined) return false
+      }
       try {
         sb.openTab({ type: 'git' }, sessionId ? { sessionId } : undefined)
         return true

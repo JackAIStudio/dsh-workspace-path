@@ -13,8 +13,9 @@ const ui = readFileSync(join(root, 'client/ui.js'), 'utf8')
 const addWorkspace = readFileSync(join(root, 'client/add-workspace.js'), 'utf8')
 const devTools = readFileSync(join(root, 'client/dev-tools.js'), 'utf8')
 const heroTools = readFileSync(join(root, 'client/hero-tools.js'), 'utf8')
-const sidebarFilter = readFileSync(join(root, 'client/sidebar-filter.js'), 'utf8')
+const heroPicker = readFileSync(join(root, 'client/hero-picker.js'), 'utf8')
 const badges = readFileSync(join(root, 'client/badges.js'), 'utf8')
+const sidebarFilter = readFileSync(join(root, 'client/sidebar-filter.js'), 'utf8')
 const apply = readFileSync(join(root, 'client/apply.js'), 'utf8')
 
 const out = `window.__ModuleLoader__.load({
@@ -40,6 +41,7 @@ ${ui}
 ${addWorkspace}
 ${devTools}
 ${heroTools}
+${heroPicker}
 ${badges}
 ${sidebarFilter}
 ${apply}
